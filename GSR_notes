@@ -1,0 +1,9 @@
+> src/init.cpp contem a sintaxe da condicao inicial.
+
+   p. ex. na funcao Init::initial_IPGlasma_XY_with_pi tem na linha 598 'ss >> dummy1 >> dummy2 >> dummy3 >> utau >> ux >> uy >> ueta >> ...'  
+
+> pra mudar a pasta na qual os arquivos de output serao adicionados, basta trocar a localizacao do codigo compilado
+   mas dai eh necessario tambem trocar o caminho do EoS por exemplo
+
+
+> src/grid_info.cpp contem a informacao sobre os outputs  

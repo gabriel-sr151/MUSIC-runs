@@ -1899,7 +1899,7 @@ void Cell_info::output_average_phase_diagram_trajectory(
 void Cell_info::output_momentum_anisotropy_vs_etas(
                 const double tau, SCGrid &arena) const {
     ostringstream filename;
-    filename << "momentum_anisotropy_tau_" << tau << ".dat";
+    filename << "temp-output-fd/momentum_anisotropy_tau_" << tau << ".dat"; // CHANGED GSR
     std::fstream of;
     of.open(filename.str().c_str(), std::fstream::out);
     of << "# eta_s  epsilon_p(ideal)(cos)  epsilon_p(ideal)(sin)  "
@@ -1907,19 +1907,19 @@ void Cell_info::output_momentum_anisotropy_vs_etas(
        << "epsilon_p(full)(cos)  epsilon_p(full)(sin)  " << endl;
 
     ostringstream filename1;
-    filename1 << "eccentricities_evo_ed_tau_" << tau << ".dat";
+    filename1 << "temp-output-fd/eccentricities_evo_ed_tau_" << tau << ".dat"; // CHANGED GSR
     std::fstream of1;
     of1.open(filename1.str().c_str(), std::fstream::out);
     of1 << "# eta_s  ed(GeV/fm^3)  ecc_n(cos)  ecc_n(sin) (n=1-6)"<< endl;
 
     ostringstream filename2;
-    filename2 << "eccentricities_evo_nB_tau_" << tau << ".dat";
+    filename2 << "temp-output-fd/eccentricities_evo_nB_tau_" << tau << ".dat"; // CHANGED GSR
     std::fstream of2;
     of2.open(filename2.str().c_str(), std::fstream::out);
     of2 << "# eta_s  nB(1/fm^3)  ecc_n(cos)  ecc_n(sin) (n=1-6)"<< endl;
 
     ostringstream filename3;
-    filename3 << "meanpT_estimators_tau_" << tau << ".dat";
+    filename3 << "temp-output-fd/meanpT_estimators_tau_" << tau << ".dat"; // CHANGED GSR
     std::fstream of3;
     of3.open(filename3.str().c_str(), std::fstream::out);
     of3 << "# eta_s  dS/deta_s  dE/deta_s (GeV) [s] (1/fm^-3)  [r^2] (fm^2)"

@@ -114,11 +114,11 @@ void Cell_info::Output_hydro_information_header() {
 
 //! This function outputs hydro evolution file in binary format
 void Cell_info::OutputEvolutionDataXYEta(SCGrid &arena, double tau) {
-    const string out_name_xyeta = "evolution_xyeta.dat";
+    const string out_name_xyeta = "temp-output/evolution_xyeta.dat";
     const string out_name_W_xyeta =
                         "evolution_Wmunu_over_epsilon_plus_P_xyeta.dat";
-    const string out_name_bulkpi_xyeta = "evolution_bulk_pressure_xyeta.dat";
-    const string out_name_q_xyeta = "evolution_qmu_xyeta.dat";
+    const string out_name_bulkpi_xyeta = "temp-output/evolution_bulk_pressure_xyeta.dat";
+    const string out_name_q_xyeta = "temp-output/evolution_qmu_xyeta.dat";
     string out_open_mode;
     FILE *out_file_xyeta        = NULL;
     FILE *out_file_W_xyeta      = NULL;
@@ -997,7 +997,7 @@ void Cell_info::compute_angular_momentum(
 //! at a give proper time
 void Cell_info::check_conservation_law(SCGrid &arena, SCGrid &arena_prev,
                                        const double tau) {
-    std::string filename = "global_conservation_laws.dat";
+    std::string filename = "temp-output/global_conservation_laws.dat";
     ofstream output_file;
     if (std::abs(tau - DATA.tau0) < 1e-10) {
         output_file.open(filename.c_str(), std::ofstream::out);
@@ -1241,7 +1241,7 @@ void Cell_info::output_1p1D_check_file(SCGrid &arena, const double tau) {
 
 //! This function outputs energy density and n_b for making movies
 void Cell_info::output_evolution_for_movie(SCGrid &arena, const double tau) {
-    const string out_name_xyeta = "evolution_for_movie_xyeta.dat";
+    const string out_name_xyeta = "temp-output/evolution_for_movie_xyeta.dat";
     string out_open_mode;
     FILE *out_file_xyeta;
     // If it's the first timestep, overwrite the previous file
@@ -1899,7 +1899,7 @@ void Cell_info::output_average_phase_diagram_trajectory(
 void Cell_info::output_momentum_anisotropy_vs_etas(
                 const double tau, SCGrid &arena) const {
     ostringstream filename;
-    filename << "temp-output-fd/momentum_anisotropy_tau_" << tau << ".dat"; // CHANGED GSR
+    filename << "temp-output/momentum_anisotropy_tau_" << tau << ".dat"; // CHANGED GSR
     std::fstream of;
     of.open(filename.str().c_str(), std::fstream::out);
     of << "# eta_s  epsilon_p(ideal)(cos)  epsilon_p(ideal)(sin)  "
@@ -1907,19 +1907,19 @@ void Cell_info::output_momentum_anisotropy_vs_etas(
        << "epsilon_p(full)(cos)  epsilon_p(full)(sin)  " << endl;
 
     ostringstream filename1;
-    filename1 << "temp-output-fd/eccentricities_evo_ed_tau_" << tau << ".dat"; // CHANGED GSR
+    filename1 << "temp-output/eccentricities_evo_ed_tau_" << tau << ".dat"; // CHANGED GSR
     std::fstream of1;
     of1.open(filename1.str().c_str(), std::fstream::out);
     of1 << "# eta_s  ed(GeV/fm^3)  ecc_n(cos)  ecc_n(sin) (n=1-6)"<< endl;
 
     ostringstream filename2;
-    filename2 << "temp-output-fd/eccentricities_evo_nB_tau_" << tau << ".dat"; // CHANGED GSR
+    filename2 << "temp-output/eccentricities_evo_nB_tau_" << tau << ".dat"; // CHANGED GSR
     std::fstream of2;
     of2.open(filename2.str().c_str(), std::fstream::out);
     of2 << "# eta_s  nB(1/fm^3)  ecc_n(cos)  ecc_n(sin) (n=1-6)"<< endl;
 
     ostringstream filename3;
-    filename3 << "temp-output-fd/meanpT_estimators_tau_" << tau << ".dat"; // CHANGED GSR
+    filename3 << "temp-output/meanpT_estimators_tau_" << tau << ".dat"; // CHANGED GSR
     std::fstream of3;
     of3.open(filename3.str().c_str(), std::fstream::out);
     of3 << "# eta_s  dS/deta_s  dE/deta_s (GeV) [s] (1/fm^-3)  [r^2] (fm^2)"
@@ -2093,7 +2093,7 @@ void Cell_info::output_momentum_anisotropy_vs_tau(
                 const double tau, const double eta_min, const double eta_max,
                 SCGrid &arena) const {
     ostringstream filename;
-    filename << "momentum_anisotropy_eta_" << eta_min
+    filename << "temp-output/momentum_anisotropy_eta_" << eta_min // changed GSR
              << "_" << eta_max << ".dat";
     std::fstream of;
     if (std::abs(tau - DATA.tau0) < 1e-10) {
@@ -2114,7 +2114,7 @@ void Cell_info::output_momentum_anisotropy_vs_tau(
     }
 
     ostringstream filename1;
-    filename1 << "eccentricities_evo_eta_" << eta_min
+    filename1 << "temp-output/eccentricities_evo_eta_" << eta_min // changed GSR
               << "_" << eta_max << ".dat";
     std::fstream of1;
     if (std::abs(tau - DATA.tau0) < 1e-10) {
@@ -2126,7 +2126,7 @@ void Cell_info::output_momentum_anisotropy_vs_tau(
     }
 
     ostringstream filename2;
-    filename2 << "inverse_Reynolds_number_eta_" << eta_min
+    filename2 << "temp-output/inverse_Reynolds_number_eta_" << eta_min // changed GSR
              << "_" << eta_max << ".dat";
     std::fstream of2;
     if (std::abs(tau - DATA.tau0) < 1e-10) {
@@ -2138,7 +2138,7 @@ void Cell_info::output_momentum_anisotropy_vs_tau(
     }
 
     ostringstream filename3;
-    filename3 << "meanpT_estimators_eta_" << eta_min << "_" << eta_max
+    filename3 << "temp-output/meanpT_estimators_eta_" << eta_min << "_" << eta_max
               << ".dat";
     std::fstream of3;
     if (std::abs(tau - DATA.tau0) < 1e-10) {

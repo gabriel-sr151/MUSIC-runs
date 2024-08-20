@@ -29,7 +29,7 @@ initialize_with_entropy 0       # 0: with energy density
                                 # 1: with entropy density
 
 # read in initial conditions from external file
-Initial_Distribution_input_filename  initial_data_GSR/cs2-T-proj/box-IC-data-side-2.0fm-max-ener-0.02GeV-width-0.1fm.dat  
+Initial_Distribution_input_filename  example_inputfiles/IPGlasma_2D/input/epsilon-u-Hydro-t0.6-0.dat #example_inputfiles/IPGlasma_2D/input/epsilon-u-Hydro-t0.6-0.dat  
                                # the filename of initial profile 
                                # (for Initial_profile == 8)
 s_factor 0.235                 # normalization factor read in
@@ -43,12 +43,12 @@ Eta_fall_off 0.7               # the scale of the fall off of the
 #######################################
 boost_invariant  0            # whether the simulation is boost-invariant
 # grid information
-Initial_time_tau_0 1000       # starting time of the hydrodynamic 
+Initial_time_tau_0 1.0       # starting time of the hydrodynamic 
                               # evolution (fm/c) 
-Total_evolution_time_tau 5  # the maximum allowed running
+Total_evolution_time_tau 1.0  # the maximum allowed running
                               # evolution time (fm/c)
                               # need to be set to some large number
-Delta_Tau 0.05                # time step to use in the evolution [fm/c]
+Delta_Tau 0.2                # time step to use in the evolution [fm/c]
 Eta_grid_size 14.0            # spatial rapidity range
                               # [-Eta_grid_size/2, Eta_grid_size/2 - delta_eta]
 Grid_size_in_eta 10.0         # number of the grid points in spatial
@@ -85,11 +85,11 @@ EOS_to_use 9                  # type of the equation of state
                               # 91: lattice EOS hotQCD with SMASH
                               # 14: lattice EOS hotQCD at finite muB
 # transport coefficients
-Viscosity_Flag_Yes_1_No_0 0        # turn on viscosity in the evolution
+Viscosity_Flag_Yes_1_No_0 1        # turn on viscosity in the evolution
 Include_Shear_Visc_Yes_1_No_0 0    # include shear viscous effect
 Shear_to_S_ratio 0.0              # value of \eta/s
 T_dependent_Shear_to_S_ratio  0    # flag to use temperature dep. \eta/s(T)
-Include_Bulk_Visc_Yes_1_No_0 0     # include bulk viscous effect
+Include_Bulk_Visc_Yes_1_No_0 1     # include bulk viscous effect
 T_dependent_Bulk_to_S_ratio 0      # include Temperature-dependent \zeta/s(T)
 Include_second_order_terms 0       # include second order non-linear coupling terms
 Include_Rhob_Yes_1_No_0 0
@@ -98,10 +98,10 @@ kappa_coefficient 0.0
 #
 #
 # switches to output evolution information
-output_evolution_data 0            # flag to output evolution history to file
+output_evolution_data 1            # flag to output evolution history to file
 output_movie_flag 0
 output_evolution_T_cut 0.145
-outputBinaryEvolution  1           # output evolution file in binary format
+outputBinaryEvolution  0           # output evolution file in binary format
 output_evolution_every_N_eta  1    # output evolution file every Neta steps
 output_evolution_every_N_y  2      # output evolution file every Ny steps
 output_evolution_every_N_x  2      # output evolution file every Nx steps

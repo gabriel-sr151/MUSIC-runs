@@ -1,11 +1,22 @@
-> src/init.cpp contem a sintaxe da condicao inicial.
-
-   p. ex. na funcao Init::initial_IPGlasma_XY_with_pi tem na linha 598 'ss >> dummy1 >> dummy2 >> dummy3 >> utau >> ux >> uy >> ueta >> ...'  
+> Ao longo do codigo Wmunu is the shear-stress tensor
 
 > pra mudar a pasta na qual os arquivos de output serao adicionados, basta trocar a localizacao do codigo compilado
    mas dai eh necessario tambem trocar o caminho do EoS por exemplo 
    eh vantajoso criar varias copias do codigo compilado quando houver varios jobs sendo rodados. Neste caso se houver apenas um arquivo
    pra eos todos os jobs vao tentar acessa-lo ao mesmo tempo e eles vao se atropelar
+[!!!!!!]
+
+> src/init.cpp contem a sintaxe da condicao inicial.
+
+   p. ex. na funcao Init::initial_IPGlasma_XY_with_pi tem na linha 598 'ss >> dummy1 >> dummy2 >> dummy3 >> utau >> ux >> uy >> ueta >> ...'  
 
 > src/grid_info.cpp contem a informacao sobre os outputs  
+ 
+  syntax to print bulk pressure in mode (line 238) fprintf(out_file_bulkpi_xyeta,"%e %e %e\n", bulk_Pi, enthropy, cs2_local);
+  (line 120) out_name_bulkpi_xyeta = "temp-output/evolution_bulk_pressure_xyeta.dat"
+
+  fprintf(out_file_xyeta, "%e %e %e %e %e\n",
+                            T_local*hbarc, muB_local*hbarc, vx, vy, vz);  
+
+
 

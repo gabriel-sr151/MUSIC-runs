@@ -116,7 +116,7 @@ void Cell_info::Output_hydro_information_header() {
 void Cell_info::OutputEvolutionDataXYEta(SCGrid &arena, double tau) {
     const string out_name_xyeta = "temp-output/evolution_xyeta.dat";
     const string out_name_W_xyeta =
-                        "evolution_Wmunu_over_epsilon_plus_P_xyeta.dat";
+                        "temp-output/evolution_Wmunu_over_epsilon_plus_P_xyeta.dat";
     const string out_name_bulkpi_xyeta = "temp-output/evolution_bulk_pressure_xyeta.dat";
     const string out_name_q_xyeta = "temp-output/evolution_qmu_xyeta.dat";
     string out_open_mode;
@@ -296,7 +296,7 @@ void Cell_info::OutputEvolutionDataXYEta(SCGrid &arena, double tau) {
 
 void Cell_info::OutputEvolution_Knudsen_Reynoldsnumbers(
         SCGrid &arena, const double tau) const {
-    const string out_name_xyeta = "evolution_KRnumbers.dat";
+    const string out_name_xyeta = "temp-output/evolution_KRnumbers.dat";
     FILE *out_file_xyeta        = NULL;
 
     // If it's the first timestep, overwrite the previous file
@@ -431,7 +431,7 @@ void Cell_info::OutputEvolutionDataXYEta_chun(SCGrid &arena, double tau) {
     // Here ueta = tau*ueta, Wieta = tau*Wieta, Wetaeta = tau^2*Wetaeta, qeta = tau*qeta
     // Here Wij is reduced variables Wij/(e+P) in the fluid rest frame
     // and qi is reduced variables qi/kappa_hat in the fluid rest frame
-    const string out_name_xyeta = "evolution_all_xyeta.dat";
+    const string out_name_xyeta = "temp-output/evolution_all_xyeta.dat";
     string out_open_mode;
     FILE *out_file_xyeta;
     // If it's the first timestep, overwrite the previous file
@@ -608,7 +608,7 @@ void Cell_info::OutputEvolutionDataXYEta_photon(SCGrid &arena, double tau) {
     // Here ueta = tau*ueta, Wieta = tau*Wieta, qeta = tau*qeta
     // Here Wij is reduced variables Wij/(e+P) used in delta f
     // and qi is reduced variables qi/kappa_hat
-    const string out_name_xyeta = "evolution_for_photon_xyeta.dat";
+    const string out_name_xyeta = "temp-output/evolution_for_photon_xyeta.dat";
     string out_open_mode;
     FILE *out_file_xyeta;
     // If it's the first timestep, overwrite the previous file
@@ -733,7 +733,7 @@ void Cell_info::OutputEvolutionDataXYEta_vorticity(
     // the format of the file is as follows,
     //    itau ix iy ieta e P T ux uy ueta mu_B
     //    omega^tx omega^ty omega^tz omega^xy omega^xz omega^yz
-    const string out_name_xyeta = "evolution_all_xyeta.dat";
+    const string out_name_xyeta = "temp-output/evolution_all_xyeta.dat";
     string out_open_mode;
     FILE *out_file_xyeta;
     // If it's the first timestep, overwrite the previous file

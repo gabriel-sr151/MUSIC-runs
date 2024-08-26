@@ -1,0 +1,12 @@
+echo "transfering data from temp to final folder ..."
+
+echo "list of folders in final data folder"
+ls final_data_files 
+
+echo "Insert folder name" 
+read folder_name  
+path = "final_data_files/acausality-stuff/${folder_name}"
+
+mkdir $finalpath
+
+mv temp-output/* $finalpath

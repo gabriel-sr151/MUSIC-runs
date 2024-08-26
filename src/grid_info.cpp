@@ -1896,7 +1896,7 @@ void Cell_info::output_average_phase_diagram_trajectory(
 
 //! This function outputs system's eccentricity and momentum anisotropy
 //! as functions of eta_s
-void Cell_info::output_momentum_anisotropy_vs_etas(
+/* void Cell_info::output_momentum_anisotropy_vs_etas(
                 const double tau, SCGrid &arena) const {
     ostringstream filename;
     filename << "temp-output/momentum_anisotropy_tau_" << tau << ".dat"; // CHANGED GSR
@@ -2086,10 +2086,10 @@ void Cell_info::output_momentum_anisotropy_vs_etas(
     of2.close();
     of3.close();
 }
-
+*/ //commented out GSR
 
 //! This function outputs system's momentum anisotropy as a function of tau
-void Cell_info::output_momentum_anisotropy_vs_tau(
+/* void Cell_info::output_momentum_anisotropy_vs_tau(
                 const double tau, const double eta_min, const double eta_max,
                 SCGrid &arena) const {
     ostringstream filename;
@@ -2356,7 +2356,7 @@ void Cell_info::output_momentum_anisotropy_vs_tau(
         << meanpT_est_num[3]/meanpT_est_den[0] << endl;
     of3.close();
 }
-
+*/ // GSR commented out
 
 void Cell_info::get_LRF_shear_stress_tensor(const Cell_small &cell,
                                             const double eta_s,

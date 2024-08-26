@@ -609,6 +609,7 @@ double Diss::Make_uPiSource(const double tau, const Cell_small *grid_pt,
         include_coupling_to_shear = 1;
     }
 
+    
     double epsilon, rhob;
     if (rk_flag == 0) {
         epsilon = grid_pt->epsilon;
@@ -616,6 +617,13 @@ double Diss::Make_uPiSource(const double tau, const Cell_small *grid_pt,
     } else {
         epsilon = grid_pt_prev->epsilon;
         rhob = grid_pt_prev->rhob;
+    }
+
+    double excl_second_GSR; // variable to exclude Bulk theta term GSR
+    if (DATA.include_second_order_terms == 1){
+        excl_second_GSR = 1.0;
+    } else {
+        excl_second_GSR = 0.0;
     }
 
     // defining bulk viscosity coefficient
@@ -669,7 +677,7 @@ double Diss::Make_uPiSource(const double tau, const Cell_small *grid_pt,
     // Computing relaxation term and nonlinear term:
     // - Bulk - transport_coeff1*Bulk*theta
     tempf = (-(grid_pt->pi_b)
-             - transport_coeff1*theta_local*(grid_pt->pi_b));
+             - excl_second_GSR*transport_coeff1*theta_local*(grid_pt->pi_b));
 
     // Computing nonlinear term: + transport_coeff2*Bulk*Bulk
     if (include_BBterm == 1) {

@@ -51,7 +51,7 @@ Total_evolution_time_tau 1.0  # the maximum allowed running
 Delta_Tau 0.02                # time step to use in the evolution [fm/c]
 Eta_grid_size 14.0            # spatial rapidity range
                               # [-Eta_grid_size/2, Eta_grid_size/2 - delta_eta]
-Grid_size_in_eta 10         # number of the grid points in spatial
+Grid_size_in_eta 10.0         # number of the grid points in spatial
                               # rapidity direction
                               # Must have at least 4 cells per processor
                               # Must be an even number.
@@ -98,10 +98,10 @@ kappa_coefficient 0.0
 #
 #
 # switches to output evolution information
-output_evolution_data 2            # flag to output evolution history to file #
+output_evolution_data 1            # flag to output evolution history to file
 output_movie_flag 1
 output_evolution_T_cut 0.145 
-outputBinaryEvolution  1           # output evolution file in binary format
+outputBinaryEvolution  0           # output evolution file in binary format
 output_evolution_every_N_eta  1    # output evolution file every Neta steps
 output_evolution_every_N_y  2      # output evolution file every Ny steps
 output_evolution_every_N_x  2      # output evolution file every Nx steps

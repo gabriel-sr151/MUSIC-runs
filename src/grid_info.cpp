@@ -1270,7 +1270,7 @@ void Cell_info::output_evolution_for_movie(SCGrid &arena, const double tau) {
         const int output_nx   = static_cast<int>(arena.nX()/n_skip_x);
         const int output_ny   = static_cast<int>(arena.nY()/n_skip_y);
         const int output_neta = (
-                std::min(1, static_cast<int>(arena.nEta()/n_skip_eta)));
+                std::max(1, static_cast<int>(arena.nEta()/n_skip_eta)));
         const double output_dx     = DATA.delta_x*n_skip_x;
         const double output_dy     = DATA.delta_y*n_skip_y;
         const double output_deta   = DATA.delta_eta*n_skip_eta;
@@ -1896,7 +1896,7 @@ void Cell_info::output_average_phase_diagram_trajectory(
 
 //! This function outputs system's eccentricity and momentum anisotropy
 //! as functions of eta_s
-/* void Cell_info::output_momentum_anisotropy_vs_etas(
+ void Cell_info::output_momentum_anisotropy_vs_etas(
                 const double tau, SCGrid &arena) const {
     ostringstream filename;
     filename << "temp-output/momentum_anisotropy_tau_" << tau << ".dat"; // CHANGED GSR
@@ -2086,10 +2086,10 @@ void Cell_info::output_average_phase_diagram_trajectory(
     of2.close();
     of3.close();
 }
-*/ //commented out GSR
+
 
 //! This function outputs system's momentum anisotropy as a function of tau
-/* void Cell_info::output_momentum_anisotropy_vs_tau(
+void Cell_info::output_momentum_anisotropy_vs_tau(
                 const double tau, const double eta_min, const double eta_max,
                 SCGrid &arena) const {
     ostringstream filename;
@@ -2356,7 +2356,7 @@ void Cell_info::output_average_phase_diagram_trajectory(
         << meanpT_est_num[3]/meanpT_est_den[0] << endl;
     of3.close();
 }
-*/ // GSR commented out
+ // GSR commented out
 
 void Cell_info::get_LRF_shear_stress_tensor(const Cell_small &cell,
                                             const double eta_s,

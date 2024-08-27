@@ -12,13 +12,19 @@
 
 > src/grid_info.cpp contem a informacao sobre os outputs  
  
+  >> evolution output
+
   syntax to print bulk pressure in mode (line 238) fprintf(out_file_bulkpi_xyeta,"%e %e %e\n", bulk_Pi, enthropy, cs2_local);
   (line 120) out_name_bulkpi_xyeta = "temp-output/evolution_bulk_pressure_xyeta.dat"
 
   fprintf(out_file_xyeta, "%e %e %e %e %e\n",
                             T_local*hbarc, muB_local*hbarc, vx, vy, vz);  
 
+  >> movie output
+  
+  --header output
 
+    see lines 1280 to 1290
 
 > 'include_second_order_terms' flag
 
@@ -37,4 +43,9 @@
 
    terms Wsigma, WW, Shear_Sigma_term, Shear_Shear_term controlled by include_coupling_to_shear   
    
+   term delta_pipi (shear-theta) is NOT controlled by Include_second_order_terms  see variable tempf
+
+> 'output_evolution_data' flag
+
+   see lines 130 to 137 of evolve.cpp
 

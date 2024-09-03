@@ -1,3 +1,5 @@
+DICAS GERAIS
+
 > Ao longo do codigo Wmunu is the shear-stress tensor
 
 > pra mudar a pasta na qual os arquivos de output serao adicionados, basta trocar a localizacao do codigo compilado
@@ -5,6 +7,13 @@
    eh vantajoso criar varias copias do codigo compilado quando houver varios jobs sendo rodados. Neste caso se houver apenas um arquivo
    pra eos todos os jobs vao tentar acessa-lo ao mesmo tempo e eles vao se atropelar
 [!!!!!!]
+
+> quando rodar o MUSIC em 3D fazer o plateau de forma que haja uma parte vazia grande  ____|------|____ e nao _|------|_ 
+
+> the discretization flags can be overruled by e.g. the initial state data discretization data
+
+##################################################################################################################
+SPECIFIC PARTS OF THE CODE
 
 > src/init.cpp contem a sintaxe da condicao inicial.
 
@@ -47,5 +56,7 @@
 
 > 'output_evolution_data' flag
 
+   this flag takes values 1 2 3 4 depending on how you want the output to be 
    see lines 130 to 137 of evolve.cpp
+
 

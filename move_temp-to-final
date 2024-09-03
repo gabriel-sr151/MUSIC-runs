@@ -3,10 +3,15 @@ echo "transfering data from temp to final folder ..."
 echo "list of folders in final data folder"
 ls final_data_files 
 
+echo "Insert project name" 
+read project_folder  
+
 echo "Insert folder name" 
-read folder_name  
-path = "final_data_files/acausality-stuff/${folder_name}"
+read new_folder_name  
 
-mkdir $finalpath
+path="final_data_files/${project_folder}/${new_folder_name}"
 
-mv temp-output/* $finalpath
+echo $path
+mkdir -p $path
+
+mv temp-output/* $path

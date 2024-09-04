@@ -1,6 +1,4 @@
 #based on https://github.com/JETSCAPE/SummerSchool2020/blob/master/hydro_session/hydro_movie-TestRun.ipynb
-
-
 from numpy import *
 from os import path
 home = path.expanduser("~")
@@ -38,7 +36,8 @@ working_path = path.join(home, "MUSIC/final_data_files")
 # define the contour levels
 levelsT = linspace(0.13, 0.30, 50)
 levelsbulk = linspace(-0.10, 0.40, 50)
-levelscaus = linspace(0.01, 1.20, 50)
+levelscaus = linspace(-0.1, 1.20, 50)
+levelsVW = linspace(-0.2, 0.2, 50)
 
 # define a custmized color map
 colors1 = array([[1, 1, 1, 1]])
@@ -58,7 +57,15 @@ my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/test_run-bin-out-QCD-EoS-2"
+TestResultFolder = "acausality-stuff/run5" #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55
+                                           #run 2 -- pure bulk with bulk_relax_time_factor = 19.34     
+                                           #run 3 -- pure bulk with bulk_relax_time_factor = 1/19.36
+                                           #run 4-- pure bulk with bulk_relax_time_factor = 1/15.0
+                                           #run 5-- pure bulk with bulk_relax_time_factor = 1/14.55 - more tau steps 
+
+bulk_relax_time_factor = 1.0/14.55 #MUSIC_default 1/14.55
+
+
 
 # load hydrodynamic evolution data
 data = fromfile(path.join(working_path, TestResultFolder,"evolution_all_xyeta.dat"), dtype=float32)
@@ -110,7 +117,13 @@ T  = zeros([ntau, neta, nx, ny])
 cs2 = zeros([ntau, neta, nx, ny]) #GSR
 vx = zeros([ntau, neta, nx, ny])
 vy = zeros([ntau, neta, nx, ny])
+vz = zeros([ntau, neta, nx, ny]) #GSR
 bulkPI = zeros([ntau, neta, nx, ny]) #GSR
+
+wchar2 = zeros([ntau, neta, nx, ny]) #GSR -- characteristic speed for pure bulk simulations
+v2 = zeros([ntau, neta, nx, ny]) #GSR -- VW criterion
+                               
+
 
 for itau in range(ntau):
     idx = (abs(data[:, 0] - itau) < 0.1)
@@ -127,6 +140,7 @@ for itau in range(ntau):
         cs2[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 7]
         vx[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 8]/u0
         vy[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 9]/u0
+        vz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 10]/u0
         #rhob[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
         #muB[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
         #pixx[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ] #when shear is activated
@@ -135,6 +149,19 @@ for itau in range(ntau):
         #piyy[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
         #piyz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
         bulkPI[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 11]
+
+        wchar2[itau, eta_idx, x_idx, y_idx] = cs2[itau, eta_idx, x_idx, y_idx] \
+              + (1.0/bulk_relax_time_factor)*( (1.0/3.0 - cs2[itau, eta_idx, x_idx, y_idx])**(2.0) )\
+                /(1.0 + bulkPI[itau, eta_idx, x_idx, y_idx]/(ed[itau, eta_idx, x_idx, y_idx]+pr[itau, eta_idx, x_idx, y_idx]+0.0000001) )
+                                                     # i put a regulator otherwise things diverge
+
+        v2[itau, eta_idx, x_idx, y_idx] = vx[itau, eta_idx, x_idx, y_idx]**2 + vy[itau, eta_idx, x_idx, y_idx]**2 \
+                                       + vz[itau, eta_idx, x_idx, y_idx]**2
+                                          
+
+#wchar2 = cs2 + 15.0*((1.0/3.0 - cs2)**(2.0))/(1 + bulkPI/(e+P))  
+
+
 
 
 # print out some useful information about the evolution file
@@ -177,22 +204,26 @@ print("neta = {0}, eta_min = {1:.2f} fm, eta_max = {2:.2f} fm, deta = {3:.2f}".f
 '''
 
 
-
-final_plots_folder = 'final_data_files/acausality-stuff/test_run-bin-out-QCD-EoS-2'
+final_plots_folder = path.join(working_path, TestResultFolder)
 
 
 
 # make a 2D meshgrid in the transverse plane
 X, Y = meshgrid(x, y)
 
-# make the contoumpur plot
-'''fig = plt.figure()
-cont = plt.contourf(X, Y, bulkPI[0, 0, :, :]/(ed[0, 0, :, :]+pr[0, 0, :, :]), levelsbulk, cmap=my_cmap, extend='both')
+
+
+# make the contour plot
+'''tau_idx = -1 #int(ntau*(2/3)) # 0 for the initial condition
+
+fig = plt.figure()
+cont = plt.contourf(X, Y, bulkPI[tau_idx, 0, :, :]/(ed[tau_idx, 0, :, :]+pr[tau_idx, 0, :, :]), levelsbulk, cmap=my_cmap, extend='both')
 cbar = fig.colorbar(cont)
 plt.xlabel(r"$x$ (fm)")
 plt.ylabel(r"$y$ (fm)")
+plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
 plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_Bulk_Contour_XY")
+plt.savefig(f"{final_plots_folder}/Bulk_ov_e_p_Contour_XY-initial-tau_{tau_idx}-of-{ntau}")
 '''
 # make the contour plot
 '''fig = plt.figure()
@@ -204,29 +235,78 @@ plt.tight_layout()
 plt.savefig(f"{final_plots_folder}/TestRun_cs2_Contour_XY")
 '''
 
-'''a = [[1.,2.,3.],[4.,5.,6.]]
-b = [[2.,2.,3.],[1.,4.,5.]]
-div = [[ea/eb for ea in a] for eb in b]]
-print(div)
-'''
 
-'''
-fig = plt.figure()
-cont = plt.contourf(X, Y, ed[0, 0, :, :]+pr[0, 0, :, :] , levelsbulk, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_e+P_Contour_XY")
 
-'''
-#wchar = cs2 + 15*((1.0/3.0 - cs2)**(2.0))/(1 + bulkPI/(e+P))  
+#tau_idx = 0*int(ntau*(2/3)) # 0 for the initial condition
 
 # make the contour plot
-fig = plt.figure()
-cont = plt.contourf(X, Y, cs2[0, 0, :, :] + 15.0*( (1.0/3.0 - cs2[0, 0, :, :])**(2.0) )/(1.0 + bulkPI[0, 0, :, :]/(ed[0, 0, :, :]+pr[0, 0, :, :]+0.0000001) ) , levelscaus, cmap=my_cmap, extend='both')
+'''fig = plt.figure()
+cont = plt.contourf(X, Y, wchar2[tau_idx, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
 cbar = fig.colorbar(cont)
 plt.xlabel(r"$x$ (fm)")
 plt.ylabel(r"$y$ (fm)")
+plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
 plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_caus_Contour_XY")
+plt.savefig(f"{final_plots_folder}/TestRun_caus_Contour_XY-tau_{tau_idx}-of-{ntau}")
+
+print("CAREFUL!!!!!: THE VALUE OF 'bulk_relax_time_factor' HAS TO BE CONSISTENT WITH THE CODE RAN. Default MUSIC: 14.55")
+'''
+'''Tau, X = meshgrid(tau_list, x)
+
+y_idx = int(ny/2)  # pick the central point in the y direction
+
+fig = plt.figure()
+cont = plt.contourf(X, Tau, wchar2[:, 0, :, y_idx].transpose(), levelscaus,
+                    cmap=my_cmap, extend='both')
+cbar = fig.colorbar(cont)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$\tau$ (fm/c)")
+plt.text(1.0, 10.0, r'$y = {0:3.1f}$ fm'.format(y[y_idx]))
+#plt.tight_layout()
+plt.savefig(f"{final_plots_folder}/TestRun_wchar2_Contour_TauX")
+'''
+
+'''tau_idx = -1 #*int(ntau*(2/3)) # 0 for the initial condition
+
+fig = plt.figure()
+cont = plt.contourf(X, Y, v2[tau_idx, 0, :, :]*wchar2[tau_idx, 0, :, :], levelsVW, cmap=my_cmap, extend='both')
+cbar = fig.colorbar(cont)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
+plt.tight_layout()
+plt.savefig(f"{final_plots_folder}/TestRun_V2W2_Contour_XY-tau_{tau_idx}-of-{ntau}")
+'''
+
+######################################
+
+X, Y = meshgrid(x, y)
+
+# first plot the first frame as a contour plot
+fig = plt.figure()
+cont = plt.contourf(X, Y, wchar2[0, 0, :, :].transpose(), levelscaus,
+                    cmap=my_cmap, extend='both')
+time_text = plt.text(-6, 6, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
+cbar = fig.colorbar(cont)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout()
+    
+
+# define animation function to update the contour at every time frame
+def animate(i): 
+    global cont, time_text
+    for c in cont.collections:
+        c.remove()  # removes only the contours, leaves the rest intact
+    cont = plt.contourf(X, Y, wchar2[i, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
+    return cont, time_text
+
+# create the animation
+anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
+
+# save the animation to a file
+writergif = animation.PillowWriter(fps=2)
+anim.save(f"{final_plots_folder}/animation_wchar2-2.gif", writer=writergif)

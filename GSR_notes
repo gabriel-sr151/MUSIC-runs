@@ -35,6 +35,8 @@ SPECIFIC PARTS OF THE CODE
 
     see lines 1280 to 1290
 
+> src/read_in_parameters.cpp contem a informação sobre o valores padrão das entradas (para o fator do tau_BULK por exemplo)
+
 > 'include_second_order_terms' flag
 
    terms tau_pipi (shear-sigma), phi7 (shear-shear) excluded line 183 -- 185 controlled by Include_second_order_terms
@@ -58,5 +60,7 @@ SPECIFIC PARTS OF THE CODE
 
    this flag takes values 1 2 3 4 depending on how you want the output to be 
    see lines 130 to 137 of evolve.cpp
+
+
 
 

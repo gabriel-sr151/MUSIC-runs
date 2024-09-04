@@ -14,4 +14,5 @@ path="final_data_files/${project_folder}/${new_folder_name}"
 echo $path
 mkdir -p $path
 
-mv temp-output/* $path
+mv temp-output/evolution_* $path
+mv temp-output/input_* $path

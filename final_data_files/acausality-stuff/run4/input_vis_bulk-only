@@ -91,7 +91,8 @@ Shear_to_S_ratio 0.0              # value of \eta/s
 T_dependent_Shear_to_S_ratio  0    # flag to use temperature dep. \eta/s(T)
 Include_Bulk_Visc_Yes_1_No_0 1     # include bulk viscous effect
 T_dependent_Bulk_to_S_ratio 1      # include Temperature-dependent \zeta/s(T)
-bulk_relax_time_factor 19.34       #for bulk_relaxation_type == 0 \tau_PI = \zeta*factor/[(1/3-cs2)^2(e+P)]
+bulk_relax_time_factor 1.0/15.0     #default_value 1.0/14.55
+                                   #for bulk_relaxation_type == 0 \tau_PI = \zeta*factor/[(1/3-cs2)^2(e+P)]
                                    #for bulk_relaxation_type == 1 \tau_PI = \zeta/[factor*(1/3-cs2)(e+P)]
 Include_second_order_terms 0       # include second order non-linear coupling terms
 Include_Rhob_Yes_1_No_0 0

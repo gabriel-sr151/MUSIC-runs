@@ -217,6 +217,13 @@ double Diss::Make_uWSource(const double tau, const Cell_small *grid_pt,
             transport_coeffs_.get_lambda_pibulkPi_coeff()*tau_pi);
     double transport_coefficient2_b = 0.;
 
+    double excl_second_GSR_shear; // variable to exclude Bulk theta term GSR
+    if (DATA.include_second_order_terms == 1){
+        excl_second_GSR_shear = 1.0;
+    } else {
+        excl_second_GSR_shear = 0.0;
+    }
+
 
     /* This source has many terms */
     /* everything in the 1/(tau_pi) piece is here */
@@ -230,7 +237,7 @@ double Diss::Make_uWSource(const double tau, const Cell_small *grid_pt,
     ////////////////////////////////////////////////////////////////////////
 
     // full term is
-    tempf = (-(1.0 + transport_coefficient2*theta_local)*(Wmunu[mu][nu]));
+    tempf = (-(1.0 + excl_second_GSR_shear*transport_coefficient2*theta_local)*(Wmunu[mu][nu]));
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
@@ -619,11 +626,11 @@ double Diss::Make_uPiSource(const double tau, const Cell_small *grid_pt,
         rhob = grid_pt_prev->rhob;
     }
 
-    double excl_second_GSR; // variable to exclude Bulk theta term GSR
+    double excl_second_GSR_bulk; // variable to exclude Bulk theta term GSR
     if (DATA.include_second_order_terms == 1){
-        excl_second_GSR = 1.0;
+        excl_second_GSR_bulk = 1.0;
     } else {
-        excl_second_GSR = 0.0;
+        excl_second_GSR_bulk = 0.0;
     }
 
     // defining bulk viscosity coefficient
@@ -677,7 +684,7 @@ double Diss::Make_uPiSource(const double tau, const Cell_small *grid_pt,
     // Computing relaxation term and nonlinear term:
     // - Bulk - transport_coeff1*Bulk*theta
     tempf = (-(grid_pt->pi_b)
-             - excl_second_GSR*transport_coeff1*theta_local*(grid_pt->pi_b));
+             - excl_second_GSR_bulk*transport_coeff1*theta_local*(grid_pt->pi_b));
 
     // Computing nonlinear term: + transport_coeff2*Bulk*Bulk
     if (include_BBterm == 1) {

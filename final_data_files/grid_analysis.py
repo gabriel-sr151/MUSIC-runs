@@ -57,11 +57,13 @@ my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run5" #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55
+TestResultFolder = "acausality-stuff/run1-finer" #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55
                                            #run 2 -- pure bulk with bulk_relax_time_factor = 19.34     
                                            #run 3 -- pure bulk with bulk_relax_time_factor = 1/19.36
-                                           #run 4-- pure bulk with bulk_relax_time_factor = 1/15.0
-                                           #run 5-- pure bulk with bulk_relax_time_factor = 1/14.55 - more tau steps 
+                                           #run 4 -- pure bulk with bulk_relax_time_factor = 1/15.0
+                                           #run 5 -- same as run1 for double checking -- something changed when considering another 
+                                                     #tau_bulk factor
+                                           #run 1 finer -- run 1 input file with more tau  
 
 bulk_relax_time_factor = 1.0/14.55 #MUSIC_default 1/14.55
 
@@ -122,7 +124,9 @@ bulkPI = zeros([ntau, neta, nx, ny]) #GSR
 
 wchar2 = zeros([ntau, neta, nx, ny]) #GSR -- characteristic speed for pure bulk simulations
 v2 = zeros([ntau, neta, nx, ny]) #GSR -- VW criterion
-                               
+causality_status = zeros([ntau, neta, nx, ny]) #GSR
+V2w2_status = zeros([ntau, neta, nx, ny]) #GSR                            
+
 
 
 for itau in range(ntau):
@@ -154,10 +158,28 @@ for itau in range(ntau):
               + (1.0/bulk_relax_time_factor)*( (1.0/3.0 - cs2[itau, eta_idx, x_idx, y_idx])**(2.0) )\
                 /(1.0 + bulkPI[itau, eta_idx, x_idx, y_idx]/(ed[itau, eta_idx, x_idx, y_idx]+pr[itau, eta_idx, x_idx, y_idx]+0.0000001) )
                                                      # i put a regulator otherwise things diverge
-
+          
         v2[itau, eta_idx, x_idx, y_idx] = vx[itau, eta_idx, x_idx, y_idx]**2 + vy[itau, eta_idx, x_idx, y_idx]**2 \
                                        + vz[itau, eta_idx, x_idx, y_idx]**2
-                                          
+
+        if wchar2[itau, eta_idx, x_idx, y_idx] < 1.0:
+            
+            causality_status[itau, eta_idx, x_idx, y_idx] = 0.0
+
+        else:
+
+            causality_status[itau, eta_idx, x_idx, y_idx] = 1.0
+
+
+        if wchar2[itau, eta_idx, x_idx, y_idx]*v2[itau, eta_idx, x_idx, y_idx] < 1.0:
+            
+            V2w2_status[itau, eta_idx, x_idx, y_idx] = 0.0
+
+        else:
+
+            V2w2_status[itau, eta_idx, x_idx, y_idx] = 1.0
+
+
 
 #wchar2 = cs2 + 15.0*((1.0/3.0 - cs2)**(2.0))/(1 + bulkPI/(e+P))  
 
@@ -298,9 +320,9 @@ plt.tight_layout()
 # define animation function to update the contour at every time frame
 def animate(i): 
     global cont, time_text
-    for c in cont.collections:
+    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
         c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, wchar2[i, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
+    cont = plt.contourf(X, Y, causality_status[i, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
     time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
     return cont, time_text
 
@@ -308,5 +330,5 @@ def animate(i):
 anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
-writergif = animation.PillowWriter(fps=2)
-anim.save(f"{final_plots_folder}/animation_wchar2-2.gif", writer=writergif)
+writergif = animation.PillowWriter(fps=16)
+anim.save(f"{final_plots_folder}/animation_causality_status.gif", writer=writergif)

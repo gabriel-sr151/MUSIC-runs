@@ -57,15 +57,20 @@ my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run1-finer" #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55
-                                           #run 2 -- pure bulk with bulk_relax_time_factor = 19.34     
-                                           #run 3 -- pure bulk with bulk_relax_time_factor = 1/19.36
-                                           #run 4 -- pure bulk with bulk_relax_time_factor = 1/15.0
-                                           #run 5 -- same as run1 for double checking -- something changed when considering another 
+TestResultFolder = "acausality-stuff/run4-dcheck" 
+                                           #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
+                                           #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
+                                           #run 3 -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file ERR ---  never insert 1/14.55 in the input
+                                                    # file. put the numerical value instead (0.0687).
+                                           #run 4 -- pure bulk with bulk_relax_time_factor = 1/15.0 in input file ERR
+                                           #run 5 -- same as run1 for double checking -- something is weird when considering another 
                                                      #tau_bulk factor
-                                           #run 1 finer -- run 1 input file with more tau  
+                                           #run 1 finer -- run 1 input file with smaller delta_tau
+                                           #run 4 - hard -- pure bulk with bulk_relax_time_factor = 1/15.0 changed in code
+                                           #run 3 - hard -- pure bulk with bulk_relax_time_factor = 1/19.34 changed in code
+                                               #>> for this run there was a energy density factor warning
 
-bulk_relax_time_factor = 1.0/14.55 #MUSIC_default 1/14.55
+bulk_relax_time_factor = 1.0/15.0 #MUSIC_default 1/14.55
 
 
 
@@ -270,9 +275,8 @@ plt.ylabel(r"$y$ (fm)")
 plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
 plt.tight_layout()
 plt.savefig(f"{final_plots_folder}/TestRun_caus_Contour_XY-tau_{tau_idx}-of-{ntau}")
-
-print("CAREFUL!!!!!: THE VALUE OF 'bulk_relax_time_factor' HAS TO BE CONSISTENT WITH THE CODE RAN. Default MUSIC: 14.55")
 '''
+
 '''Tau, X = meshgrid(tau_list, x)
 
 y_idx = int(ny/2)  # pick the central point in the y direction
@@ -300,6 +304,20 @@ plt.tight_layout()
 plt.savefig(f"{final_plots_folder}/TestRun_V2W2_Contour_XY-tau_{tau_idx}-of-{ntau}")
 '''
 
+
+'''tau_idx = -1 #int(ntau*(2/3)) # 0 for the initial condition
+
+# make the contour plot
+fig = plt.figure()
+cont = plt.contourf(X, Y, causality_status[tau_idx, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
+cbar = fig.colorbar(cont)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
+plt.tight_layout()
+plt.savefig(f"{final_plots_folder}/TestRun_causality_status_Contour_XY-tau_{tau_idx}-of-{ntau}")
+'''
+
 ######################################
 
 X, Y = meshgrid(x, y)
@@ -322,7 +340,7 @@ def animate(i):
     global cont, time_text
     for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
         c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, causality_status[i, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
+    cont = plt.contourf(X, Y, wchar2[i, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
     time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
     return cont, time_text
 

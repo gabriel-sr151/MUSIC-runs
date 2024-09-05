@@ -37,7 +37,7 @@ SPECIFIC PARTS OF THE CODE
 
 > src/read_in_parameters.cpp contem a informação sobre o valores padrão das entradas (para o fator do tau_BULK por exemplo)
 
-> 'include_second_order_terms' flag
+> 'include_second_order_terms' flag and dissipative.cpp
 
    terms tau_pipi (shear-sigma), phi7 (shear-shear) excluded line 183 -- 185 controlled by Include_second_order_terms
 

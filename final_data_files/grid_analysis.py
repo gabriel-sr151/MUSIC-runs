@@ -57,12 +57,13 @@ my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run4-dcheck" 
+TestResultFolder = "acausality-stuff/run4-hard" 
                                            #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
                                            #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
-                                           #run 3 -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file ERR ---  never insert 1/14.55 in the input
+                                           #run 3 (ERR) -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file 
+                                                    # ERR ---  never insert 1/14.55 in the input
                                                     # file. put the numerical value instead (0.0687).
-                                           #run 4 -- pure bulk with bulk_relax_time_factor = 1/15.0 in input file ERR
+                                           #run 4 (ERR) -- pure bulk with bulk_relax_time_factor = 1/15.0 in input file ERR
                                            #run 5 -- same as run1 for double checking -- something is weird when considering another 
                                                      #tau_bulk factor
                                            #run 1 finer -- run 1 input file with smaller delta_tau
@@ -70,7 +71,7 @@ TestResultFolder = "acausality-stuff/run4-dcheck"
                                            #run 3 - hard -- pure bulk with bulk_relax_time_factor = 1/19.34 changed in code
                                                #>> for this run there was a energy density factor warning
 
-bulk_relax_time_factor = 1.0/15.0 #MUSIC_default 1/14.55
+bulk_relax_time_factor = 1./15. #MUSIC_default 1/14.55
 
 
 
@@ -167,7 +168,7 @@ for itau in range(ntau):
         v2[itau, eta_idx, x_idx, y_idx] = vx[itau, eta_idx, x_idx, y_idx]**2 + vy[itau, eta_idx, x_idx, y_idx]**2 \
                                        + vz[itau, eta_idx, x_idx, y_idx]**2
 
-        if wchar2[itau, eta_idx, x_idx, y_idx] < 1.0:
+        if (wchar2[itau, eta_idx, x_idx, y_idx] < 1.0) or (T[itau, eta_idx, x_idx, y_idx] < 0.150):
             
             causality_status[itau, eta_idx, x_idx, y_idx] = 0.0
 
@@ -324,7 +325,7 @@ X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
 fig = plt.figure()
-cont = plt.contourf(X, Y, wchar2[0, 0, :, :].transpose(), levelscaus,
+cont = plt.contourf(X, Y, causality_status[0, 0, :, :].transpose(), levelscaus,
                     cmap=my_cmap, extend='both')
 time_text = plt.text(-6, 6, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
 cbar = fig.colorbar(cont)
@@ -340,7 +341,7 @@ def animate(i):
     global cont, time_text
     for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
         c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, wchar2[i, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
+    cont = plt.contourf(X, Y, causality_status[i, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
     time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
     return cont, time_text
 
@@ -349,4 +350,4 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
 writergif = animation.PillowWriter(fps=16)
-anim.save(f"{final_plots_folder}/animation_causality_status.gif", writer=writergif)
+anim.save(f"{final_plots_folder}/animation_causality_status-T_cut.gif", writer=writergif)

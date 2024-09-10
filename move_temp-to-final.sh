@@ -16,3 +16,7 @@ mkdir -p $path
 
 mv temp-output/evolution_* $path
 mv temp-output/input_* $path
+mv temp-output/log_* $path
+
+echo "removing stuff from temp-output folder..."
+rm temp-output/*

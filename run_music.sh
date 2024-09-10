@@ -7,6 +7,10 @@ read path
 echo "Copying input file to temporary output folder..."
 cp $path ./temp-output/
 
-./MUSIChydro $path
+echo "MUSIC is running ..."
 
+logfile='temp-output/log_music.txt' 
+./MUSIChydro $path > $logfile
+
+echo "MUSIC ended."
 

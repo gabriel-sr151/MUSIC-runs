@@ -57,7 +57,7 @@ my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run4-hard" 
+TestResultFolder = "acausality-stuff/run8-global-boost-2" 
                                            #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
                                            #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
                                            #run 3 (ERR) -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file 
@@ -70,6 +70,15 @@ TestResultFolder = "acausality-stuff/run4-hard"
                                            #run 4 - hard -- pure bulk with bulk_relax_time_factor = 1/15.0 changed in code
                                            #run 3 - hard -- pure bulk with bulk_relax_time_factor = 1/19.34 changed in code
                                                #>> for this run there was a energy density factor warning
+                                           #run 4 - dcheck -- double check run -- input file implementation error found
+                                           # pure bulk with bulk_relax_time_factor = 1/15.0 changed in code                                               
+                                           #run 6 (ERR) - locally boosted IC vx -> relat_sum(vx,0.2vx) bulk_relax_time_factor = 1/15.0   
+                                           # ERR implementation error: boost with wrong sign 
+                                           #run 7 -- locally boosted IC vx -> relat_sum(vx,0.5vx) bulk_relax_time_factor = 1/15.0 
+                                           #run7-vx+2vx -- locally boosted IC vx -> relat_sum(vx,2vx) bulk_relax_time_factor = 1/15.0 
+                                           #run7-vx+1vx -- locally boosted IC vx -> relat_sum(vx,vx) bulk_relax_time_factor = 1/15.0
+                                           #run8-global -- global boost with vx -> relat_sum(vx,-0.8) bulk_relax_time_factor = 1/15.0 
+                                           #run8-global -- global boost with vx -> relat_sum(vx,-0.99) bulk_relax_time_factor = 1/15.0    
 
 bulk_relax_time_factor = 1./15. #MUSIC_default 1/14.55
 
@@ -325,7 +334,7 @@ X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
 fig = plt.figure()
-cont = plt.contourf(X, Y, causality_status[0, 0, :, :].transpose(), levelscaus,
+cont = plt.contourf(X, Y, v2[0, 0, :, :].transpose(), levelscaus,
                     cmap=my_cmap, extend='both')
 time_text = plt.text(-6, 6, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
 cbar = fig.colorbar(cont)
@@ -349,5 +358,5 @@ def animate(i):
 anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
-writergif = animation.PillowWriter(fps=16)
-anim.save(f"{final_plots_folder}/animation_causality_status-T_cut.gif", writer=writergif)
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation_causality-status.gif", writer=writergif)

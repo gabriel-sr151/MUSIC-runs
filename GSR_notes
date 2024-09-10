@@ -41,7 +41,7 @@ SPECIFIC PARTS OF THE CODE
 
    terms tau_pipi (shear-sigma), phi7 (shear-shear) excluded line 183 -- 185 controlled by Include_second_order_terms
 
-   term phi6 (bulk-sigma)  line 348 -- 359 controlled by Include_second_order_terms
+   term phi6 (bulk-sigma) line 348 -- 359 controlled by Include_second_order_terms
    
    term delta_pipi (shear-theta) is NOT controlled by Include_second_order_terms  see variable tempf line 
 

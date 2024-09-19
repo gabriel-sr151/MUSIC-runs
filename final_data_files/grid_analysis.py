@@ -57,7 +57,7 @@ my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run8-global-boost-2" 
+TestResultFolder = "acausality-stuff/run4-hard" 
                                            #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
                                            #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
                                            #run 3 (ERR) -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file 
@@ -79,6 +79,9 @@ TestResultFolder = "acausality-stuff/run8-global-boost-2"
                                            #run7-vx+1vx -- locally boosted IC vx -> relat_sum(vx,vx) bulk_relax_time_factor = 1/15.0
                                            #run8-global -- global boost with vx -> relat_sum(vx,-0.8) bulk_relax_time_factor = 1/15.0 
                                            #run8-global -- global boost with vx -> relat_sum(vx,-0.99) bulk_relax_time_factor = 1/15.0    
+                                           # ------------------ all runs above this line contained an error postprocessing regarding Pi/(e+P)
+                                           #                    because the bulk printed in Pi/(e+p) and not Pi             
+
 
 bulk_relax_time_factor = 1./15. #MUSIC_default 1/14.55
 
@@ -136,6 +139,8 @@ vx = zeros([ntau, neta, nx, ny])
 vy = zeros([ntau, neta, nx, ny])
 vz = zeros([ntau, neta, nx, ny]) #GSR
 bulkPI = zeros([ntau, neta, nx, ny]) #GSR
+bulkPI_norm = zeros([ntau, neta, nx, ny]) #GSR  -- Pi/(e+p)
+
 
 wchar2 = zeros([ntau, neta, nx, ny]) #GSR -- characteristic speed for pure bulk simulations
 v2 = zeros([ntau, neta, nx, ny]) #GSR -- VW criterion
@@ -167,11 +172,19 @@ for itau in range(ntau):
         #pixz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
         #piyy[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
         #piyz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        bulkPI[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 11]
+        bulkPI_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 11] # Pi/(e+p)
+
+        bulkPI[itau, eta_idx, x_idx, y_idx] = bulkPI_norm[itau, eta_idx, x_idx, y_idx]\
+             *(ed[itau, eta_idx, x_idx, y_idx] + pr[itau, eta_idx, x_idx, y_idx])
+        
+        ##################
+        #   wchar2 = cs2 + (zeta/tau_BULK)*(1/(e+p+PI))
+        #   below we consider tau_BULK = (zeta/(e+p))*(factor)*(1/(1/3-cs2)) change accordingly 
+        ###################
 
         wchar2[itau, eta_idx, x_idx, y_idx] = cs2[itau, eta_idx, x_idx, y_idx] \
               + (1.0/bulk_relax_time_factor)*( (1.0/3.0 - cs2[itau, eta_idx, x_idx, y_idx])**(2.0) )\
-                /(1.0 + bulkPI[itau, eta_idx, x_idx, y_idx]/(ed[itau, eta_idx, x_idx, y_idx]+pr[itau, eta_idx, x_idx, y_idx]+0.0000001) )
+                /(1.0 + bulkPI_norm[itau, eta_idx, x_idx, y_idx] )
                                                      # i put a regulator otherwise things diverge
           
         v2[itau, eta_idx, x_idx, y_idx] = vx[itau, eta_idx, x_idx, y_idx]**2 + vy[itau, eta_idx, x_idx, y_idx]**2 \
@@ -350,7 +363,7 @@ def animate(i):
     global cont, time_text
     for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
         c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, causality_status[i, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
+    cont = plt.contourf(X, Y, wchar2[i, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
     time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
     return cont, time_text
 
@@ -359,4 +372,54 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_causality-status.gif", writer=writergif)
+anim.save(f"{final_plots_folder}/animation_wchar2-status.gif", writer=writergif)
+
+
+
+'''nskip = 2  # only plot every other point to speed up the live animation
+
+X, Y = meshgrid(x, y)
+
+v_mag = sqrt(vx[-1, 0, :, :]**2 + vy[-1, 0, :, :]**2.)
+
+# first plot the first frame as the contour plot
+levels2 = (linspace(0.10**0.25, 0.3**0.25, 30))**(4.)
+fig = plt.figure()
+cont = plt.contourf(X[::nskip, ::nskip], Y[::nskip, ::nskip],
+                    T[0, 0, ::nskip, ::nskip],
+                    levels2, cmap='Reds', extend='both')
+Q = plt.quiver(X[::nskip, ::nskip], Y[::nskip, ::nskip],
+              vy[0, 0, ::nskip, ::nskip],
+              vx[0, 0, ::nskip, ::nskip],
+              units='xy', scale_units='xy', scale=0.5, color='b')
+time_text = plt.text(-7.5, 6.5, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
+cbar = fig.colorbar(cont)
+plt.tight_layout()
+plt.xlim(-8, 8)
+plt.ylim(-8, 8)
+
+# update the temperature contour and velocity vector field 
+def update_quiver(num, Q, X, Y):
+    global cont, time_text
+    for c in cont.collections:
+        c.remove()  # removes only the contours, leaves the rest intact
+    cont = plt.contourf(X[::nskip, ::nskip], Y[::nskip, ::nskip],
+                        T[num, 0, ::nskip, ::nskip],
+                        levels2, cmap='Reds', extend='both')
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[num])) 
+    
+    U = vy[num, 0, ::nskip, ::nskip]
+    V = vx[num, 0, ::nskip, ::nskip]
+    
+    Q = plt.quiver(X[::nskip, ::nskip], Y[::nskip, ::nskip],
+                   U, V, units='xy', scale_units='xy', scale=0.5, color='b')
+    return Q, cont, time_text  
+
+# create the animation
+anim = animation.FuncAnimation(fig, update_quiver, fargs=(Q, X, Y),
+                               frames=ntau, blit=False, repeat=False)
+
+# save the animation
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation_Tandflow.gif", writer=writergif)
+'''

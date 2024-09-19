@@ -1,5 +1,7 @@
 DICAS GERAIS
 
+> [!!!!] todos os plots feitos envolvendo o bulk antes de 16/09/24 estaop incorretos pois as quantidades dissipativas sao printadas normalizadas p. ex. o que sai do codigo eh Pi/(e+p) e nap Pi em si
+
 > Ao longo do codigo Wmunu is the shear-stress tensor
 
 > pra mudar a pasta na qual os arquivos de output serao adicionados, basta trocar a localizacao do codigo compilado

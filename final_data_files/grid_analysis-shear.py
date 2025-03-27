@@ -152,6 +152,11 @@ vy = zeros([ntau, neta, nx, ny])
 vz = zeros([ntau, neta, nx, ny]) #GSR
 bulkPI = zeros([ntau, neta, nx, ny]) #GSR
 bulkPI_norm = zeros([ntau, neta, nx, ny]) #GSR  -- Pi/(e+p)
+pixx = zeros([ntau, neta, nx, ny])  #GSR  -- SHEAR_TENSOR/(e+p)
+pixy = zeros([ntau, neta, nx, ny])
+pixz = zeros([ntau, neta, nx, ny])
+piyy = zeros([ntau, neta, nx, ny])
+piyz = zeros([ntau, neta, nx, ny]) 
 
 
 wchar2 = zeros([ntau, neta, nx, ny]) #GSR -- characteristic speed for pure bulk simulations
@@ -179,11 +184,11 @@ for itau in range(ntau):
         vz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 10]/u0
         #rhob[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
         #muB[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        #pixx[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ] #when shear is activated
-        #pixy[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        #pixz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        #piyy[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        #piyz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
+        pixx[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ] #when shear is activated
+        pixy[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
+        pixz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
+        piyy[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
+        piyz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
         bulkPI_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 11] # Pi/(e+p)
 
         bulkPI[itau, eta_idx, x_idx, y_idx] = bulkPI_norm[itau, eta_idx, x_idx, y_idx]\
@@ -259,281 +264,11 @@ print("ny = {0}, y_min = {1:.2f} fm, y_max = {2:.2f} fm, dy = {3:.2f} fm".format
 print("neta = {0}, eta_min = {1:.2f} fm, eta_max = {2:.2f} fm, deta = {3:.2f}".format(neta, eta[0], eta[-1], deta))
 
 
-'''def zeta_ov_s(T_in_fm):
-
-    #the simulation was ran with 'T_dependent_Bulk_to_S_ratio 1'
-
-'''
-    #zeta/s parametrization from src/transport_coeffs.cpp L194
-    #T input in fm  
-'''
-    hbarc = 1### 
-    T_in_GeV = hbarc*T_in_fm   
-    Ttr = 0.18
-    T_ov_Ttr = T_in_GeV/Ttr
-    A1=-13.77, A2=27.55, A3=13.45
-    lambda1=0.9, lambda2=0.25, lambda3=0.9, lambda4=0.22;
-    sigma1=0.025, sigma2=0.13, sigma3=0.0025, sigma4=0.022;
-
-    bulk = A1*T_ov_Ttr*T_ov_Ttr + A2*T_ov_Ttr - A3;
-
-    if T_in_GeV < 0.995*Ttr:
-
-        bulk = (lambda3*np.exp((T_ov_Ttr-1)/sigma3) + lambda4*np.exp((T_ov_Ttr-1)/sigma4) + 0.03)
-
-    if T_in_GeV > 1.05*Ttr:
-
-        bulk = (lambda1*exp(-(dummy-1)/sigma1) + lambda2*exp(-(dummy-1)/sigma2) + 0.001)
-
-    return bulk    
-'''
-
-
 final_plots_folder = path.join(working_path, TestResultFolder)
 
 
-
-# make a 2D meshgrid in the transverse plane
-X, Y = meshgrid(x, y)
+######################################---PLOTS----########################################################
 
 
 
-# make the contour plot
-'''tau_idx = -1 #int(ntau*(2/3)) # 0 for the initial condition
 
-fig = plt.figure()
-cont = plt.contourf(X, Y, bulkPI[tau_idx, 0, :, :]/(ed[tau_idx, 0, :, :]+pr[tau_idx, 0, :, :]), levelsbulk, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/Bulk_ov_e_p_Contour_XY-initial-tau_{tau_idx}-of-{ntau}")
-'''
-# make the contour plot
-'''fig = plt.figure()
-cont = plt.contourf(X, Y, cs2[0, 0, :, :], levelsbulk, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_cs2_Contour_XY")
-'''
-
-
-
-#tau_idx = 0*int(ntau*(2/3)) # 0 for the initial condition
-
-# make the contour plot
-'''fig = plt.figure()
-cont = plt.contourf(X, Y, wchar2[tau_idx, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_caus_Contour_XY-tau_{tau_idx}-of-{ntau}")
-'''
-
-'''Tau, X = meshgrid(tau_list, x)
-
-y_idx = int(ny/2)  # pick the central point in the y direction
-
-fig = plt.figure()
-cont = plt.contourf(X, Tau, wchar2[:, 0, :, y_idx].transpose(), levelscaus,
-                    cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$\tau$ (fm/c)")
-plt.text(1.0, 10.0, r'$y = {0:3.1f}$ fm'.format(y[y_idx]))
-#plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_wchar2_Contour_TauX")
-'''
-
-'''tau_idx = int(ntau*(1/3)) # 0 for the initial condition
-
-fig = plt.figure()
-cont = plt.contourf(X, Y, v2[tau_idx, 0, :, :]*wchar2[tau_idx, 0, :, :], levelsVW, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/V2W2_Contour_XY-tau_{tau_idx}-of-{ntau}")
-
-'''
-'''tau_idx = int(ntau*(18/51)) # 0 for the initial condition
-
-fig = plt.figure()
-cont = plt.contourf(X, Y, V2w2_status[tau_idx, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/V2W2_status-countour-tau_{tau_idx}-of-{ntau}")
-'''
-
-
-
-'''tau_idx = -1 #int(ntau*(2/3)) # 0 for the initial condition
-
-# make the contour plot
-fig = plt.figure()
-cont = plt.contourf(X, Y, causality_status[tau_idx, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_causality_status_Contour_XY-tau_{tau_idx}-of-{ntau}")
-'''
-
-######################################
-
-X, Y = meshgrid(x, y)
-
-# first plot the first frame as a contour plot
-fig = plt.figure()
-cont = plt.contourf(X, Y, V2w2_status[0, 0, :, :].transpose(), levels2status,
-                    cmap=my_cmap_2stat, extend='both')
-time_text = plt.text(-6, 6, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout()   
-
-# define animation function to update the contour at every time frame
-def animate(i): 
-    global cont, time_text
-    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
-        c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, T[i, 0, :, :], levelsT, cmap=my_cmap, extend='both')
-    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
-    return cont, time_text
-
-# create the animation
-anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
-
-# save the animation to a file
-writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_v2w2-status-new-.gif", writer=writergif)
-
-
-
-'''tau_idx = int(ntau*(40/51)) # 0 for the initial condition
-
-fig = plt.figure(figsize=(10,6))
-cont = plt.contourf(X, Y, causal_AND_v2w2_status[tau_idx, 0, :, :], 
-                    levels = levels3status, 
-                    cmap=my_cmap_3stat,
-                    extend='both')
-#cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(-7.4, -7, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]), color ='white')
-legend_patches = [mpatches.Patch(color=colors3stat[i], label = total_status_labels[i])
-                  for i in range(len(colors3stat))]
-plt.legend(handles = legend_patches,
-            loc='center left', 
-            bbox_to_anchor=(1.05,0.5), 
-            frameon=False)
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/full_status-countour-tau_{tau_idx}-of-{ntau}-GYR")
-'''
-
-###################################### -- animation for QM talk
-
-'''X, Y = meshgrid(x, y)
-
-# first plot the first frame as a contour plot
-fig = plt.figure(figsize=(10,6))
-cont = plt.contourf(X, Y, causal_AND_v2w2_status[0, 0, :, :].transpose(), 
-                    levels = levels3status, 
-                    cmap=my_cmap_3stat, 
-                    extend='both')
-time_text = plt.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]), color ='white')
-#cbar = fig.colorbar(cont, ticks = [0,1,2,3])
-#cbar.ax.set_yticklabels(total_status_labels)
-legend_patches = [mpatches.Patch(color=colors3stat[i], label = total_status_labels[i])
-                  for i in range(len(colors3stat))]
-plt.legend(handles = legend_patches,
-            loc='center left', 
-            bbox_to_anchor=(1.05,0.5), 
-            frameon=False)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout(rect=[0, 0, 1, 1])   
-
-# define animation function to update the contour at every time frame
-def animate(i): 
-    global cont, time_text
-    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
-        c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, T[i, 0, :, :], levels = levels3status, cmap=my_cmap_3stat, extend='both')
-    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
-    return cont, time_text
-
-# create the animation
-anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
-
-# save the animation to a file
-writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_full-status.gif", writer=writergif)
-'''
-
-'''nskip = 2  # only plot every other point to speed up the live animation
-
-X, Y = meshgrid(x, y)
-
-v_mag = sqrt(vx[-1, 0, :, :]**2 + vy[-1, 0, :, :]**2.)
-
-# first plot the first frame as the contour plot
-levels2 = (linspace(0.10**0.25, 0.3**0.25, 30))**(4.)
-fig = plt.figure()
-cont = plt.contourf(X[::nskip, ::nskip], Y[::nskip, ::nskip],
-                    T[0, 0, ::nskip, ::nskip],
-                    levels2, cmap='Reds', extend='both')
-Q = plt.quiver(X[::nskip, ::nskip], Y[::nskip, ::nskip],
-              vy[0, 0, ::nskip, ::nskip],
-              vx[0, 0, ::nskip, ::nskip],
-              units='xy', scale_units='xy', scale=0.5, color='b')
-time_text = plt.text(-7.5, 6.5, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
-cbar = fig.colorbar(cont)
-plt.tight_layout()
-plt.xlim(-8, 8)
-plt.ylim(-8, 8)
-
-# update the temperature contour and velocity vector field 
-def update_quiver(num, Q, X, Y):
-    global cont, time_text
-    for c in cont.collections:
-        c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X[::nskip, ::nskip], Y[::nskip, ::nskip],
-                        T[num, 0, ::nskip, ::nskip],
-                        levels2, cmap='Reds', extend='both')
-    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[num])) 
-    
-    U = vy[num, 0, ::nskip, ::nskip]
-    V = vx[num, 0, ::nskip, ::nskip]
-    
-    Q = plt.quiver(X[::nskip, ::nskip], Y[::nskip, ::nskip],
-                   U, V, units='xy', scale_units='xy', scale=0.5, color='b')
-    return Q, cont, time_text  
-
-# create the animation
-anim = animation.FuncAnimation(fig, update_quiver, fargs=(Q, X, Y),
-                               frames=ntau, blit=False, repeat=False)
-
-# save the animation
-writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_Tandflow.gif", writer=writergif)
-'''

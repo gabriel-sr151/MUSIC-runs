@@ -1,6 +1,6 @@
 DICAS GERAIS
 
-> [!!!!] todos os plots feitos envolvendo o bulk antes de 16/09/24 estaop incorretos pois as quantidades dissipativas sao printadas normalizadas p. ex. o que sai do codigo eh Pi/(e+p) e nap Pi em si
+> [!!!!] todos os plots feitos envolvendo o bulk antes de 16/09/24 estaop incorretos pois as quantidades dissipativas sao printadas normalizadas p. ex. o que sai do codigo eh Pi/(e+p) e nao Pi em si o mesmo vale pro shear
 
 > Ao longo do codigo Wmunu is the shear-stress tensor
 
@@ -30,6 +30,8 @@ SPECIFIC PARTS OF THE CODE
 
   fprintf(out_file_xyeta, "%e %e %e %e %e\n",
                             T_local*hbarc, muB_local*hbarc, vx, vy, vz);  
+
+  to know the order of printing for e.g. OutputEvolutionDataXYEta_chun see lines 546 until 584                         
 
   >> movie output
   

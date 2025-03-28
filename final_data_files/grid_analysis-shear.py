@@ -150,13 +150,18 @@ cs2 = zeros([ntau, neta, nx, ny]) #GSR
 vx = zeros([ntau, neta, nx, ny])
 vy = zeros([ntau, neta, nx, ny])
 vz = zeros([ntau, neta, nx, ny]) #GSR
-bulkPI = zeros([ntau, neta, nx, ny]) #GSR
 bulkPI_norm = zeros([ntau, neta, nx, ny]) #GSR  -- Pi/(e+p)
-pixx = zeros([ntau, neta, nx, ny])  #GSR  -- SHEAR_TENSOR/(e+p)
+pixx_norm = zeros([ntau, neta, nx, ny])  #GSR  -- SHEAR_TENSOR/(e+p)
+pixy_norm = zeros([ntau, neta, nx, ny])
+pixz_norm = zeros([ntau, neta, nx, ny])
+piyy_norm = zeros([ntau, neta, nx, ny])
+piyz_norm = zeros([ntau, neta, nx, ny]) 
+pixx = zeros([ntau, neta, nx, ny])  #GSR  -- SHEAR_TENSOR
 pixy = zeros([ntau, neta, nx, ny])
 pixz = zeros([ntau, neta, nx, ny])
 piyy = zeros([ntau, neta, nx, ny])
 piyz = zeros([ntau, neta, nx, ny]) 
+
 
 
 wchar2 = zeros([ntau, neta, nx, ny]) #GSR -- characteristic speed for pure bulk simulations
@@ -184,27 +189,35 @@ for itau in range(ntau):
         vz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 10]/u0
         #rhob[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
         #muB[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        pixx[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ] #when shear is activated
-        pixy[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        pixz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        piyy[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        piyz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        bulkPI_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 11] # Pi/(e+p)
+        pixx_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 11]# shear/(e+p)
+        pixy_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 12]
+        pixz_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 13]
+        piyy_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 14]
+        piyz_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 15]
 
-        bulkPI[itau, eta_idx, x_idx, y_idx] = bulkPI_norm[itau, eta_idx, x_idx, y_idx]\
-             *(ed[itau, eta_idx, x_idx, y_idx] + pr[itau, eta_idx, x_idx, y_idx])
+
+        bulkPI_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 16] # Pi/(e+p)
+
+        v2[itau, eta_idx, x_idx, y_idx] = vx[itau, eta_idx, x_idx, y_idx]**2 + vy[itau, eta_idx, x_idx, y_idx]**2 \
+                                       + vz[itau, eta_idx, x_idx, y_idx]**2
         
         ##################
-        #   wchar2 = cs2 + (zeta/tau_BULK)*(1/(e+p+PI))
-        #   below we consider tau_BULK = (zeta/(e+p))*(factor)*(1/(1/3-cs2)) change accordingly 
+        #   CHARACTERISTIC SPEEDS COMPUTATION BEGINS HERE ----------------------------------------
+        #   below we consider tau_BULK = (zeta/(e+p))*(factor)*(1/(1/3-cs2)) change accordingly
+        #   SOURCE -- 
+        #   BRASIL!  
         ###################
 
         wchar2[itau, eta_idx, x_idx, y_idx] = cs2[itau, eta_idx, x_idx, y_idx] \
               + (1.0/bulk_relax_time_factor)*( (1.0/3.0 - cs2[itau, eta_idx, x_idx, y_idx])**(2.0) )\
                 /(1.0 + bulkPI_norm[itau, eta_idx, x_idx, y_idx] )
                                                     
-        v2[itau, eta_idx, x_idx, y_idx] = vx[itau, eta_idx, x_idx, y_idx]**2 + vy[itau, eta_idx, x_idx, y_idx]**2 \
-                                       + vz[itau, eta_idx, x_idx, y_idx]**2
+        
+        ##################
+        #   NECESSARY CAUSALITY CONDITIONS AND VW CRITERION BEGINS HERE ----------------------------------------
+        #   below we consider tau_BULK = (zeta/(e+p))*(factor)*(1/(1/3-cs2)) change accordingly 
+        ###################
+
 
         if (wchar2[itau, eta_idx, x_idx, y_idx] < 1.0):
             

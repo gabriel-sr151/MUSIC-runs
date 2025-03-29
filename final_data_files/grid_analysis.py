@@ -393,7 +393,7 @@ plt.savefig(f"{final_plots_folder}/TestRun_causality_status_Contour_XY-tau_{tau_
 
 ######################################
 
-X, Y = meshgrid(x, y)
+'''X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
 fig = plt.figure()
@@ -421,7 +421,7 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_v2w2-status-new-.gif", writer=writergif)
+anim.save(f"{final_plots_folder}/animation_v2w2-status-new-.gif", writer=writergif)'''
 
 
 
@@ -450,7 +450,7 @@ plt.savefig(f"{final_plots_folder}/full_status-countour-tau_{tau_idx}-of-{ntau}-
 
 ###################################### -- animation for QM talk
 
-'''X, Y = meshgrid(x, y)
+X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
 fig = plt.figure(figsize=(10,6))
@@ -478,7 +478,7 @@ def animate(i):
     global cont, time_text
     for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
         c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, T[i, 0, :, :], levels = levels3status, cmap=my_cmap_3stat, extend='both')
+    cont = plt.contourf(X, Y, causal_AND_v2w2_status[i, 0, :, :], levels = levels3status, cmap=my_cmap_3stat, extend='both')
     time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
     return cont, time_text
 
@@ -488,7 +488,7 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation_full-status.gif", writer=writergif)
-'''
+
 
 '''nskip = 2  # only plot every other point to speed up the live animation
 

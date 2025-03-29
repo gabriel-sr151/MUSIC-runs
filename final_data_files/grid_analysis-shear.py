@@ -1,4 +1,5 @@
 #based on https://github.com/JETSCAPE/SummerSchool2020/blob/master/hydro_session/hydro_movie-TestRun.ipynb
+import numpy as np
 from numpy import *
 from os import path
 home = path.expanduser("~")
@@ -42,7 +43,7 @@ levelsVW = linspace(-0.2, 0.2, 50)
 levelscaus = linspace(-0.1, 1.20, 50)
 levelsVW = linspace(-0.2, 0.2, 50)
 levels2status = [-2, 0, 2]
-levels3status = [-0.5, 0.5, 1.5, 2.5,3.5]
+levels3status = [-15,-5, 5, 15, 25, 35]
 
 
 # define a custmized color map
@@ -60,42 +61,20 @@ colors1 = array([[1, 1, 1, 1]])
 colors2 = plt.cm.jet(linspace(0., 1, 10))
 colors = vstack((colors1, colors2))
 colors2stat = ['black','green','red']
-colors3stat = ['green','yellow','red']
-total_status_labels = ['causal & stable','acausal & stable', 'acausal & unstable']
+colors3stat = ['pink','green','yellow','red']
+total_status_labels = ['elliptical','causal & stable','acausal & stable', 'acausal & unstable']
 my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
 my_cmap_2stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors2stat)
-my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', ['black'] + colors3stat)
+my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', 
+                                                             colors3stat[:1] + ['black'] + colors3stat[1:])
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run4-hard" 
-                                           #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
-                                           #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
-                                           #run 3 (ERR) -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file 
-                                                    # ERR ---  never insert 1/14.55 in the input
-                                                    # file. put the numerical value instead (0.0687).
-                                           #run 4 (ERR) -- pure bulk with bulk_relax_time_factor = 1/15.0 in input file ERR
-                                           #run 5 -- same as run1 for double checking -- something is weird when considering another 
-                                                     #tau_bulk factor
-                                           #run 1 finer -- run 1 input file with smaller delta_tau
-                                           #run 4 - hard -- pure bulk with bulk_relax_time_factor = 1/15.0 changed in code
-                                           #run 3 - hard -- pure bulk with bulk_relax_time_factor = 1/19.34 changed in code
-                                               #>> for this run there was a energy density factor warning
-                                           #run 4 - dcheck -- double check run -- input file implementation error found
-                                           # pure bulk with bulk_relax_time_factor = 1/15.0 changed in code                                               
-                                           #run 6 (ERR) - locally boosted IC vx -> relat_sum(vx,0.2vx) bulk_relax_time_factor = 1/15.0   
-                                           # ERR implementation error: boost with wrong sign 
-                                           #run 7 -- locally boosted IC vx -> relat_sum(vx,0.5vx) bulk_relax_time_factor = 1/15.0 
-                                           #run7-vx+2vx -- locally boosted IC vx -> relat_sum(vx,2vx) bulk_relax_time_factor = 1/15.0 
-                                           #run7-vx+1vx -- locally boosted IC vx -> relat_sum(vx,vx) bulk_relax_time_factor = 1/15.0
-                                           #run8-global -- global boost with vx -> relat_sum(vx,-0.8) bulk_relax_time_factor = 1/15.0 
-                                           #run8-global -- global boost with vx -> relat_sum(vx,-0.99) bulk_relax_time_factor = 1/15.0    
-                                           # ------------------ all runs above this line contained an error postprocessing regarding Pi/(e+P)
-                                           #                    because the bulk printed in Pi/(e+p) and not Pi  
-                                           # run4XL -- pure bulk with bulk_relax_time_factor = 1/15.0 but with larger tau window  run 4 - hard is the reference          
+TestResultFolder = "acausality-w-shear/run1" 
+                                           #run 1 -- no second order terms, i excluded even the ones that music
+                                           # doesn't by default -- energy 2x error
 
 
-bulk_relax_time_factor = 1./15. #MUSIC_default 1/14.55
 
 
 
@@ -164,12 +143,25 @@ piyz = zeros([ntau, neta, nx, ny])
 
 
 
-wchar2 = zeros([ntau, neta, nx, ny]) #GSR -- characteristic speed for pure bulk simulations
 v2 = zeros([ntau, neta, nx, ny]) #GSR -- VW criterion
 causality_status = zeros([ntau, neta, nx, ny]) #GSR
 V2w2_status = zeros([ntau, neta, nx, ny]) #GSR                            
 causal_AND_v2w2_status = zeros([ntau, neta, nx, ny]) #GSR
+wchar2_min = zeros([ntau, neta, nx, ny]) #GSR
+wchar2_max = zeros([ntau, neta, nx, ny]) #GSR
+wchar2_min_which = zeros([ntau, neta, nx, ny]) #GSR
+wchar2_max_which = zeros([ntau, neta, nx, ny]) #GSR
 
+
+#test_matrix = np.array([[1, 2, 3],
+#                        [2, 6, 4],
+#                        [3, 4, -7]])
+
+#eigv_pi_norm = np.linalg.eigh(test_matrix)[0]
+
+#print(eigv_pi_norm)
+
+#sys.exit()
 
 for itau in range(ntau):
     idx = (abs(data[:, 0] - itau) < 0.1)
@@ -189,7 +181,7 @@ for itau in range(ntau):
         vz[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 10]/u0
         #rhob[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
         #muB[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, ]
-        pixx_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 11]# shear/(e+p)
+        pixx_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 11]# shear/(e+p) in the LRF
         pixy_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 12]
         pixz_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 13]
         piyy_norm[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 14]
@@ -202,75 +194,130 @@ for itau in range(ntau):
                                        + vz[itau, eta_idx, x_idx, y_idx]**2
         
         ##################
-        #   CHARACTERISTIC SPEEDS COMPUTATION BEGINS HERE ----------------------------------------
-        #   below we consider tau_BULK = (zeta/(e+p))*(factor)*(1/(1/3-cs2)) change accordingly
-        #   SOURCE -- 
-        #   BRASIL!  
+        #   CHARACTERISTIC SPEEDS COMPUTATION BEGINS HERE----------------------------------------
+        #   below we consider 
+        #   tau_BULK = (zeta/(e+p))*(factor) change accordingly
+        #   SOURCE -- arxiv: 2005.11632  
         ###################
 
-        wchar2[itau, eta_idx, x_idx, y_idx] = cs2[itau, eta_idx, x_idx, y_idx] \
-              + (1.0/bulk_relax_time_factor)*( (1.0/3.0 - cs2[itau, eta_idx, x_idx, y_idx])**(2.0) )\
-                /(1.0 + bulkPI_norm[itau, eta_idx, x_idx, y_idx] )
-                                                    
+        #pimunu-eigenvalues
+
+        pizz_norm = - pixx_norm[itau, eta_idx, x_idx, y_idx] - piyy_norm[itau, eta_idx, x_idx, y_idx]
+
+        pi_norm_matrix = np.array([[pixx_norm[itau, eta_idx, x_idx, y_idx], pixy_norm[itau, eta_idx, x_idx, y_idx], pixz_norm[itau, eta_idx, x_idx, y_idx]],
+                                   [pixy_norm[itau, eta_idx, x_idx, y_idx], piyy_norm[itau, eta_idx, x_idx, y_idx], piyz_norm[itau, eta_idx, x_idx, y_idx]],
+                                   [pixz_norm[itau, eta_idx, x_idx, y_idx], piyz_norm[itau, eta_idx, x_idx, y_idx], pizz_norm]])
+       
+        eigv_pi_norm = np.linalg.eigh(pi_norm_matrix)[0] # since the matrix is symmmetric numpy has a more efficient method
+
+        #first order to rlx time ratios
+
+        bulk_relax_time_factor = 1./15. #MUSIC_default 1/14.55
+        eta_OV_tauPI_ed_PL_pr = 1.0/5.0 # (eta/[tau_BULK*(e+p)])
+        zeta_OV_tauPI_ed_PL_pr = (1.0/bulk_relax_time_factor)*( (1.0/3.0 - cs2[itau, eta_idx, x_idx, y_idx])**(2.0) ) # (zeta/[tau_BULK*(e+p)])
+
+        
+        #second order terms
+
+        incl_second = 0
+
+        delPIPI_OV_tauPI = incl_second
+        lamb_PI_pi_OV_tau_PI = incl_second
+
+        lamb_pi_PI_OV_tau_pi = incl_second
+        delpipi_OV_taupi = incl_second
+        taupipi_OV_taupi = incl_second
+ 
+        #characteristic speeds
+
+        num_char_w = 3 #number of characteristic velocities
+        wchar2_sound = zeros([num_char_w]) #GSR -- characteristic speed
+        wchar2_g = zeros([num_char_w]) #GSR -- characteristic speed
+        wchar2_shear = zeros([num_char_w, num_char_w]) #GSR -- characteristic speed
+
+        wchar2_list = []
+
+        for a in range(num_char_w):
+
+            wchar2_sound[a] = cs2[itau, eta_idx, x_idx, y_idx] \
+              +  1/(1.0 + bulkPI_norm[itau, eta_idx, x_idx, y_idx] + eigv_pi_norm[a])\
+              *(zeta_OV_tauPI_ed_PL_pr + delPIPI_OV_tauPI*bulkPI_norm[itau, eta_idx, x_idx, y_idx]
+                + lamb_PI_pi_OV_tau_PI*eigv_pi_norm[a]
+                + (1/3)*eta_OV_tauPI_ed_PL_pr + (1/6)*lamb_pi_PI_OV_tau_pi + delpipi_OV_taupi*eigv_pi_norm[a]\
+                - (1/6)*taupipi_OV_taupi*eigv_pi_norm[a]\
+                + eta_OV_tauPI_ed_PL_pr + (1/2)*lamb_pi_PI_OV_tau_pi*bulkPI_norm[itau, eta_idx, x_idx, y_idx]
+                + (1/2)*taupipi_OV_taupi*eigv_pi_norm[a]  )
+            
+            wchar2_list.append(wchar2_sound[a])
+            
+            wchar2_g[a] = (4*eta_OV_tauPI_ed_PL_pr \
+                + 2*lamb_pi_PI_OV_tau_pi*bulkPI_norm[itau, eta_idx, x_idx, y_idx] + taupipi_OV_taupi*eigv_pi_norm[a])\
+                /( 4*(1.0 + bulkPI_norm[itau, eta_idx, x_idx, y_idx]) )
+            
+            wchar2_list.append(wchar2_g[a])         
+
+
+            for b in range(num_char_w):
+
+                if b > a:
+
+                     wchar2_shear[a, b] = ( eta_OV_tauPI_ed_PL_pr \
+                        + (1/2)*lamb_pi_PI_OV_tau_pi*bulkPI_norm[itau, eta_idx, x_idx, y_idx]\
+                        + (1/4)*taupipi_OV_taupi*(eigv_pi_norm[a] + eigv_pi_norm[b])) \
+                        /(1.0 + bulkPI_norm[itau, eta_idx, x_idx, y_idx] + eigv_pi_norm[a])  
+
+                     wchar2_list.append(wchar2_shear[a, b]) 
+
+            #end for
+
+        #end for
+
+        #print(wchar2_list)
+                                                           
+        wchar2_min[itau, eta_idx, x_idx, y_idx] = min(wchar2_list)
+        wchar2_max[itau, eta_idx, x_idx, y_idx] = max(wchar2_list)
+
+       # print(wchar2_min[itau, eta_idx, x_idx, y_idx], wchar2_max[itau, eta_idx, x_idx, y_idx])
+
+        wchar2_min_which[itau, eta_idx, x_idx, y_idx] = wchar2_list.index(min(wchar2_list))           
+        wchar2_max_which[itau, eta_idx, x_idx, y_idx] = wchar2_list.index(max(wchar2_list))                                            
+
         
         ##################
-        #   NECESSARY CAUSALITY CONDITIONS AND VW CRITERION BEGINS HERE ----------------------------------------
-        #   below we consider tau_BULK = (zeta/(e+p))*(factor)*(1/(1/3-cs2)) change accordingly 
+        #   NECESSARY CAUSALITY CONDITIONS AND VW CRITERION BEGINS HERE ---------------------------------------- 
         ###################
 
-
-        if (wchar2[itau, eta_idx, x_idx, y_idx] < 1.0):
-            
-            causality_status[itau, eta_idx, x_idx, y_idx] = 0
-
-        else:
-
-            causality_status[itau, eta_idx, x_idx, y_idx] = 1
-
-
-        if wchar2[itau, eta_idx, x_idx, y_idx]*v2[itau, eta_idx, x_idx, y_idx] < 1.0:
-            
-            V2w2_status[itau, eta_idx, x_idx, y_idx] = 0
-
-        else:
-
-            V2w2_status[itau, eta_idx, x_idx, y_idx] = 1
-
-        if (wchar2[itau, eta_idx, x_idx, y_idx] < 1.0 and (v2[itau, eta_idx, x_idx, y_idx] < 1.0)):
+        if ( (wchar2_max[itau, eta_idx, x_idx, y_idx] < 1.0) and (wchar2_min[itau, eta_idx, x_idx, y_idx] > 0.0) ):
            
-           causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 1
+           causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 10
 
         else: 
 
-            if wchar2[itau, eta_idx, x_idx, y_idx]*v2[itau, eta_idx, x_idx, y_idx] < 1.0:
-               
-               causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 2
+            if (wchar2_min[itau, eta_idx, x_idx, y_idx] < 0.0):
+
+                causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = -10
 
             else:
 
-                causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 3   
+                if wchar2_max[itau, eta_idx, x_idx, y_idx]*v2[itau, eta_idx, x_idx, y_idx] < 1.0:
+                    
+                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 20
+
+                else:
+
+                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 30   
 
 
 
 
 
-
-
-
-
-
-
-
-
-#wchar2 = cs2 + 15.0*((1.0/3.0 - cs2)**(2.0))/(1 + bulkPI/(e+P))  
-
+#sys.exit()
 
 
 
 # print out some useful information about the evolution file
 print("Read in data completed.")
 
-#print(nx, x[0], x[-1], dx)
 
 print("nx = {0}, x_min = {1:.2f} fm, x_max = {2:.2f} fm, dx = {3:.2f} fm".format(nx, x[0], x[-1], dx))
 print("ny = {0}, y_min = {1:.2f} fm, y_max = {2:.2f} fm, dy = {3:.2f} fm".format(ny, y[0], y[-1], dy))
@@ -282,6 +329,45 @@ final_plots_folder = path.join(working_path, TestResultFolder)
 
 ######################################---PLOTS----########################################################
 
+
+# make a 2D meshgrid in the transverse plane
+X, Y = meshgrid(x, y)
+
+# first plot the first frame as a contour plot
+fig = plt.figure(figsize=(10,6))
+cont = plt.contourf(X, Y, causal_AND_v2w2_status[0, 0, :, :].transpose(), 
+                    levels = levels3status, 
+                    cmap=my_cmap_3stat, 
+                    extend='both')
+time_text = plt.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]), color ='white')
+legend_patches = [mpatches.Patch(color=colors3stat[i], label = total_status_labels[i])
+                  for i in range(len(colors3stat))]
+plt.legend(handles = legend_patches,
+            loc='center left', 
+            bbox_to_anchor=(1.05,0.5), 
+            frameon=False)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout(rect=[0, 0, 1, 1])   
+
+# define animation function to update the contour at every time frame
+def animate(i): 
+    global cont, time_text
+    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
+        c.remove()  # removes only the contours, leaves the rest intact
+    cont = plt.contourf(X, Y, causal_AND_v2w2_status[i, 0, :, :],\
+                         levels = levels3status, cmap=my_cmap_3stat, extend='both')
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
+    return cont, time_text
+
+# create the animation
+anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
+
+# save the animation to a file
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation_full-status.gif", writer=writergif)
 
 
 

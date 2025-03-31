@@ -62,11 +62,15 @@ colors2 = plt.cm.jet(linspace(0., 1, 10))
 colors = vstack((colors1, colors2))
 colors2stat = ['black','green','red']
 colors3stat = ['pink','green','yellow','red']
+colors4stat = ['green','yellow','blue','red']
 total_status_labels = ['elliptical','causal & stable','acausal & stable', 'acausal & unstable']
+which_status_labels = ['sound mode',r'$\mathfrak{g}-mode$','shear mode']
 my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
 my_cmap_2stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors2stat)
 my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', 
                                                              colors3stat[:1] + ['black'] + colors3stat[1:])
+my_cmap_4stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', 
+                                                             colors4stat[:1] + ['black'] + colors4stat[1:])
 
 
 # change the following line to your result folder
@@ -76,7 +80,7 @@ TestResultFolder = "acausality-w-shear/run2"
                                            #Run 2 -- i reincluded the terms excluded by me in run 1
                                            #Run 3 -- i included second order terms
                                            
-
+print('RESULTS BEING ANALYZED:',TestResultFolder)
 
 
 
@@ -156,25 +160,22 @@ wchar2_min_which = zeros([ntau, neta, nx, ny]) #GSR
 wchar2_max_which = zeros([ntau, neta, nx, ny]) #GSR
 
 
-#test_matrix = np.array([[1, 2, 3],
-#                        [2, 6, 4],
-#                        [3, 4, -7]])
-
-#eigv_pi_norm = np.linalg.eigh(test_matrix)[0]
-
-#print(eigv_pi_norm)
-
-#sys.exit()
-
-#########################################################
-#               ANALYZED DATA FILES
-#########################################################
-
-
+frac_ugly = zeros(ntau)
+frac_bad = zeros(ntau)
+frac_good = zeros(ntau)
+frac_elli = zeros(ntau)
+N_active = zeros(ntau) # number of nonzero v2w2 status
 
 for itau in range(ntau):
+
     idx = (abs(data[:, 0] - itau) < 0.1)
     data_cut = data[idx, :]
+    frac_ugly[itau] = 0.0
+    frac_bad[itau] = 0.0
+    frac_good[itau] = 0.0
+    frac_elli[itau] = 0.0
+    N_active[itau] = 0.0
+
     for igrid in range(len(data_cut[:, 0])):
         x_idx   = int(data_cut[igrid, 1] + 0.1)
         y_idx   = int(data_cut[igrid, 2] + 0.1)
@@ -227,7 +228,7 @@ for itau in range(ntau):
         
         #second order terms
         incl_sec_mus = 1.0 #include second order terms, excluded by 'Include_second_order_terms = 0' by default
-        incl_sec = 1.0 #include second order terms not excluded by 'Include_second_order_terms = 0' by default
+        incl_sec = 0.0 #include second order terms not excluded by 'Include_second_order_terms = 0' by default
 
         #second order terms in bulk eom
 
@@ -243,7 +244,7 @@ for itau in range(ntau):
  
         #characteristic speeds
 
-        num_char_w = 3 #number of characteristic velocities
+        num_char_w = 3 #"number" of characteristic velocities
         wchar2_sound = zeros([num_char_w]) #GSR -- characteristic speed
         wchar2_g = zeros([num_char_w]) #GSR -- characteristic speed
         wchar2_shear = zeros([num_char_w, num_char_w]) #GSR -- characteristic speed
@@ -272,7 +273,7 @@ for itau in range(ntau):
 
             for b in range(num_char_w):
 
-                if b > a:
+                if b != a:
 
                      wchar2_shear[a, b] = ( eta_OV_tauPI_ed_PL_pr \
                         + (1/2)*lamb_pi_PI_OV_tau_pi*bulkPI_norm[itau, eta_idx, x_idx, y_idx]\
@@ -286,16 +287,49 @@ for itau in range(ntau):
         #end for
 
         #print(wchar2_list)
-                                                           
+
+        ###################  EXTREMUM CHARACTERISTIC SPEEDS
+
         wchar2_min[itau, eta_idx, x_idx, y_idx] = min(wchar2_list)
         wchar2_max[itau, eta_idx, x_idx, y_idx] = max(wchar2_list)
 
        # print(wchar2_min[itau, eta_idx, x_idx, y_idx], wchar2_max[itau, eta_idx, x_idx, y_idx])
 
-        wchar2_min_which[itau, eta_idx, x_idx, y_idx] = wchar2_list.index(min(wchar2_list))           
-        wchar2_max_which[itau, eta_idx, x_idx, y_idx] = wchar2_list.index(max(wchar2_list))                                            
+       ###################  WHICH OF THE MODES ARE DO THE EXTREMUM CHARACTERISTIC SPEEDS BELONG TO?
 
-        
+       #MAX
+
+        if wchar2_list.index(max(wchar2_list)) <= 3: 
+
+            wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 10 #sound mode is max           
+
+        else:
+
+            if wchar2_list.index(max(wchar2_list))<=6: #g mode is max
+
+                wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 20
+
+            else: 
+
+                 wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 30 # shear mode is max 
+
+       #MIN                                                    
+
+
+        if wchar2_list.index(min(wchar2_list)) <= 3: 
+
+            wchar2_min_which[itau, eta_idx, x_idx, y_idx] = 10 #sound mode is min          
+
+        else:
+
+            if wchar2_list.index(min(wchar2_list))<=6: #g mode is min
+
+                wchar2_min_which[itau, eta_idx, x_idx, y_idx] = 20
+
+            else: 
+
+                 wchar2_min_which[itau, eta_idx, x_idx, y_idx] = 30 # shear mode is min
+
         ##################
         #   NECESSARY CAUSALITY CONDITIONS AND VW CRITERION BEGINS HERE ---------------------------------------- 
         ###################
@@ -304,11 +338,17 @@ for itau in range(ntau):
            
            causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 10
 
+           frac_good[itau] += 1.0
+           N_active[itau] += 1.0
+
         else: 
 
             if (wchar2_min[itau, eta_idx, x_idx, y_idx] < 0.0):
 
                 causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = -10
+
+                frac_elli[itau] += 1.0
+                N_active[itau]+= 1.0
 
             else:
 
@@ -316,13 +356,30 @@ for itau in range(ntau):
                     
                     causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 20
 
+                    frac_bad[itau] += 1.0
+                    N_active[itau] += 1.0
+
                 else:
 
-                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 30   
+                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 30 
+
+                    frac_ugly[itau] += 1.0 
+                    N_active[itau] += 1.0 
                 
                 #end if
             #end if
         #end if
+    #end for
+
+    frac_ugly[itau] = frac_ugly[itau]/N_active[itau]
+    frac_bad[itau] = frac_bad[itau]/N_active[itau]
+    frac_good[itau] = frac_good[itau]/N_active[itau]
+    frac_elli[itau] = frac_elli[itau]/N_active[itau]
+
+
+#end for    
+
+
 
          
          
@@ -345,12 +402,27 @@ print("neta = {0}, eta_min = {1:.2f} fm, eta_max = {2:.2f} fm, deta = {3:.2f}".f
 
 final_plots_folder = path.join(working_path, TestResultFolder)
 
-
 ######################################---PLOTS----########################################################
 
-############### fluid velocity
+############## fractions good, bad, ugly
 
-X, Y = meshgrid(x, y)
+'''fig = plt.figure()
+
+plt.plot(tau_list, frac_good, label = 'good', color = 'green')
+plt.plot(tau_list, frac_bad, label = 'bad', color = 'yellow')
+plt.plot(tau_list, frac_ugly, label = 'ugly', color = 'red')
+plt.plot(tau_list, frac_elli, label = 'elliptical', color = 'pink')
+plt.xlabel(r"$\tau (fm)$")
+plt.ylabel("fractions")
+plt.tight_layout()
+plt.legend()
+plt.savefig(f"{final_plots_folder}/fracs-GBUE")
+'''
+#sys.exit()
+
+############### v2w2 animation
+
+'''X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
 fig = plt.figure()
@@ -379,9 +451,9 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation-v2w2.gif", writer=writergif)
+'''
 
-
-############### fluid velocity
+############### fluid velocity animation
 
 '''X, Y = meshgrid(x, y)
 
@@ -446,8 +518,8 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation-w2char-min.gif", writer=writergif)
-
 '''
+
 
 ################ maximum propagation speeds
 
@@ -480,8 +552,8 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation-w2char-max.gif", writer=writergif)
-'''
 
+'''
 ################ causal and v2w2 status
 
 # make a 2D meshgrid in the transverse plane

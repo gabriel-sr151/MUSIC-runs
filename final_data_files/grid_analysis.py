@@ -294,7 +294,7 @@ final_plots_folder = path.join(working_path, TestResultFolder)
 
 
 # make a 2D meshgrid in the transverse plane
-X, Y = meshgrid(x, y)
+#X, Y = meshgrid(x, y)
 
 
 

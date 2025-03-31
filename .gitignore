@@ -1,13 +1,11 @@
 *.[oa]
 *.~
-*.dat
 *.e
 .DS_Store
 results/
 obj/
 tests/
 *.pyc
-*.txt
 *.dylib
 MUSIChydro
 perf.data*

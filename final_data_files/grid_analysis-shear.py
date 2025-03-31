@@ -41,7 +41,7 @@ levelsbulk = linspace(-0.10, 0.40, 50)
 levelscaus = linspace(-0.1, 1.20, 50)
 levelsVW = linspace(-0.2, 0.2, 50)
 levelscaus = linspace(-0.1, 1.20, 50)
-levelsVW = linspace(-0.2, 0.2, 50)
+levelsV = linspace(0.0, 1.0, 50)
 levels2status = [-2, 0, 2]
 levels3status = [-15,-5, 5, 15, 25, 35]
 
@@ -70,9 +70,12 @@ my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap',
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-w-shear/run1" 
-                                           #run 1 -- no second order terms, i excluded even the ones that music
-                                           # doesn't by default -- energy 2x error
+TestResultFolder = "acausality-w-shear/run2" 
+                                           #Run 1 -- no second order terms, i excluded even the ones that music
+                                           #                            doesn't by default -- energy 2x error
+                                           #Run 2 -- i reincluded the terms excluded by me in run 1
+                                           #Run 3 -- i included second order terms
+                                           
 
 
 
@@ -163,6 +166,12 @@ wchar2_max_which = zeros([ntau, neta, nx, ny]) #GSR
 
 #sys.exit()
 
+#########################################################
+#               ANALYZED DATA FILES
+#########################################################
+
+
+
 for itau in range(ntau):
     idx = (abs(data[:, 0] - itau) < 0.1)
     data_cut = data[idx, :]
@@ -195,8 +204,6 @@ for itau in range(ntau):
         
         ##################
         #   CHARACTERISTIC SPEEDS COMPUTATION BEGINS HERE----------------------------------------
-        #   below we consider 
-        #   tau_BULK = (zeta/(e+p))*(factor) change accordingly
         #   SOURCE -- arxiv: 2005.11632  
         ###################
 
@@ -212,21 +219,27 @@ for itau in range(ntau):
 
         #first order to rlx time ratios
 
-        bulk_relax_time_factor = 1./15. #MUSIC_default 1/14.55
+        bulk_relax_time_factor = 1.0/15.0 #MUSIC_default 1/14.55
         eta_OV_tauPI_ed_PL_pr = 1.0/5.0 # (eta/[tau_BULK*(e+p)])
-        zeta_OV_tauPI_ed_PL_pr = (1.0/bulk_relax_time_factor)*( (1.0/3.0 - cs2[itau, eta_idx, x_idx, y_idx])**(2.0) ) # (zeta/[tau_BULK*(e+p)])
+        zeta_OV_tauPI_ed_PL_pr = (1.0/bulk_relax_time_factor)\
+                               *( (1.0/3.0 - cs2[itau, eta_idx, x_idx, y_idx])**(2.0) ) # (zeta/[tau_BULK*(e+p)])
 
         
         #second order terms
+        incl_sec_mus = 1.0 #include second order terms, excluded by 'Include_second_order_terms = 0' by default
+        incl_sec = 1.0 #include second order terms not excluded by 'Include_second_order_terms = 0' by default
 
-        incl_second = 0
+        #second order terms in bulk eom
 
-        delPIPI_OV_tauPI = incl_second
-        lamb_PI_pi_OV_tau_PI = incl_second
+        delPIPI_OV_tauPI = incl_sec_mus*(2.0/3.0)
+        lamb_PI_pi_OV_tau_PI = (8.0/5.0)*(1.0/3.0 - cs2[itau, eta_idx, x_idx, y_idx])
+        lamb_PI_pi_OV_tau_PI = incl_sec*lamb_PI_pi_OV_tau_PI
 
-        lamb_pi_PI_OV_tau_pi = incl_second
-        delpipi_OV_taupi = incl_second
-        taupipi_OV_taupi = incl_second
+        #second order terms in shear eoms
+
+        lamb_pi_PI_OV_tau_pi = incl_sec*(6.0/5.0)
+        delpipi_OV_taupi = incl_sec_mus*(4.0/3.0)
+        taupipi_OV_taupi = incl_sec*(10.0/7.0)
  
         #characteristic speeds
 
@@ -306,7 +319,13 @@ for itau in range(ntau):
                 else:
 
                     causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 30   
+                
+                #end if
+            #end if
+        #end if
 
+         
+         
 
 
 
@@ -329,9 +348,144 @@ final_plots_folder = path.join(working_path, TestResultFolder)
 
 ######################################---PLOTS----########################################################
 
+############### fluid velocity
+
+X, Y = meshgrid(x, y)
+
+# first plot the first frame as a contour plot
+fig = plt.figure()
+cont = plt.contourf(X, Y, v2[0, 0, :, :]*wchar2_max[0, 0, :, :], levelsV,
+                    cmap=my_cmap, extend='both')
+time_text = plt.text(-6, 6, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
+cbar = fig.colorbar(cont)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout()   
+
+# define animation function to update the contour at every time frame
+def animate(i): 
+    global cont, time_text
+    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
+        c.remove()  # removes only the contours, leaves the rest intact
+    cont = plt.contourf(X, Y, v2[i, 0, :, :]*wchar2_max[i, 0, :, :], levelsV, cmap=my_cmap, extend='both')
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
+    return cont, time_text
+
+# create the animation
+anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
+
+# save the animation to a file
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation-v2w2.gif", writer=writergif)
+
+
+############### fluid velocity
+
+'''X, Y = meshgrid(x, y)
+
+# first plot the first frame as a contour plot
+fig = plt.figure()
+cont = plt.contourf(X, Y, v2[0, 0, :, :], levelsV,
+                    cmap=my_cmap, extend='both')
+time_text = plt.text(-6, 6, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
+cbar = fig.colorbar(cont)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout()   
+
+# define animation function to update the contour at every time frame
+def animate(i): 
+    global cont, time_text
+    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
+        c.remove()  # removes only the contours, leaves the rest intact
+    cont = plt.contourf(X, Y, v2[i, 0, :, :], levelsV, cmap=my_cmap, extend='both')
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
+    return cont, time_text
+
+# create the animation
+anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
+
+# save the animation to a file
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation-v2.gif", writer=writergif)
+'''
+
+
+############### minimum propagation speeds
+
+'''X, Y = meshgrid(x, y)
+
+# first plot the first frame as a contour plot
+fig = plt.figure()
+cont = plt.contourf(X, Y, wchar2_min[0, 0, :, :], levelsV,
+                    cmap=my_cmap, extend='both')
+time_text = plt.text(-6, 6, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
+cbar = fig.colorbar(cont)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout()   
+
+# define animation function to update the contour at every time frame
+def animate(i): 
+    global cont, time_text
+    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
+        c.remove()  # removes only the contours, leaves the rest intact
+    cont = plt.contourf(X, Y, wchar2_min[i, 0, :, :], levelsV, cmap=my_cmap, extend='both')
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
+    return cont, time_text
+
+# create the animation
+anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
+
+# save the animation to a file
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation-w2char-min.gif", writer=writergif)
+
+'''
+
+################ maximum propagation speeds
+
+'''X, Y = meshgrid(x, y)
+
+# first plot the first frame as a contour plot
+fig = plt.figure()
+cont = plt.contourf(X, Y, wchar2_max[0, 0, :, :], levelsV,
+                    cmap=my_cmap, extend='both')
+time_text = plt.text(-6, 6, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
+cbar = fig.colorbar(cont)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout()   
+
+# define animation function to update the contour at every time frame
+def animate(i): 
+    global cont, time_text
+    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
+        c.remove()  # removes only the contours, leaves the rest intact
+    cont = plt.contourf(X, Y, wchar2_max[i, 0, :, :], levelsV, cmap=my_cmap, extend='both')
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
+    return cont, time_text
+
+# create the animation
+anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
+
+# save the animation to a file
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation-w2char-max.gif", writer=writergif)
+'''
+
+################ causal and v2w2 status
 
 # make a 2D meshgrid in the transverse plane
-X, Y = meshgrid(x, y)
+'''X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
 fig = plt.figure(figsize=(10,6))
@@ -368,6 +522,6 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation_full-status.gif", writer=writergif)
-
+'''
 
 

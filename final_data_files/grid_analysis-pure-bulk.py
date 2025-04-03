@@ -68,7 +68,7 @@ my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', ['bl
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run4-hard" 
+TestResultFolder = "acausality-stuff/run4XL" 
                                            #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
                                            #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
                                            #run 3 (ERR) -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file 
@@ -423,9 +423,9 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation_v2w2-status-new-.gif", writer=writergif)'''
 
+X, Y = meshgrid(x, y)
 
-
-'''tau_idx = int(ntau*(40/51)) # 0 for the initial condition
+tau_idx = int(ntau*(50/82)) # 0 for the initial condition
 
 fig = plt.figure(figsize=(10,6))
 cont = plt.contourf(X, Y, causal_AND_v2w2_status[tau_idx, 0, :, :], 
@@ -445,8 +445,8 @@ plt.legend(handles = legend_patches,
 plt.xlim([-8, 8])
 plt.ylim([-8, 8])
 plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/full_status-countour-tau_{tau_idx}-of-{ntau}-GYR")
-'''
+plt.savefig(f"{final_plots_folder}/full_status-countour-pure-bulk-tau_{tau_idx}-of-{ntau}-GYR")
+
 
 ###################################### -- animation for QM talk
 

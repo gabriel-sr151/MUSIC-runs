@@ -67,5 +67,5 @@ SPECIFIC PARTS OF THE CODE
    see lines 130 to 137 of evolve.cpp
 
 
-
+> in grid_info.cpp line 491, chun's output file excludes data cells below a threshold energy. take this into account for improving the readouts in grid_analysis.py 
 

@@ -184,6 +184,7 @@ frac_elli_from_shear = zeros(ntau)
 frac_acaus_from_sound = zeros(ntau)
 frac_acaus_from_g = zeros(ntau)
 frac_acaus_from_shear = zeros(ntau)
+frac_acaus = zeros(ntau)
 
 for itau in range(ntau):
 
@@ -194,6 +195,7 @@ for itau in range(ntau):
     frac_good[itau] = 0.0
     frac_elli[itau] = 0.0
     N_active[itau] = 0.0
+    frac_acaus[itau] = 0.0
 
     for igrid in range(len(data_cut[:, 0])):
         x_idx   = int(data_cut[igrid, 1] + 0.1)
@@ -319,6 +321,20 @@ for itau in range(ntau):
 
        #MAX
 
+        if (wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]) % 4) == 0:
+
+            wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 10 #sound mode is min if index is 0,4,8  
+
+        else:
+
+            if (wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]) % 4) == 1:  
+
+                wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 20 #g mode is min if index is 1,5,9
+
+            else: 
+
+                wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 30 # shear mode is min if index is 2,3,6,7,10,11
+
         '''if wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]) <= 2: 
 
             wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 10 #sound mode is max if index is 0,1,2           
@@ -363,6 +379,13 @@ for itau in range(ntau):
             else: 
 
                  wchar2_min_which[itau, eta_idx, x_idx, y_idx] = 30 # shear mode is min if index is >5''' 
+        
+        '''print(wchar2_min[itau, eta_idx, x_idx, y_idx], wchar2_list.index(wchar2_min[itau, eta_idx, x_idx, y_idx]),\
+               wchar2_min_which[itau, eta_idx, x_idx, y_idx])
+        print(wchar2_max[itau, eta_idx, x_idx, y_idx], wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]),\
+               wchar2_max_which[itau, eta_idx, x_idx, y_idx])
+        '''
+        #sys.exit()
 
         ##################
         #   NECESSARY CAUSALITY CONDITIONS AND VW CRITERION BEGINS HERE ---------------------------------------- 
@@ -377,6 +400,7 @@ for itau in range(ntau):
 
         else: 
 
+            #elliptical cells begin
             if (wchar2_min[itau, eta_idx, x_idx, y_idx] <= 0.0):
 
                 causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = -10.0 # CHANGE TO -10 WHEN SEPARATING 
@@ -404,8 +428,27 @@ for itau in range(ntau):
 
                  #### WHAT MODE IS ELLIPTIC? - END   
 
+            #elliptical cells end
             else:
 
+                frac_acaus[itau] += 1.0
+
+                #vw criterion -begin
+                if wchar2_max[itau, eta_idx, x_idx, y_idx]*v2[itau, eta_idx, x_idx, y_idx] < 1.0:
+                    
+                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 20.0
+
+                    frac_bad[itau] += 1.0
+                    N_active[itau] += 1.0
+
+                else:
+
+                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 30.0 
+
+                    frac_ugly[itau] += 1.0 
+                    N_active[itau] += 1.0 
+                
+                #vw criterion -end
                 #### WHAT MODE IS BAD OR UGLY? -BEGIN
 
                 if (wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]) % 4) == 0:
@@ -423,21 +466,7 @@ for itau in range(ntau):
                         frac_acaus_from_shear[itau] += 1.0 # shear mode is max if index is 2,3,6,7,10,11
 
 
-                 #### WHAT MODE IS BAD OR UGLY? - END
-
-                if wchar2_max[itau, eta_idx, x_idx, y_idx]*v2[itau, eta_idx, x_idx, y_idx] < 1.0:
-                    
-                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 20.0
-
-                    frac_bad[itau] += 1.0
-                    N_active[itau] += 1.0
-
-                else:
-
-                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 30.0 
-
-                    frac_ugly[itau] += 1.0 
-                    N_active[itau] += 1.0 
+                 #### WHAT MODE IS BAD OR UGLY? - END                    
                 
                 #end if
             #end if
@@ -447,9 +476,9 @@ for itau in range(ntau):
     frac_elli_from_g[itau] = frac_elli_from_g[itau]/frac_elli[itau]
     frac_elli_from_sound[itau] = frac_elli_from_sound[itau]/frac_elli[itau]
 
-    frac_acaus_from_shear[itau] = frac_acaus_from_shear[itau]/(frac_bad[itau] + frac_ugly[itau])
-    frac_acaus_from_g[itau] = frac_acaus_from_g[itau]/(frac_elli[itau] + frac_ugly[itau])
-    frac_acaus_from_sound[itau] = frac_acaus_from_sound[itau]/(frac_elli[itau] + frac_ugly[itau])
+    frac_acaus_from_shear[itau] = frac_acaus_from_shear[itau]/frac_acaus[itau]
+    frac_acaus_from_g[itau] = frac_acaus_from_g[itau]/frac_acaus[itau]
+    frac_acaus_from_sound[itau] = frac_acaus_from_sound[itau]/frac_acaus[itau]
 
     frac_ugly[itau] = frac_ugly[itau]/N_active[itau]
     frac_bad[itau] = frac_bad[itau]/N_active[itau]
@@ -602,7 +631,7 @@ anim.save(f"{final_plots_folder}/animation_which-max-status.gif", writer=writerg
 '''
 ############## fractions good, bad, ugly
 
-'''fig = plt.figure()
+fig = plt.figure()
 
 frac_sum = frac_good + frac_bad + frac_ugly + frac_elli
 
@@ -616,7 +645,7 @@ plt.ylabel("fractions")
 plt.tight_layout()
 plt.legend()
 plt.savefig(f"{final_plots_folder}/fracs-GoodBadUglyElli")
-'''
+
 #sys.exit()
 
 ################ contour plot of a frame of full_status

@@ -53,7 +53,7 @@ SPECIFIC PARTS OF THE CODE
 
       if (DATA.include_second_order_terms == 1) {
            include_BBterm = 1;
-           include_coupling_to_shear = 1;
+           include_coupling_to_shear = 1; --> this automatically includes coupling when second order coeffs are on
       }
 
    terms Wsigma (tau_pi_pi), WW, Shear_Sigma_term, Bulk_Sigma_term (lambda_pi_PI) Shear_Shear_term controlled by include_coupling_to_shear   

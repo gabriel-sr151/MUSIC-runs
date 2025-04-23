@@ -78,15 +78,26 @@ my_cmap_4stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap',
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-w-shear/run3" 
-                                           # Run 1 -- no second order terms, i excluded even the ones that music
+TestResultFolder = "acausality-w-shear/run4-taupipi-on-lambs-on" 
+                                           # >run 1 -- no second order terms, i excluded even the ones that music
                                            #                            doesn't by default -- energy 2x error
-                                           # Run 2 -- i reincluded the terms excluded by me in run 1 
+                                           # >run 2 -- i reincluded the terms excluded by me in run 1 
                                            # incl_sec_mus = 1.0
                                            # incl_sec = 0.0
-                                           # Run 3 -- i included second order terms
+                                           # >run 3 -- i included second order terms
                                            # incl_sec_mus = 1.0
-                                           # incl_sec = 1.0 
+                                           # incl_sec = 1.0 -- Reynolds square terms ON
+                                           # >run4-both-coups included only delta_pipi, delta_PIPI, lambda_PIpi, 
+                                           # lambda_piPI terms all other coeffs excluded
+                                           # >run4-no-PI-coup included only delta_pipi, delta_PIPI, (lambda_PIpi = 0), 
+                                           # lambda_piPI terms all other coeffs excluded
+                                           # >run4-no-sh-coup included only delta_pipi, delta_PIPI, lambda_PIpi, 
+                                           # (lambda_piPI = 0) terms all other coeffs excluded
+                                           # >run4-taupipi-on-no-lambs included only delta_pipi, delta_PIPI, 
+                                           # and tau_pipi all other coeffs excluded
+                                           # >run4-taupipi-on-lambs-on included only delta_pipi, delta_PIPI, 
+                                           #  lambda_PIpi, lambda_piPI, tau_pipi all other coeffs excluded 
+                                           # NO Reynolds square terms
 
                                            
         
@@ -249,19 +260,22 @@ for itau in range(ntau):
         
         #second order terms
         incl_sec_mus = 1.0 #include second order terms; excluded by 'Include_second_order_terms = 0' by default
-        incl_sec = 1.0 #include second order terms; not excluded by 'Include_second_order_terms = 0' by default
+        incl_sec = 1.0 #include second order terms; included by 'Include_second_order_terms = 0' by default
+        incl_lamb_PI_shear = 1.0 #include shear coupling in bulk eom; make sure incl_sec = 1.0
+        incl_lamb_pi_PI = 1.0 #include bulk_PI coupling in shear eom; make sure incl_sec = 1.0
+        incl_tau_pipi = 1.0 #include tau_pipi
 
         #second order terms in bulk eom
 
         delPIPI_OV_tauPI = incl_sec_mus*(2.0/3.0)
         lamb_PI_pi_OV_tau_PI = (8.0/5.0)*(1.0/3.0 - cs2[itau, eta_idx, x_idx, y_idx])
-        lamb_PI_pi_OV_tau_PI = incl_sec*lamb_PI_pi_OV_tau_PI
+        lamb_PI_pi_OV_tau_PI = incl_lamb_PI_shear*incl_sec*lamb_PI_pi_OV_tau_PI
 
         #second order terms in shear eoms
 
-        lamb_pi_PI_OV_tau_pi = incl_sec*(6.0/5.0)
+        lamb_pi_PI_OV_tau_pi = incl_lamb_pi_PI*incl_sec*(6.0/5.0)
         delpipi_OV_taupi = incl_sec_mus*(4.0/3.0)
-        taupipi_OV_taupi = incl_sec*(10.0/7.0)
+        taupipi_OV_taupi = incl_tau_pipi*incl_sec*(10.0/7.0)
  
         #characteristic speeds begin
 
@@ -679,7 +693,7 @@ plt.savefig(f"{final_plots_folder}/full_status-countour-w-shear-all-second-order
 ################ causal and v2w2 status
 
 # make a 2D meshgrid in the transverse plane
-'''X, Y = meshgrid(x, y)
+X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
 fig = plt.figure(figsize=(10,6))
@@ -716,7 +730,7 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation_full-status-w-elli.gif", writer=writergif)
-'''
+
 
 
 ############### v2w2 animation

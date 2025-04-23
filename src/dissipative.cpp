@@ -217,12 +217,11 @@ double Diss::Make_uWSource(const double tau, const Cell_small *grid_pt,
             transport_coeffs_.get_lambda_pibulkPi_coeff()*tau_pi);
     double transport_coefficient2_b = 0.;
 
-    double excl_second_GSR_shear = 1.0; // variable to exclude Bulk theta term GSR
-    //if (DATA.include_second_order_terms == 1){
-    //    excl_second_GSR_shear = 1.0;
-    //} else {
-    //    excl_second_GSR_shear = 0.0;
-    //}
+    double incl_del_pipi_GSR = 1.0; 
+    double incl_lamb_pi_PI = 1.0; // include shear to bulk coupling
+    double incl_tau_pipi = 1.0; // shear-sigma
+    double incl_rest_shear = 0.0; // shear-shear, bulk-shear terms
+    
 
 
 
@@ -238,7 +237,7 @@ double Diss::Make_uWSource(const double tau, const Cell_small *grid_pt,
     ////////////////////////////////////////////////////////////////////////
 
     // full term is
-    tempf = (-(1.0 + excl_second_GSR_shear*transport_coefficient2*theta_local)*(Wmunu[mu][nu]));
+    tempf = (-(1.0 + incl_del_pipi_GSR*transport_coefficient2*theta_local)*(Wmunu[mu][nu]));
 
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
@@ -363,11 +362,11 @@ double Diss::Make_uWSource(const double tau, const Cell_small *grid_pt,
 
         // full term is
         // first term: sign changes according to metric sign convention
-        Coupling_to_Bulk = -Bulk_Sigma_term + Bulk_W_term;
+        Coupling_to_Bulk = -incl_lamb_pi_PI*Bulk_Sigma_term + incl_rest_shear*Bulk_W_term;
     }
 
     // final answer is
-    SW = (NS_term + tempf + Vorticity_term + Wsigma_term + WW_term
+    SW = (NS_term + tempf + incl_rest_shear*Vorticity_term + incl_tau_pipi*Wsigma_term + incl_rest_shear*WW_term
           + Coupling_to_Bulk)/(tau_pi);
     return(SW);
 }
@@ -627,12 +626,10 @@ double Diss::Make_uPiSource(const double tau, const Cell_small *grid_pt,
         rhob = grid_pt_prev->rhob;
     }
 
-    double excl_second_GSR_bulk = 1.0; // variable to exclude Bulk theta term GSR
-    //if (DATA.include_second_order_terms == 1){
-    //    excl_second_GSR_bulk = 1.0;
-    //} else {
-    //    excl_second_GSR_bulk = 0.0;
-    //}
+    double incl_delPIPI_GSR = 1.0; // variable to in/exclude Bulk theta term GSR
+    double incl_lamb_PI_shear = 1.0; // include bulk to shear coupling
+    double incl_rest_bulk = 0.0; // shear-shear and bulkbulk terms
+
 
     // defining bulk viscosity coefficient
 
@@ -685,7 +682,7 @@ double Diss::Make_uPiSource(const double tau, const Cell_small *grid_pt,
     // Computing relaxation term and nonlinear term:
     // - Bulk - transport_coeff1*Bulk*theta
     tempf = (-(grid_pt->pi_b)
-             - excl_second_GSR_bulk*transport_coeff1*theta_local*(grid_pt->pi_b));
+             - incl_delPIPI_GSR*transport_coeff1*theta_local*(grid_pt->pi_b));
 
     // Computing nonlinear term: + transport_coeff2*Bulk*Bulk
     if (include_BBterm == 1) {
@@ -728,13 +725,13 @@ double Diss::Make_uPiSource(const double tau, const Cell_small *grid_pt,
         Shear_Shear_term = WW*transport_coeff2_s;
 
         // full term that couples to shear is
-        Coupling_to_Shear = -Shear_Sigma_term + Shear_Shear_term ;
+        Coupling_to_Shear = -incl_lamb_PI_shear*Shear_Sigma_term + incl_rest_bulk*Shear_Shear_term ;
     } else {
         Coupling_to_Shear = 0.0;
     }
 
     // Final Answer
-    Final_Answer = NS_term + tempf + BB_term + Coupling_to_Shear;
+    Final_Answer = NS_term + tempf + incl_rest_bulk*BB_term + Coupling_to_Shear;
 
     return Final_Answer/(Bulk_Relax_time);
 }/* Make_uPiSource */

@@ -78,7 +78,7 @@ my_cmap_4stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap',
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-w-shear/run4-taupipi-on-lambs-on" 
+TestResultFolder = "acausality-w-shear/run5-QRVoff" 
                                            # >run 1 -- no second order terms, i excluded even the ones that music
                                            #                            doesn't by default -- energy 2x error
                                            # >run 2 -- i reincluded the terms excluded by me in run 1 
@@ -98,6 +98,8 @@ TestResultFolder = "acausality-w-shear/run4-taupipi-on-lambs-on"
                                            # >run4-taupipi-on-lambs-on included only delta_pipi, delta_PIPI, 
                                            #  lambda_PIpi, lambda_piPI, tau_pipi all other coeffs excluded 
                                            # NO Reynolds square terms
+                                           # >run5-QRVoff used music Include_second_order_terms 0 questrevert 
+                                           # regulator off
 
                                            
         
@@ -260,10 +262,10 @@ for itau in range(ntau):
         
         #second order terms
         incl_sec_mus = 1.0 #include second order terms; excluded by 'Include_second_order_terms = 0' by default
-        incl_sec = 1.0 #include second order terms; included by 'Include_second_order_terms = 0' by default
-        incl_lamb_PI_shear = 1.0 #include shear coupling in bulk eom; make sure incl_sec = 1.0
-        incl_lamb_pi_PI = 1.0 #include bulk_PI coupling in shear eom; make sure incl_sec = 1.0
-        incl_tau_pipi = 1.0 #include tau_pipi
+        incl_sec = 0.0 #include second order terms; included by 'Include_second_order_terms = 0' by default
+        incl_lamb_PI_shear = 0.0 #include shear coupling in bulk eom; make sure incl_sec = 1.0
+        incl_lamb_pi_PI = 0.0 #include bulk_PI coupling in shear eom; make sure incl_sec = 1.0
+        incl_tau_pipi = 0.0 #include tau_pipi
 
         #second order terms in bulk eom
 

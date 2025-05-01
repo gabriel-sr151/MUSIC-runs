@@ -68,7 +68,7 @@ my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', ['bl
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run4XL" 
+TestResultFolder = "acausality-stuff/run9-QRVoff" 
                                            #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
                                            #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
                                            #run 3 (ERR) -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file 
@@ -93,6 +93,7 @@ TestResultFolder = "acausality-stuff/run4XL"
                                            # ------------------ all runs above this line contained an error postprocessing regarding Pi/(e+P)
                                            #                    because the bulk printed in Pi/(e+p) and not Pi  
                                            # run4XL -- pure bulk with bulk_relax_time_factor = 1/15.0 but with larger tau window  run 4 - hard is the reference          
+                                           #run9-QRVoff -- ques
 
 
 bulk_relax_time_factor = 1./15. #MUSIC_default 1/14.55
@@ -231,13 +232,6 @@ for itau in range(ntau):
             else:
 
                 causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 3   
-
-
-
-
-
-
-
 
 
 
@@ -393,7 +387,7 @@ plt.savefig(f"{final_plots_folder}/TestRun_causality_status_Contour_XY-tau_{tau_
 
 ######################################
 
-'''X, Y = meshgrid(x, y)
+X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
 fig = plt.figure()
@@ -421,9 +415,9 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_v2w2-status-new-.gif", writer=writergif)'''
+anim.save(f"{final_plots_folder}/animation_v2w2-status-new-.gif", writer=writergif)
 
-X, Y = meshgrid(x, y)
+'''X, Y = meshgrid(x, y)
 
 tau_idx = int(ntau*(50/82)) # 0 for the initial condition
 
@@ -446,7 +440,7 @@ plt.xlim([-8, 8])
 plt.ylim([-8, 8])
 plt.tight_layout()
 plt.savefig(f"{final_plots_folder}/full_status-countour-pure-bulk-tau_{tau_idx}-of-{ntau}-GYR")
-
+'''
 
 ###################################### -- animation for QM talk
 

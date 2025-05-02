@@ -29,7 +29,9 @@ mpl.rcParams['legend.fontsize'] = 15
 mpl.rcParams['legend.numpoints'] = 1
 mpl.rcParams['font.size'] = 15
 mpl.rcParams['savefig.format'] = "pdf"
-#
+from log_music_analysis import *
+
+
 #sys.exit() # INTERRUPT CODE for debugging
 
 working_path = path.join(home, "MUSIC/final_data_files")
@@ -100,6 +102,9 @@ TestResultFolder = "acausality-w-shear/run5-QRVoff"
                                            # NO Reynolds square terms
                                            # >run5-QRVoff used music Include_second_order_terms 0 questrevert 
                                            # regulator off
+                                           # >run6-Echo+ all second order stuff included even the Reynolds square terms
+                                           # increased echo_level to 6 to see how many times QuestRevert would 
+                                           # be triggered
 
                                            
         
@@ -488,6 +493,7 @@ for itau in range(ntau):
             #end if
         #end if
     #end for
+
     frac_elli_from_shear[itau] = frac_elli_from_shear[itau]/frac_elli[itau]
     frac_elli_from_g[itau] = frac_elli_from_g[itau]/frac_elli[itau]
     frac_elli_from_sound[itau] = frac_elli_from_sound[itau]/frac_elli[itau]

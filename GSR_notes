@@ -69,3 +69,5 @@ SPECIFIC PARTS OF THE CODE
 
 > in grid_info.cpp line 491, chun's output file excludes data cells below a threshold energy. take this into account for improving the readouts in grid_analysis.py 
 
+> changing echo level changes the amount of information in music logs
+

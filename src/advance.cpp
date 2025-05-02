@@ -302,12 +302,12 @@ void Advance::FirstRKStepW(const double tau, SCGrid &arena_prev,
 
     // If the energy density of the fluid element is smaller than 0.01GeV
     // reduce Wmunu using the QuestRevert algorithm
-/*    if (DATA.Initial_profile != 0 && DATA.Initial_profile != 1) {
+    if (DATA.Initial_profile != 0 && DATA.Initial_profile != 1) {
         QuestRevert(tau, grid_pt_f, ieta, ix, iy);
         if (DATA.turn_on_diff == 1) {
             QuestRevert_qmu(tau, grid_pt_f, ieta, ix, iy);
         }
-    }*/
+    }
 }
 
 // update results after RK evolution to grid_pt
@@ -322,7 +322,7 @@ void Advance::UpdateTJbRK(const ReconstCell &grid_rk, Cell_small &grid_pt) {
 //! in the dilute region to stablize numerical simulations
 void Advance::QuestRevert(const double tau, Cell_small *grid_pt,
                           const int ieta, const int ix, const int iy) {
-    double eps_scale = 0.1;   // 1/fm^4
+    double eps_scale = 0.02;   // 1/fm^4 default: 0.1
     double e_local   = grid_pt->epsilon;
     double rhob      = grid_pt->rhob;
 

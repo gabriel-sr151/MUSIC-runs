@@ -8,6 +8,7 @@ from matplotlib import animation
 import matplotlib.pyplot as plt
 import sys # GSR
 import matplotlib.patches as mpatches
+from log_music_analysis import find_warning # script to extract questrevert alerts points 
 
 # define format for the plots
 import matplotlib as mpl
@@ -44,6 +45,7 @@ levelscaus = linspace(-0.1, 1.20, 50)
 levelsVW = linspace(-0.2, 0.2, 50)
 levelscaus = linspace(-0.1, 1.20, 50)
 levelsV = linspace(0.0, 1.0, 50)
+levels2statusQR = [0, 2]
 levels2status = [-2, 0, 2]
 levels3status = [-15,-5, 5, 15, 25, 35]
 levels4status = [-5, 5, 15, 25, 35]
@@ -63,14 +65,17 @@ my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
 colors1 = array([[1, 1, 1, 1]])
 colors2 = plt.cm.jet(linspace(0., 1, 10))
 colors = vstack((colors1, colors2))
+colors2statQR = ['black','red']
 colors2stat = ['black','green','red']
 colors3stat = ['pink','green','yellow','red']
 #colors3stat = ['green','yellow','red']  # for QM talk
 colors4stat = ['green','blue','red']
 total_status_labels = ['elliptical','causal & stable','acausal & stable', 'acausal & unstable']
+QR_status_labels = ['inactive','active']
 which_status_labels = ['sound mode',r'shear $\mathfrak{g}$-mode','shear w-mode']
 my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
 my_cmap_2stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors2stat)
+my_cmap_2statQR = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors2statQR)
 my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', 
                                                              colors3stat[:1] + ['black'] + colors3stat[1:])
 #my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', 
@@ -80,7 +85,7 @@ my_cmap_4stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap',
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-w-shear/run5-QRVoff" 
+TestResultFolder = "acausality-w-shear/run6-echo+v4" 
                                            # >run 1 -- no second order terms, i excluded even the ones that music
                                            #                            doesn't by default -- energy 2x error
                                            # >run 2 -- i reincluded the terms excluded by me in run 1 
@@ -105,6 +110,10 @@ TestResultFolder = "acausality-w-shear/run5-QRVoff"
                                            # >run6-Echo+ all second order stuff included even the Reynolds square terms
                                            # increased echo_level to 6 to see how many times QuestRevert would 
                                            # be triggered
+                                           # >run6-echo+v2 "run6-Echo+" and eps_scale parameter changed from 
+                                           # default 0.1 to 0.02
+                                           # >run6-echo+v3 "run6-echo+v2" with every x,y cell printed
+                                           # >run6-echo+v4 "run6-Echo+" with every x,y cell printed
 
                                            
         
@@ -155,6 +164,9 @@ ny = int(header[5])
 y_size = 2.*abs(header[7])
 dy = header[6]
 y = array([-y_size/2.+i*dy for i in range(ny)])
+
+
+
 
 
 # create 3D grids for energy density, temperature, and velocity
@@ -219,6 +231,8 @@ for itau in range(ntau):
         x_idx   = int(data_cut[igrid, 1] + 0.1)
         y_idx   = int(data_cut[igrid, 2] + 0.1)
         eta_idx = int(data_cut[igrid, 3] + 0.1)
+
+        
         u0 = sqrt(1. + data_cut[igrid, 8]**2.
                   + data_cut[igrid, 9]**2. + data_cut[igrid, 10]**2)
         ed[itau, eta_idx, x_idx, y_idx] = data_cut[igrid, 4]
@@ -241,6 +255,8 @@ for itau in range(ntau):
 
         v2[itau, eta_idx, x_idx, y_idx] = vx[itau, eta_idx, x_idx, y_idx]**2 + vy[itau, eta_idx, x_idx, y_idx]**2 \
                                        + vz[itau, eta_idx, x_idx, y_idx]**2
+        
+
         
         ##################
         #   CHARACTERISTIC SPEEDS COMPUTATION BEGINS HERE----------------------------------------
@@ -267,10 +283,10 @@ for itau in range(ntau):
         
         #second order terms
         incl_sec_mus = 1.0 #include second order terms; excluded by 'Include_second_order_terms = 0' by default
-        incl_sec = 0.0 #include second order terms; included by 'Include_second_order_terms = 0' by default
-        incl_lamb_PI_shear = 0.0 #include shear coupling in bulk eom; make sure incl_sec = 1.0
-        incl_lamb_pi_PI = 0.0 #include bulk_PI coupling in shear eom; make sure incl_sec = 1.0
-        incl_tau_pipi = 0.0 #include tau_pipi
+        incl_sec = 1.0 #include second order terms; included by 'Include_second_order_terms = 0' by default
+        incl_lamb_PI_shear = 1.0 #include shear coupling in bulk eom; make sure incl_sec = 1.0
+        incl_lamb_pi_PI = 1.0 #include bulk_PI coupling in shear eom; make sure incl_sec = 1.0
+        incl_tau_pipi = 1.0 #include tau_pipi
 
         #second order terms in bulk eom
 
@@ -492,6 +508,9 @@ for itau in range(ntau):
                 #end if
             #end if
         #end if
+
+
+
     #end for
 
     frac_elli_from_shear[itau] = frac_elli_from_shear[itau]/frac_elli[itau]
@@ -514,7 +533,6 @@ for itau in range(ntau):
 
 
 
-
 #sys.exit()
 
 
@@ -532,9 +550,101 @@ final_plots_folder = path.join(working_path, TestResultFolder)
 
 ######################################---PLOTS----########################################################
 
+# quest revert REGULATOR WARNING
+
+filename_log = path.join(final_plots_folder, "log_music.txt")
+extracted_data = find_warning(filename_log)
+
+#sys.exit()
+
+QR_warning_status = zeros([ntau, neta, nx, ny]) 
+                
+for entry in extracted_data:
+
+    itau = int( (entry[0]-tau0)/dtau )
+    ieta = entry[1]
+    ix = int(entry[2])#/2)
+    iy = int(entry[3])#/2)  
+    # to translate to ix,iy, we have to take into account that not necessarily all cells are printed out 
+
+    QR_warning_status[itau, ieta, ix, iy] = 1.0
+
+#print(QR_warning_status[0, 0, :, :]) 
+
+#sys.exit()
+
+
+X, Y = meshgrid(x, y)
+
+tau_idx = 0 # 0 for the initial condition
+
+fig = plt.figure(figsize=(10,6))
+cont = plt.contourf(X, Y, QR_warning_status[tau_idx, 0, :, :], 
+                    levels = levels2statusQR, 
+                    cmap=my_cmap_2statQR,
+                    extend='both')
+#cbar = fig.colorbar(cont)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.text(-7.4, -7, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]), color ='white')
+legend_patches = [mpatches.Patch(color=colors2statQR[i], label = QR_status_labels[i])
+                  for i in range(len(colors2statQR))]
+plt.legend(handles = legend_patches,
+            loc='center left', 
+            bbox_to_anchor=(1.05,0.5), 
+            frameon=False)
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout()
+plt.savefig(f"{final_plots_folder}/QR_status-countour-tau_{tau_idx}-of-{ntau}-GYR")
+
+
+############# animation QR status
+
+# make a 2D meshgrid in the transverse plane
+X, Y = meshgrid(x, y)
+
+# first plot the first frame as a contour plot
+fig = plt.figure(figsize=(10,6))
+cont = plt.contourf(X, Y, QR_warning_status[0, 0, :, :].transpose(), 
+                    levels = levels2statusQR, 
+                    cmap=my_cmap_2statQR, 
+                    extend='both')
+time_text = plt.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]), color ='white')
+legend_patches = [mpatches.Patch(color=colors2statQR[i], label = QR_status_labels[i])
+                  for i in range(len(colors2statQR))]
+plt.legend(handles = legend_patches,
+            loc='center left', 
+            bbox_to_anchor=(1.05,0.5), 
+            frameon=False)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout(rect=[0, 0, 1, 1])   
+
+# define animation function to update the contour at every time frame
+def animate(i): 
+    global cont, time_text
+    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
+        c.remove()  # removes only the contours, leaves the rest intact
+    cont = plt.contourf(X, Y, QR_warning_status[i, 0, :, :],\
+                         levels = levels2statusQR, cmap=my_cmap_2statQR, extend='both')
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
+    return cont, time_text
+
+# create the animation
+anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
+
+# save the animation to a file
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation_QR-status-w-elli.gif", writer=writergif)
+
+
+
 ############## fractions of each mode among the acausal cells
 
-fig = plt.figure()
+'''fig = plt.figure()
 
 frac_acaus_sum = frac_acaus_from_sound + frac_acaus_from_shear + frac_acaus_from_g
 
@@ -547,10 +657,10 @@ plt.ylabel("fraction among acausal")
 plt.tight_layout()
 plt.legend()
 plt.savefig(f"{final_plots_folder}/fracs-acausal-modes")
-
+'''
 ############## fractions of each mode among the elliptical cells
 
-fig = plt.figure()
+'''fig = plt.figure()
 
 frac_elli_sum = frac_elli_from_sound + frac_elli_from_shear + frac_elli_from_g
 
@@ -563,6 +673,95 @@ plt.ylabel("fraction among elliptical")
 plt.tight_layout()
 plt.legend()
 plt.savefig(f"{final_plots_folder}/fracs-elli-modes")
+'''
+
+############## fractions good, bad, ugly
+
+'''fig = plt.figure()
+
+frac_sum = frac_good + frac_bad + frac_ugly + frac_elli
+
+plt.plot(tau_list, frac_good, label = 'good', color = 'green')
+plt.plot(tau_list, frac_bad, label = 'bad', color = 'yellow')
+plt.plot(tau_list, frac_ugly, label = 'ugly', color = 'red')
+plt.plot(tau_list, frac_elli, label = 'elliptical', color = 'pink')
+plt.plot(tau_list, frac_sum, '--' , label = 'sum', color = 'black')
+plt.xlabel(r"$\tau (fm)$")
+plt.ylabel("fractions")
+plt.tight_layout()
+plt.legend()
+plt.savefig(f"{final_plots_folder}/fracs-GoodBadUglyElli")
+'''
+#sys.exit()
+
+################ contour plot of a frame of full_status
+
+X, Y = meshgrid(x, y)
+
+tau_idx = 0 # 0 for the initial condition
+
+fig = plt.figure(figsize=(10,6))
+cont = plt.contourf(X, Y, causal_AND_v2w2_status[tau_idx, 0, :, :], 
+                    levels = levels3status, 
+                    cmap=my_cmap_3stat,
+                    extend='both')
+#cbar = fig.colorbar(cont)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.text(-7.4, -7, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]), color ='white')
+legend_patches = [mpatches.Patch(color=colors3stat[i], label = total_status_labels[i])
+                  for i in range(len(colors3stat))]
+plt.legend(handles = legend_patches,
+            loc='center left', 
+            bbox_to_anchor=(1.05,0.5), 
+            frameon=False)
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout()
+plt.savefig(f"{final_plots_folder}/full_status-countour-all-second-order-terms-tau_{tau_idx}-of-{ntau}-GYR")
+
+################ causal and v2w2 status animation
+
+# make a 2D meshgrid in the transverse plane
+X, Y = meshgrid(x, y)
+
+# first plot the first frame as a contour plot
+fig = plt.figure(figsize=(10,6))
+cont = plt.contourf(X, Y, causal_AND_v2w2_status[0, 0, :, :].transpose(), 
+                    levels = levels3status, 
+                    cmap=my_cmap_3stat, 
+                    extend='both')
+time_text = plt.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]), color ='white')
+legend_patches = [mpatches.Patch(color=colors3stat[i], label = total_status_labels[i])
+                  for i in range(len(colors3stat))]
+plt.legend(handles = legend_patches,
+            loc='center left', 
+            bbox_to_anchor=(1.05,0.5), 
+            frameon=False)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout(rect=[0, 0, 1, 1])   
+
+# define animation function to update the contour at every time frame
+def animate(i): 
+    global cont, time_text
+    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
+        c.remove()  # removes only the contours, leaves the rest intact
+    cont = plt.contourf(X, Y, causal_AND_v2w2_status[i, 0, :, :],\
+                         levels = levels3status, cmap=my_cmap_3stat, extend='both')
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
+    return cont, time_text
+
+# create the animation
+anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
+
+# save the animation to a file
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation_full-status-w-elli.gif", writer=writergif)
+
+
 
 
 ############# animation for which mode is wchar2min
@@ -608,8 +807,6 @@ anim.save(f"{final_plots_folder}/animation_which-min-status.gif", writer=writerg
 '''
 
 
-
-
 ############# animation for which mode is wchar2max
 
 '''X, Y = meshgrid(x, y)
@@ -651,93 +848,7 @@ writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation_which-max-status.gif", writer=writergif)
 
 '''
-############## fractions good, bad, ugly
 
-fig = plt.figure()
-
-frac_sum = frac_good + frac_bad + frac_ugly + frac_elli
-
-plt.plot(tau_list, frac_good, label = 'good', color = 'green')
-plt.plot(tau_list, frac_bad, label = 'bad', color = 'yellow')
-plt.plot(tau_list, frac_ugly, label = 'ugly', color = 'red')
-plt.plot(tau_list, frac_elli, label = 'elliptical', color = 'pink')
-plt.plot(tau_list, frac_sum, '--' , label = 'sum', color = 'black')
-plt.xlabel(r"$\tau (fm)$")
-plt.ylabel("fractions")
-plt.tight_layout()
-plt.legend()
-plt.savefig(f"{final_plots_folder}/fracs-GoodBadUglyElli")
-
-#sys.exit()
-
-################ contour plot of a frame of full_status
-
-'''X, Y = meshgrid(x, y)
-
-tau_idx = 0 # 0 for the initial condition
-
-fig = plt.figure(figsize=(10,6))
-cont = plt.contourf(X, Y, causal_AND_v2w2_status[tau_idx, 0, :, :], 
-                    levels = levels3status, 
-                    cmap=my_cmap_3stat,
-                    extend='both')
-#cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(-7.4, -7, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]), color ='white')
-legend_patches = [mpatches.Patch(color=colors3stat[i], label = total_status_labels[i])
-                  for i in range(len(colors3stat))]
-plt.legend(handles = legend_patches,
-            loc='center left', 
-            bbox_to_anchor=(1.05,0.5), 
-            frameon=False)
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/full_status-countour-w-shear-all-second-order-terms-tau_{tau_idx}-of-{ntau}-GYR")
-'''
-
-
-################ causal and v2w2 status
-
-# make a 2D meshgrid in the transverse plane
-X, Y = meshgrid(x, y)
-
-# first plot the first frame as a contour plot
-fig = plt.figure(figsize=(10,6))
-cont = plt.contourf(X, Y, causal_AND_v2w2_status[0, 0, :, :].transpose(), 
-                    levels = levels3status, 
-                    cmap=my_cmap_3stat, 
-                    extend='both')
-time_text = plt.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]), color ='white')
-legend_patches = [mpatches.Patch(color=colors3stat[i], label = total_status_labels[i])
-                  for i in range(len(colors3stat))]
-plt.legend(handles = legend_patches,
-            loc='center left', 
-            bbox_to_anchor=(1.05,0.5), 
-            frameon=False)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout(rect=[0, 0, 1, 1])   
-
-# define animation function to update the contour at every time frame
-def animate(i): 
-    global cont, time_text
-    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
-        c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, causal_AND_v2w2_status[i, 0, :, :],\
-                         levels = levels3status, cmap=my_cmap_3stat, extend='both')
-    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
-    return cont, time_text
-
-# create the animation
-anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
-
-# save the animation to a file
-writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_full-status-w-elli.gif", writer=writergif)
 
 
 

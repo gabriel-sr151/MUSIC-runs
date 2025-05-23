@@ -33,24 +33,21 @@ def find_warning(filename):
 
                 ieta, ix, iy = warning_match.groups()
 
-                warned_cells.append([current_tau, ieta, ix, iy])
+                warned_cells.append([current_tau, int(ieta), int(ix), int(iy)])
 
     return warned_cells
 
 
-working_folder = path.join(home, "MUSIC/final_data_files/acausality-w-shear/run6-echo+v2")
+if __name__ == '__main__': # the code under this does not run when imported as a module
 
-
-if __name__ == '__main__':
+    working_folder = path.join(home, "MUSIC/final_data_files/acausality-w-shear/run6-Echo+")
 
     filename = path.join(working_folder, "log_music.txt")
     
-    #'./acausality-w-shear/run6-echo+v2/log_music.txt'
-
     extracted_data = find_warning(filename)
 
     for entry in extracted_data:
 
         print(f"tau={entry[0]} fm/c, ieta={entry[1]}, ix={entry[2]}, iy={entry[3]}")            
 
-
+# to translate to x,y in fm, we have to take into account that not all cells are printed out

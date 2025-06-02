@@ -10,5 +10,5 @@ fi
 
 git commit -m "$msg" 
 
-git push -u origin vandy_pc2
+git push -u origin vandy_pc
 

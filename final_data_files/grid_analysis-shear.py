@@ -315,7 +315,8 @@ for itau in range(ntau):
               +  1.0/(1.0 + bulkPI_norm[itau, eta_idx, x_idx, y_idx] + eigv_pi_norm[a])\
               *(zeta_OV_tauPI_ed_PL_pr + delPIPI_OV_tauPI*bulkPI_norm[itau, eta_idx, x_idx, y_idx]
                 + lamb_PI_pi_OV_tau_PI*eigv_pi_norm[a]
-                + (1.0/3.0)*eta_OV_tauPI_ed_PL_pr + (1.0/6.0)*lamb_pi_PI_OV_tau_pi + delpipi_OV_taupi*eigv_pi_norm[a]\
+                + (1.0/3.0)*eta_OV_tauPI_ed_PL_pr + (1.0/6.0)*lamb_pi_PI_OV_tau_pi*bulkPI_norm[itau, eta_idx, x_idx, y_idx] 
+                + delpipi_OV_taupi*eigv_pi_norm[a]\
                 - (1.0/6.0)*taupipi_OV_taupi*eigv_pi_norm[a]\
                 + eta_OV_tauPI_ed_PL_pr + (1.0/2.0)*lamb_pi_PI_OV_tau_pi*bulkPI_norm[itau, eta_idx, x_idx, y_idx]
                 + (1.0/2.0)*taupipi_OV_taupi*eigv_pi_norm[a]  )

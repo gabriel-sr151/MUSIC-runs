@@ -1,0 +1,125 @@
+=====================================================
+| .___  ___.  __    __       _______. __    ______  |
+| |   \/   | |  |  |  |     /       ||  |  /      | |
+| |  \  /  | |  |  |  |    |   (----`|  | |  ,----' |
+| |  |\/|  | |  |  |  |     \   \    |  | |  |      |
+| |  |  |  | |  `--'  | .----)   |   |  | |  `----. |
+| |__|  |__|  \______/  |_______/    |__|  \______| |
+=====================================================
+MUSIC - a 3+1D viscous relativistic hydrodynamic code for heavy ion collisions
+Copyright (C) 2017  Gabriel Denicol, Charles Gale, Sangyong Jeon, Matthew Luzum, Jean-François Paquet, Björn Schenke, Chun Shen
+Version: (git branch:public_stable) Commit:1f85e94fdae1388777df4aa07ad1ea5da0eea418
+🎵 2.535 MB  DeltaX = 0.100503 fm
+🎵 2.535 MB  DeltaY = 0.100503 fm
+🎵 2.535 MB  DeltaETA = inf
+🎵 2.535 MB  DeltaTau = 0.02 fm
+🎵 2.535 MB read_in_parameters: Time step size = 0.02
+🎵 2.535 MB read_in_parameters: Number of time steps required = 50
+🎵 5.199 MB Done read_in_parameters.
+🎵 5.199 MB Checking input parameter list ... 
+🎵 5.199 MB For a (2+1)-d simulation, reset deta = 0.1 and eta_size = 0.0
+[1m[33m⚠ hydro with zero shear viscosity does not need shear delta f in Cooper-Frye! input Include_deltaf = 1. Now rewrite it to 0![0m
+🎵 5.199 MB Finished checking input parameter list. Everything looks reasonable so far 😁👍🍺🍺🍻🍻
+🎵 5.199 MB reading EOS hotQCD ...
+🎵 5.199 MB from path ./EOS/hotQCD
+🎵 6.605 MB Done reading EOS.
+🎵 6.918 MB OpenMP: using 24 threads.
+🎵 6.918 MB initArena
+🎵 6.918 MB example_inputfiles/IPGlasma_2D/input/epsilon-u-Hydro-t0.6-0-increased-in-x-by-1.0.dat
+🎵 6.918 MB Using Initial_profile=9. Overwriting lattice dimensions:neta=1, nx=512, ny=512deta=0.1, dx=0.0664062, dy=0.066406
+🎵 132.9 MB Grid allocated.
+🎵 132.9 MB  ----- information on initial distribution -----
+🎵 132.9 MB file name used: example_inputfiles/IPGlasma_2D/input/epsilon-u-Hydro-t0.6-0-increased-in-x-by-1.0.dat
+🎵 163 MB eta_size=0, x_size=34, y_size=34
+🎵 163 MB initial distribution done.
+🎵 163 MB Freeze-out surface starts at 0.6 fm/c.
+🎵 217 MB eps_max = 90.2799 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.476563 GeV.
+🎵 217 MB 🕑 Done time step 0/50 tau = 0.6 fm/c
+🎵 217 MB eps_max = 75.5305 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.456631 GeV.
+🎵 217 MB 🕑 Done time step 1/50 tau = 0.62 fm/c
+🎵 217 MB eps_max = 65.262 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.440972 GeV.
+🎵 217 MB 🕑 Done time step 2/50 tau = 0.64 fm/c
+🎵 217 MB eps_max = 70.6669 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.449425 GeV.
+🎵 217 MB 🕑 Done time step 3/50 tau = 0.66 fm/c
+🎵 217 MB eps_max = 75.946 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.45723 GeV.
+🎵 217 MB 🕑 Done time step 4/50 tau = 0.68 fm/c
+🎵 217 MB eps_max = 79.6093 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.462413 GeV.
+🎵 217 MB 🕑 Done time step 5/50 tau = 0.7 fm/c
+🎵 217 MB eps_max = 81.1973 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.464605 GeV.
+🎵 217 MB 🕑 Done time step 6/50 tau = 0.72 fm/c
+🎵 217 MB eps_max = 80.7905 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.464046 GeV.
+🎵 217 MB 🕑 Done time step 7/50 tau = 0.74 fm/c
+🎵 217 MB eps_max = 78.7751 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.461248 GeV.
+🎵 217 MB 🕑 Done time step 8/50 tau = 0.76 fm/c
+🎵 217 MB eps_max = 75.3961 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.456436 GeV.
+🎵 217 MB 🕑 Done time step 9/50 tau = 0.78 fm/c
+🎵 217 MB eps_max = 70.9778 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.449896 GeV.
+🎵 217 MB 🕑 Done time step 10/50 tau = 0.8 fm/c
+🎵 217 MB eps_max = 66.1615 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.442413 GeV.
+🎵 217 MB 🕑 Done time step 11/50 tau = 0.82 fm/c
+🎵 217 MB eps_max = 61.103 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.434106 GeV.
+🎵 217 MB 🕑 Done time step 12/50 tau = 0.84 fm/c
+🎵 217 MB eps_max = 55.8137 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.424857 GeV.
+🎵 217 MB 🕑 Done time step 13/50 tau = 0.86 fm/c
+🎵 217 MB eps_max = 50.4108 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.414712 GeV.
+🎵 217 MB 🕑 Done time step 14/50 tau = 0.88 fm/c
+🎵 217 MB eps_max = 45.1093 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.403945 GeV.
+🎵 217 MB 🕑 Done time step 15/50 tau = 0.9 fm/c
+🎵 217 MB eps_max = 43.7695 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.401077 GeV.
+🎵 217 MB 🕑 Done time step 16/50 tau = 0.92 fm/c
+🎵 217 MB eps_max = 43.6869 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.400898 GeV.
+🎵 217 MB 🕑 Done time step 17/50 tau = 0.94 fm/c
+🎵 217 MB eps_max = 43.2044 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.399848 GeV.
+🎵 217 MB 🕑 Done time step 18/50 tau = 0.96 fm/c
+🎵 217 MB eps_max = 42.6928 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.398725 GeV.
+🎵 217 MB 🕑 Done time step 19/50 tau = 0.98 fm/c
+🎵 217 MB eps_max = 42.5608 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.398434 GeV.
+🎵 217 MB 🕑 Done time step 20/50 tau = 1 fm/c
+🎵 217 MB eps_max = 42.1576 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.39754 GeV.
+🎵 217 MB 🕑 Done time step 21/50 tau = 1.02 fm/c
+🎵 217 MB eps_max = 41.3727 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.395781 GeV.
+🎵 217 MB 🕑 Done time step 22/50 tau = 1.04 fm/c
+🎵 217 MB eps_max = 40.1884 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.39308 GeV.
+🎵 217 MB 🕑 Done time step 23/50 tau = 1.06 fm/c
+🎵 217 MB eps_max = 38.585 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.389329 GeV.
+🎵 217 MB 🕑 Done time step 24/50 tau = 1.08 fm/c
+🎵 217 MB eps_max = 36.7847 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.384977 GeV.
+🎵 217 MB 🕑 Done time step 25/50 tau = 1.1 fm/c
+🎵 217 MB eps_max = 36.9703 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.385433 GeV.
+🎵 217 MB 🕑 Done time step 26/50 tau = 1.12 fm/c
+🎵 217 MB eps_max = 36.6042 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.384532 GeV.
+🎵 217 MB 🕑 Done time step 27/50 tau = 1.14 fm/c
+🎵 217 MB eps_max = 36.1514 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.383409 GeV.
+🎵 217 MB 🕑 Done time step 28/50 tau = 1.16 fm/c
+🎵 217 MB eps_max = 36.0686 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.383203 GeV.
+🎵 217 MB 🕑 Done time step 29/50 tau = 1.18 fm/c
+🎵 217 MB eps_max = 35.6652 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.382192 GeV.
+🎵 217 MB 🕑 Done time step 30/50 tau = 1.2 fm/c
+🎵 217 MB eps_max = 34.8777 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.380193 GeV.
+🎵 217 MB 🕑 Done time step 31/50 tau = 1.22 fm/c
+🎵 217 MB eps_max = 33.8548 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.377548 GeV.
+🎵 217 MB 🕑 Done time step 32/50 tau = 1.24 fm/c
+🎵 217 MB eps_max = 32.7359 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.374586 GeV.
+🎵 217 MB 🕑 Done time step 33/50 tau = 1.26 fm/c
+🎵 217 MB eps_max = 32.1011 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.372872 GeV.
+🎵 217 MB 🕑 Done time step 34/50 tau = 1.28 fm/c
+🎵 217 MB eps_max = 32.4846 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.373911 GeV.
+🎵 217 MB 🕑 Done time step 35/50 tau = 1.3 fm/c
+🎵 217 MB eps_max = 32.6332 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.37431 GeV.
+🎵 217 MB 🕑 Done time step 36/50 tau = 1.32 fm/c
+🎵 217 MB eps_max = 32.5519 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.374092 GeV.
+🎵 217 MB 🕑 Done time step 37/50 tau = 1.34 fm/c
+🎵 217 MB eps_max = 32.2741 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.373342 GeV.
+🎵 217 MB 🕑 Done time step 38/50 tau = 1.36 fm/c
+🎵 217 MB eps_max = 33.7012 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.377146 GeV.
+🎵 217 MB 🕑 Done time step 39/50 tau = 1.38 fm/c
+🎵 217 MB eps_max = 49.8786 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.41367 GeV.
+🎵 217 MB 🕑 Done time step 40/50 tau = 1.4 fm/c
+🎵 217 MB eps_max = 49.4226 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.412771 GeV.
+🎵 217 MB 🕑 Done time step 41/50 tau = 1.42 fm/c
+🎵 217 MB eps_max = 54.8884 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.423172 GeV.
+🎵 217 MB 🕑 Done time step 42/50 tau = 1.44 fm/c
+🎵 217 MB eps_max = 60.6697 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.433371 GeV.
+🎵 217 MB 🕑 Done time step 43/50 tau = 1.46 fm/c
+🎵 217 MB eps_max = 160.971 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.547824 GeV.
+[1m[31m🚫 The maximum energy density increased by more than facotor of 2! This should not happen![0m

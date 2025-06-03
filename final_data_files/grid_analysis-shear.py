@@ -107,13 +107,16 @@ TestResultFolder = "acausality-w-shear/run6-echo+v4"
                                            # NO Reynolds square terms
                                            # >run5-QRVoff used music Include_second_order_terms 0 questrevert 
                                            # regulator off
-                                           # >run6-Echo+ all second order stuff included even the Reynolds square terms
+                                           # >run6-echo+ all second order stuff included even the Reynolds square terms
                                            # increased echo_level to 6 to see how many times QuestRevert would 
                                            # be triggered
                                            # >run6-echo+v2 "run6-Echo+" and eps_scale parameter changed from 
                                            # default 0.1 to 0.02
                                            # >run6-echo+v3 "run6-echo+v2" with every x,y cell printed
                                            # >run6-echo+v4 "run6-Echo+" with every x,y cell printed
+                                           #------------------------------------------------------------------
+                                           # All runs above this line contain an processing error regarding w2
+                                           # characteristic velocities. Reanalyzed: run2, run3, run6-echo+
 
                                            
         
@@ -273,7 +276,7 @@ for itau in range(ntau):
        
         eigv_pi_norm = np.linalg.eigh(pi_norm_matrix)[0] # since the matrix is symmmetric numpy has a more efficient method
 
-        #first order to rlx time ratios
+        #first order to relaxation time ratios
 
         bulk_relax_time_factor = 1.0/15.0 #MUSIC_default 1/14.55
         eta_OV_tauPI_ed_PL_pr = 1.0/5.0 # (eta/[tau_BULK*(e+p)])
@@ -286,7 +289,7 @@ for itau in range(ntau):
         incl_sec = 1.0 #include second order terms; included by 'Include_second_order_terms = 0' by default
         incl_lamb_PI_shear = 1.0 #include shear coupling in bulk eom; make sure incl_sec = 1.0
         incl_lamb_pi_PI = 1.0 #include bulk_PI coupling in shear eom; make sure incl_sec = 1.0
-        incl_tau_pipi = 1.0 #include tau_pipi
+        incl_tau_pipi = 1.0 #include tau_pipi; make sure incl_sec = 1.0
 
         #second order terms in bulk eom
 
@@ -373,20 +376,7 @@ for itau in range(ntau):
 
                 wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 30 # shear mode is min if index is 2,3,6,7,10,11
 
-        '''if wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]) <= 2: 
-
-            wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 10 #sound mode is max if index is 0,1,2           
-
-        else:
-
-            if wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx])<=5: 
-
-                wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 20 #g mode is max if index is 3,4,5
-
-            else: 
-
-                 wchar2_max_which[itau, eta_idx, x_idx, y_idx] = 30 # shear mode is max if index is >5'''
-
+    
        #MIN
         
         if (wchar2_list.index(wchar2_min[itau, eta_idx, x_idx, y_idx]) % 4) == 0:
@@ -404,25 +394,6 @@ for itau in range(ntau):
                 wchar2_min_which[itau, eta_idx, x_idx, y_idx] = 30 # shear mode is min if index is 2,3,6,7,10,11                                                    
 
 
-        '''if wchar2_list.index(wchar2_min[itau, eta_idx, x_idx, y_idx]) <= 2: 
-
-            wchar2_min_which[itau, eta_idx, x_idx, y_idx] = 10 #sound mode is min if index is 0,1,2           
-
-        else:
-
-            if wchar2_list.index(wchar2_min[itau, eta_idx, x_idx, y_idx])<=5: #g mode is min if index is 3,4,5 
-
-                wchar2_min_which[itau, eta_idx, x_idx, y_idx] = 20
-
-            else: 
-
-                 wchar2_min_which[itau, eta_idx, x_idx, y_idx] = 30 # shear mode is min if index is >5''' 
-        
-        '''print(wchar2_min[itau, eta_idx, x_idx, y_idx], wchar2_list.index(wchar2_min[itau, eta_idx, x_idx, y_idx]),\
-               wchar2_min_which[itau, eta_idx, x_idx, y_idx])
-        print(wchar2_max[itau, eta_idx, x_idx, y_idx], wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]),\
-               wchar2_max_which[itau, eta_idx, x_idx, y_idx])
-        '''
         #sys.exit()
 
         ##################
@@ -551,7 +522,7 @@ final_plots_folder = path.join(working_path, TestResultFolder)
 
 ######################################---PLOTS----########################################################
 
-# quest revert REGULATOR WARNING
+'''# quest revert REGULATOR WARNING
 
 filename_log = path.join(final_plots_folder, "log_music.txt")
 extracted_data = find_warning(filename_log)
@@ -598,11 +569,11 @@ plt.xlim([-8, 8])
 plt.ylim([-8, 8])
 plt.tight_layout()
 plt.savefig(f"{final_plots_folder}/QR_status-countour-tau_{tau_idx}-of-{ntau}-GYR")
-
+'''
 
 ############# animation QR status
 
-# make a 2D meshgrid in the transverse plane
+'''# make a 2D meshgrid in the transverse plane
 X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
@@ -639,13 +610,13 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_QR-status-w-elli.gif", writer=writergif)
+anim.save(f"{final_plots_folder}/animation_QR-status-w-elli-.gif", writer=writergif)
 
-
+'''
 
 ############## fractions of each mode among the acausal cells
 
-'''fig = plt.figure()
+fig = plt.figure()
 
 frac_acaus_sum = frac_acaus_from_sound + frac_acaus_from_shear + frac_acaus_from_g
 
@@ -657,11 +628,11 @@ plt.xlabel(r"$\tau (fm)$")
 plt.ylabel("fraction among acausal")
 plt.tight_layout()
 plt.legend()
-plt.savefig(f"{final_plots_folder}/fracs-acausal-modes")
-'''
+plt.savefig(f"{final_plots_folder}/fracs-acausal-modes-")
+
 ############## fractions of each mode among the elliptical cells
 
-'''fig = plt.figure()
+fig = plt.figure()
 
 frac_elli_sum = frac_elli_from_sound + frac_elli_from_shear + frac_elli_from_g
 
@@ -673,12 +644,12 @@ plt.xlabel(r"$\tau (fm)$")
 plt.ylabel("fraction among elliptical")
 plt.tight_layout()
 plt.legend()
-plt.savefig(f"{final_plots_folder}/fracs-elli-modes")
-'''
+plt.savefig(f"{final_plots_folder}/fracs-elli-modes-")
+
 
 ############## fractions good, bad, ugly
 
-'''fig = plt.figure()
+fig = plt.figure()
 
 frac_sum = frac_good + frac_bad + frac_ugly + frac_elli
 
@@ -691,13 +662,13 @@ plt.xlabel(r"$\tau (fm)$")
 plt.ylabel("fractions")
 plt.tight_layout()
 plt.legend()
-plt.savefig(f"{final_plots_folder}/fracs-GoodBadUglyElli")
-'''
+plt.savefig(f"{final_plots_folder}/fracs-GoodBadUglyElli-")
+
 #sys.exit()
 
 ################ contour plot of a frame of full_status
 
-X, Y = meshgrid(x, y)
+'''X, Y = meshgrid(x, y)
 
 tau_idx = 0 # 0 for the initial condition
 
@@ -719,7 +690,7 @@ plt.legend(handles = legend_patches,
 plt.xlim([-8, 8])
 plt.ylim([-8, 8])
 plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/full_status-countour-all-second-order-terms-tau_{tau_idx}-of-{ntau}-GYR")
+plt.savefig(f"{final_plots_folder}/full_status-countour-all-second-order-terms-tau_{tau_idx}-of-{ntau}-GYR")'''
 
 ################ causal and v2w2 status animation
 
@@ -760,7 +731,7 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_full-status-w-elli.gif", writer=writergif)
+anim.save(f"{final_plots_folder}/animation_full-status-w-elli-.gif", writer=writergif)
 
 
 

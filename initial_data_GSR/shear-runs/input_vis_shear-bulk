@@ -66,8 +66,8 @@ X_grid_size_in_fm 20.0        # spatial range along x direction in the
 Y_grid_size_in_fm 20.0        # spatial range along y direction in the
                               # transverse plane
                               # [-Y_grid_size_in_fm/2, Y_grid_size_in_fm/2]
-Grid_size_in_y 200            # number of the grid points in y direction
-Grid_size_in_x 200            # number of the grid points in x direction
+Grid_size_in_y 250            # number of the grid points in y direction
+Grid_size_in_x 250            # number of the grid points in x direction
 #
 #
 EOS_to_use 9                 # type of the equation of state

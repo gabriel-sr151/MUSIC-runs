@@ -126,7 +126,10 @@ TestResultFolder = "acausality-w-shear/run6-echo+v2a"
                                            # (substitutes run6-echo+ and run6-echo+v3)
                                            # >run6-echo+v2a "run6-echo+" Include_second_order_terms 1
                                            # (substitutes run6-echo+v2 and run6-echo+v4)
-                                           # run7a-finer_grid
+                                           # run7a-finer_grid test with finer grid to see if anything changes in
+                                           # the causality profile -- ERR 
+                                           # run7a-coarser_grid with finer grid to see if anything changes in
+                                           # the causality profile -- 
 
                                            
         

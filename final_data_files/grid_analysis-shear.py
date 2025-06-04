@@ -10,6 +10,8 @@ import sys # GSR
 import matplotlib.patches as mpatches
 from log_music_analysis import find_warning # script to extract questrevert alerts points 
 
+
+
 # define format for the plots
 import matplotlib as mpl
 mpl.rcParams['figure.figsize'] = [6., 4.5]
@@ -36,7 +38,8 @@ from log_music_analysis import *
 #sys.exit() # INTERRUPT CODE for debugging
 
 working_path = path.join(home, "MUSIC/final_data_files")
-#print(working_path)
+print(working_path)
+
 
 # define the contour levels
 levelsT = linspace(0.13, 0.30, 50)
@@ -71,6 +74,7 @@ colors3stat = ['pink','green','yellow','red']
 #colors3stat = ['green','yellow','red']  # for QM talk
 colors4stat = ['green','blue','red']
 total_status_labels = ['elliptical','causal & stable','acausal & stable', 'acausal & unstable']
+
 QR_status_labels = ['inactive','active']
 which_status_labels = ['sound mode',r'shear $\mathfrak{g}$-mode','shear w-mode']
 my_cmap = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors)
@@ -82,10 +86,8 @@ my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap',
 #                                                              ['pink','black'] + colors3stat) # for QM talk
 my_cmap_4stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', 
                                                               ['black'] + colors4stat)
-
-
 # change the following line to your result folder
-TestResultFolder = "acausality-w-shear/run6-echo+v4" 
+TestResultFolder = "acausality-w-shear/run6-echo+v2a" 
                                            # >run 1 -- no second order terms, i excluded even the ones that music
                                            #                            doesn't by default -- energy 2x error
                                            # >run 2 -- i reincluded the terms excluded by me in run 1 
@@ -109,14 +111,22 @@ TestResultFolder = "acausality-w-shear/run6-echo+v4"
                                            # regulator off
                                            # >run6-echo+ all second order stuff included even the Reynolds square terms
                                            # increased echo_level to 6 to see how many times QuestRevert would 
-                                           # be triggered
+                                           # be triggered ERR -- Include_second_order_terms 0, but it should be 1
                                            # >run6-echo+v2 "run6-Echo+" and eps_scale parameter changed from 
-                                           # default 0.1 to 0.02
-                                           # >run6-echo+v3 "run6-echo+v2" with every x,y cell printed
+                                           # default 0.1 to 0.02 ERR -- Include_second_order_terms 0, but it should be 1
+                                           # >run6-echo+v3 "run6-echo+v2" with every x,y cell printed 
+                                           # ERR -- Include_second_order_terms 0, but it should be 1
                                            # >run6-echo+v4 "run6-Echo+" with every x,y cell printed
+                                           # ERR -- Include_second_order_terms 0, but it should be 1
+                                           # run7-echo+finer_grid ERR -- Include_second_order_terms 0, but it should be 1
                                            #------------------------------------------------------------------
                                            # All runs above this line contain an processing error regarding w2
                                            # characteristic velocities. Reanalyzed: run2, run3, run6-echo+
+                                           # >run6-echo+a "run6-echo+" Include_second_order_terms 1
+                                           # (substitutes run6-echo+ and run6-echo+v3)
+                                           # >run6-echo+v2a "run6-echo+" Include_second_order_terms 1
+                                           # (substitutes run6-echo+v2 and run6-echo+v4)
+                                           # run7a-finer_grid
 
                                            
         
@@ -400,86 +410,98 @@ for itau in range(ntau):
         #   NECESSARY CAUSALITY CONDITIONS AND VW CRITERION BEGINS HERE ---------------------------------------- 
         ###################
 
-        if ( (wchar2_max[itau, eta_idx, x_idx, y_idx] < 1.0) and (wchar2_min[itau, eta_idx, x_idx, y_idx] > 0.0) ):
+        indeterminate_flag = 0
+        if ((1 + bulkPI_norm[itau, eta_idx, x_idx, y_idx]) < 0):
+            indeterminate_flag = 1
+        for a in range(num_char_w):
+            if ((1 + bulkPI_norm[itau, eta_idx, x_idx, y_idx] + eigv_pi_norm[a]) < 0):
+                indeterminate_flag = 1
+
+        if (indeterminate_flag != 0):
+            causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 40.0
+        else:
+
+            if ( (wchar2_max[itau, eta_idx, x_idx, y_idx] < 1.0) and (wchar2_min[itau, eta_idx, x_idx, y_idx] > 0.0) ):
            
-           causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 10.0
+                causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 10.0
 
-           frac_good[itau] += 1.0
-           N_active[itau] += 1.0
+                frac_good[itau] += 1.0
+                N_active[itau] += 1.0
 
-        else: 
+            else: 
 
-            #elliptical cells begin
-            if (wchar2_min[itau, eta_idx, x_idx, y_idx] <= 0.0):
+                #elliptical cells begin
+                if (wchar2_min[itau, eta_idx, x_idx, y_idx] <= 0.0):
 
-                causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = -10.0 # CHANGE TO -10 WHEN SEPARATING 
+                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = -10.0 # CHANGE TO -10 WHEN SEPARATING 
                                                                          # ELLIPTICAL CELLS to 30 when
                                                                          # merging with the ugly cells
-                frac_elli[itau] += 1.0
-                N_active[itau]+= 1.0
+                    frac_elli[itau] += 1.0
+                    N_active[itau]+= 1.0
 
-                #### WHAT MODE IS ELLIPTIC? -BEGIN
+                    #### WHAT MODE IS ELLIPTIC? -BEGIN
 
-                if (wchar2_list.index(wchar2_min[itau, eta_idx, x_idx, y_idx]) % 4) == 0:
+                    if (wchar2_list.index(wchar2_min[itau, eta_idx, x_idx, y_idx]) % 4) == 0:
 
-                    frac_elli_from_sound[itau] += 1.0 #sound mode is min if index is 0,4,8  
+                        frac_elli_from_sound[itau] += 1.0 #sound mode is min if index is 0,4,8  
 
+                    else:
+
+                        if (wchar2_list.index(wchar2_min[itau, eta_idx, x_idx, y_idx]) % 4) == 1:  
+
+                            frac_elli_from_g[itau] += 1.0 #g mode is min if index is 1,5,9
+
+                        else: 
+
+                            frac_elli_from_shear[itau] += 1.0 # shear mode is min if index is 2,3,6,7,10,11
+
+
+                    #### WHAT MODE IS ELLIPTIC? - END   
+
+                #elliptical cells end
                 else:
 
-                    if (wchar2_list.index(wchar2_min[itau, eta_idx, x_idx, y_idx]) % 4) == 1:  
+                    frac_acaus[itau] += 1.0
 
-                        frac_elli_from_g[itau] += 1.0 #g mode is min if index is 1,5,9
-
-                    else: 
-
-                        frac_elli_from_shear[itau] += 1.0 # shear mode is min if index is 2,3,6,7,10,11
-
-
-                 #### WHAT MODE IS ELLIPTIC? - END   
-
-            #elliptical cells end
-            else:
-
-                frac_acaus[itau] += 1.0
-
-                #vw criterion -begin
-                if wchar2_max[itau, eta_idx, x_idx, y_idx]*v2[itau, eta_idx, x_idx, y_idx] < 1.0:
+                    #vw criterion -begin
+                    if wchar2_max[itau, eta_idx, x_idx, y_idx]*v2[itau, eta_idx, x_idx, y_idx] < 1.0:
                     
-                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 20.0
+                        causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 20.0
 
-                    frac_bad[itau] += 1.0
-                    N_active[itau] += 1.0
+                        frac_bad[itau] += 1.0
+                        N_active[itau] += 1.0
 
-                else:
+                    else:
 
-                    causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 30.0 
+                        causal_AND_v2w2_status[itau, eta_idx, x_idx, y_idx] = 30.0 
 
-                    frac_ugly[itau] += 1.0 
-                    N_active[itau] += 1.0 
+                        frac_ugly[itau] += 1.0 
+                        N_active[itau] += 1.0 
                 
-                #vw criterion -end
-                #### WHAT MODE IS BAD OR UGLY? -BEGIN
+                    #vw criterion -end
+                    #### WHAT MODE IS BAD OR UGLY? -BEGIN
 
-                if (wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]) % 4) == 0:
+                    if (wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]) % 4) == 0:
 
-                    frac_acaus_from_sound[itau] += 1.0 #sound mode is max if index is 0,4,8  
+                        frac_acaus_from_sound[itau] += 1.0 #sound mode is max if index is 0,4,8  
 
-                else:
+                    else:
 
-                    if (wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]) % 4) == 1:  
+                        if (wchar2_list.index(wchar2_max[itau, eta_idx, x_idx, y_idx]) % 4) == 1:  
 
-                        frac_acaus_from_g[itau] += 1.0 #g mode is max if index is 1,5,9
+                            frac_acaus_from_g[itau] += 1.0 #g mode is max if index is 1,5,9
 
-                    else: 
+                        else: 
 
-                        frac_acaus_from_shear[itau] += 1.0 # shear mode is max if index is 2,3,6,7,10,11
+                            frac_acaus_from_shear[itau] += 1.0 # shear mode is max if index is 2,3,6,7,10,11
 
 
-                 #### WHAT MODE IS BAD OR UGLY? - END                    
+                    #### WHAT MODE IS BAD OR UGLY? - END                    
                 
+                    #end if
                 #end if
             #end if
-        #end if
+        #end if    
 
 
 
@@ -522,7 +544,7 @@ final_plots_folder = path.join(working_path, TestResultFolder)
 
 ######################################---PLOTS----########################################################
 
-'''# quest revert REGULATOR WARNING
+# quest revert REGULATOR WARNING
 
 filename_log = path.join(final_plots_folder, "log_music.txt")
 extracted_data = find_warning(filename_log)
@@ -569,11 +591,11 @@ plt.xlim([-8, 8])
 plt.ylim([-8, 8])
 plt.tight_layout()
 plt.savefig(f"{final_plots_folder}/QR_status-countour-tau_{tau_idx}-of-{ntau}-GYR")
-'''
+
 
 ############# animation QR status
 
-'''# make a 2D meshgrid in the transverse plane
+# make a 2D meshgrid in the transverse plane
 X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
@@ -610,9 +632,9 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_QR-status-w-elli-.gif", writer=writergif)
+anim.save(f"{final_plots_folder}/animation_QR-status.gif", writer=writergif)
 
-'''
+
 
 ############## fractions of each mode among the acausal cells
 
@@ -692,9 +714,112 @@ plt.ylim([-8, 8])
 plt.tight_layout()
 plt.savefig(f"{final_plots_folder}/full_status-countour-all-second-order-terms-tau_{tau_idx}-of-{ntau}-GYR")'''
 
-################ causal and v2w2 status animation
+
+################ causal and v2w2 status animation ---2 with pcolormesh
 
 # make a 2D meshgrid in the transverse plane
+X, Y = meshgrid(x, y)
+
+
+# Create 2D meshgrid in the transverse plane
+X, Y = np.meshgrid(x, y)
+
+# Set up the figure
+fig = plt.figure(figsize=(10, 6))
+ax = plt.gca()
+
+# Plot first frame
+img = ax.pcolormesh(X, Y, causal_AND_v2w2_status[0, 0, :, :].transpose(),
+                    shading='nearest',  # No interpolation between cells
+                    cmap=my_cmap_3stat,
+                    vmin=min(levels3status),  # Minimum value for colormap
+                    vmax=max(levels3status))  # Maximum value for colormap
+
+time_text = ax.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]), color='white')
+
+# Create legend
+legend_patches = [mpatches.Patch(color=colors3stat[i], label=total_status_labels[i])
+                 for i in range(len(colors3stat))]
+ax.legend(handles=legend_patches,
+          loc='center left',
+          bbox_to_anchor=(1.05, 0.5),
+          frameon=False)
+
+# Axis labels and limits
+ax.set_xlabel(r"$x$ (fm)")
+ax.set_ylabel(r"$y$ (fm)")
+ax.set_xlim([-8, 8])
+ax.set_ylim([-8, 8])
+plt.tight_layout(rect=[0, 0, 1, 1])
+
+# Animation update function
+def animate(i):
+    # Update the image data
+    img.set_array(causal_AND_v2w2_status[i, 0, :, :].ravel())
+    
+    # Update time text
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
+    
+    return img, time_text
+
+# Create the animation
+anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
+
+# Save the animation
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation_full-status-w-elli--.gif", writer=writergif)
+
+plt.close()  # Close the figure to prevent display in notebooks
+
+################ causal and v2w2 status frame --- with pcolor 
+
+# Choose which frame to plot (e.g., first frame)
+frame_idx = 20  
+
+# Create figure
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Create 2D meshgrid 
+X, Y = np.meshgrid(x, y)
+
+# Plot using pcolormesh
+plot = ax.pcolormesh(X, Y, causal_AND_v2w2_status[frame_idx, 0, :, :],
+                    shading='nearest',  # Sharp edges between cells
+                    cmap=my_cmap_3stat,
+                    vmin=min(levels3status),
+                    vmax=max(levels3status))
+
+# Add time annotation
+time_text = ax.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[frame_idx]), 
+                   color='white', fontsize=12)
+
+# Add colorbar (if desired)
+#cbar = fig.colorbar(plot, ax=ax, ticks=levels3status)
+#cbar.set_label('Status')  # Customize as needed
+
+# Create legend
+legend_patches = [mpatches.Patch(color=colors3stat[i], label=total_status_labels[i])
+                 for i in range(len(colors3stat))]
+ax.legend(handles=legend_patches,
+          loc='center left',
+          bbox_to_anchor=(1.05, 0.5),
+          frameon=False)
+
+# Axis formatting
+ax.set_xlabel(r"$x$ (fm)", fontsize=12)
+ax.set_ylabel(r"$y$ (fm)", fontsize=12)
+ax.set_xlim([-8, 8])
+ax.set_ylim([-8, 8])
+ax.set_aspect('equal')  # Keep aspect ratio square
+plt.tight_layout()
+
+# Save or show
+plt.savefig(f"{final_plots_folder}/full_status_frame_{frame_idx}-of-{ntau}.png", dpi=300, bbox_inches='tight')
+
+
+################ causal and v2w2 status animation --- with contour plot
+
+'''# make a 2D meshgrid in the transverse plane
 X, Y = meshgrid(x, y)
 
 # first plot the first frame as a contour plot
@@ -733,7 +858,7 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation_full-status-w-elli-.gif", writer=writergif)
 
-
+'''
 
 
 ############# animation for which mode is wchar2min

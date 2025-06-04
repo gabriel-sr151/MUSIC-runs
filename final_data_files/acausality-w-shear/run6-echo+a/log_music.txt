@@ -1,0 +1,1101 @@
+================================================================
+|           ____                                               |
+|         ,'  , `.               .--.--.      ,---,  ,----..   |
+|      ,-+-,.' _ |         ,--, /  /    '. ,`--.' | /   /   \  |
+|   ,-+-. ;   , ||       ,'_ /||  :  /`. / |   :  :|   :     : |
+|  ,--.'|'   |  ;|  .--. |  | :;  |  |--`  :   |  '.   |  ;. / |
+| |   |  ,', |  ':,'_ /| :  . ||  :  ;_    |   :  |.   ; /--`  |
+| |   | /  | |  |||  ' | |  . . \  \    `. '   '  ;;   | ;     |
+| '   | :  | :  |,|  | ' |  | |  `----.   \|   |  ||   : |     |
+| ;   . |  ; |--' :  | | :  ' ;  __ \  \  |'   :  ;.   | '___  |
+| |   : |  | ,    |  ; ' |  | ' /  /`--'  /|   |  ''   ; : .'| |
+| |   : '  |/     :  | : ;  ; |'--'.     / '   :  |'   | '/  : |
+| ;   | |`-'      '  :  `--'   \ `--'---'  ;   |.' |   :    /  |
+| |   ;/          :  ,      .-./           '---'    \   \ .'   |
+| '---'            `--`----'                         `---`     |
+================================================================
+MUSIC - a 3+1D viscous relativistic hydrodynamic code for heavy ion collisions
+Copyright (C) 2017  Gabriel Denicol, Charles Gale, Sangyong Jeon, Matthew Luzum, Jean-François Paquet, Björn Schenke, Chun Shen
+Version: (git branch:master) Commit:9110858a6311dc1fb43cc5f83978980216509f7c
+🎵 4.875 MB  DeltaX = 0.100503 fm
+🎵 4.875 MB  DeltaY = 0.100503 fm
+🎵 4.875 MB  DeltaETA = inf
+🎵 4.875 MB  DeltaTau = 0.02 fm
+🎵 4.875 MB read_in_parameters: Time step size = 0.02
+🎵 4.875 MB read_in_parameters: Number of time steps required = 50
+🎵 5.062 MB Done read_in_parameters.
+🎵 5.062 MB Checking input parameter list ... 
+🎵 5.062 MB For a (2+1)-d simulation, reset deta = 0.1 and eta_size = 0.0
+🎵 5.062 MB Finished checking input parameter list. Everything looks reasonable so far 😁👍🍺🍺🍻🍻
+🎵 5.062 MB reading EOS hotQCD ...
+🎵 5.062 MB from path ./EOS/hotQCD
+🎵 6.562 MB Done reading EOS.
+🎵 6.75 MB OpenMP: using 24 threads.
+🎵 6.75 MB initArena
+🎵 6.75 MB example_inputfiles/IPGlasma_2D/input/epsilon-u-Hydro-t0.6-0.dat
+🎵 6.75 MB Using Initial_profile=9. Overwriting lattice dimensions:neta=1, nx=512, ny=512deta=0.1, dx=0.0664062, dy=0.0664062
+🎵 132.8 MB Grid allocated.
+🎵 132.8 MB  ----- information on initial distribution -----
+🎵 132.8 MB file name used: example_inputfiles/IPGlasma_2D/input/epsilon-u-Hydro-t0.6-0.dat
+🎵 162.8 MB eta_size=0, x_size=34, y_size=34
+🎵 162.8 MB initial distribution done.
+🎵 162.8 MB Freeze-out surface starts at 0.6 fm/c.
+🎵 217 MB eps_max = 90.2799 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.476563 GeV.
+[1m[33m⚠ ieta = 0, ix = 320, iy = 231, energy density = 0.913399 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.61885[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 320, energy density = 0.887427 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.145282[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 231, energy density = 0.190287 GeV/fm^3, shear |pi/(epsilon+3*P)| = 417.822[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 331, energy density = 1.03082 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.370875[0m
+[1m[33m⚠ ieta = 0, ix = 322, iy = 247, energy density = 0.0230247 GeV/fm^3, shear |pi/(epsilon+3*P)| = 7.24428[0m
+[1m[33m⚠ ieta = 0, ix = 234, iy = 181, energy density = 1.03841 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.228956[0m
+[1m[33m⚠ ieta = 0, ix = 183, iy = 223, energy density = 0.772359 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.298931[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 315, energy density = 0.34282 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.77095[0m
+[1m[33m⚠ ieta = 0, ix = 324, iy = 250, energy density = 0.751187 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.813315[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 320, energy density = 0.565645 GeV/fm^3, shear |pi/(epsilon+3*P)| = 32.5992[0m
+[1m[33m⚠ ieta = 0, ix = 237, iy = 173, energy density = 0.75643 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.4362[0m
+[1m[33m⚠ ieta = 0, ix = 252, iy = 342, energy density = 0.823188 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.127751[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 317, energy density = 0.884071 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.10275[0m
+🎵 217 MB 🕑 Done time step 0/50 tau = 0.6 fm/c
+🎵 217 MB eps_max = 78.872 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.461384 GeV.
+[1m[33m⚠ ieta = 0, ix = 241, iy = 337, energy density = 0.869709 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.358039[0m
+[1m[33m⚠ ieta = 0, ix = 322, iy = 247, energy density = 0.181235 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.203068[0m
+[1m[33m⚠ ieta = 0, ix = 234, iy = 181, energy density = 1.03841 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120745[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 315, energy density = 0.0556604 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.22402[0m
+[1m[33m⚠ ieta = 0, ix = 200, iy = 297, energy density = 0.795159 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.117275[0m
+[1m[33m⚠ ieta = 0, ix = 241, iy = 337, energy density = 0.447236 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.231427[0m
+[1m[33m⚠ ieta = 0, ix = 304, iy = 318, energy density = 0.750894 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.06078[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 242, energy density = 0.81591 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.84527[0m
+[1m[33m⚠ ieta = 0, ix = 256, iy = 166, energy density = 1.08984 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.449004[0m
+[1m[33m⚠ ieta = 0, ix = 322, iy = 247, energy density = 0.181235 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.141424[0m
+[1m[33m⚠ ieta = 0, ix = 234, iy = 181, energy density = 1.06056 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.118956[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 308, energy density = 0.8708 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.141504[0m
+[1m[33m⚠ ieta = 0, ix = 172, iy = 232, energy density = 0.875328 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.130441[0m
+[1m[33m⚠ ieta = 0, ix = 336, iy = 284, energy density = 0.885692 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.760431[0m
+[1m[33m⚠ ieta = 0, ix = 200, iy = 297, energy density = 0.450991 GeV/fm^3, shear |pi/(epsilon+3*P)| = 11.0363[0m
+[1m[33m⚠ ieta = 0, ix = 229, iy = 355, energy density = 0.0210387 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.10901[0m
+🎵 217 MB 🕑 Done time step 1/50 tau = 0.62 fm/c
+🎵 217 MB eps_max = 66.0719 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.44227 GeV.
+[1m[33m⚠ ieta = 0, ix = 237, iy = 174, energy density = 0.0575091 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.145711[0m
+[1m[33m⚠ ieta = 0, ix = 247, iy = 335, energy density = 0.897078 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120371[0m
+[1m[33m⚠ ieta = 0, ix = 229, iy = 355, energy density = 0.0210387 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109795[0m
+[1m[33m⚠ ieta = 0, ix = 284, iy = 186, energy density = 0.873986 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.759467[0m
+[1m[33m⚠ ieta = 0, ix = 149, iy = 311, energy density = 0.837868 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.17936[0m
+[1m[33m⚠ ieta = 0, ix = 286, iy = 183, energy density = 0.85402 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.190775[0m
+[1m[33m⚠ ieta = 0, ix = 209, iy = 317, energy density = 1.02776 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.140149[0m
+[1m[33m⚠ ieta = 0, ix = 169, iy = 243, energy density = 0.870378 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.132062[0m
+[1m[33m⚠ ieta = 0, ix = 336, iy = 284, energy density = 0.675587 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.107493[0m
+🎵 217 MB 🕑 Done time step 2/50 tau = 0.64 fm/c
+🎵 217 MB eps_max = 67.9757 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.445278 GeV.
+[1m[33m⚠ ieta = 0, ix = 209, iy = 316, energy density = 0.537605 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.124736[0m
+[1m[33m⚠ ieta = 0, ix = 209, iy = 317, energy density = 1.02776 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.125921[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 312, energy density = 0.910356 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.32001[0m
+[1m[33m⚠ ieta = 0, ix = 247, iy = 335, energy density = 0.338209 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.104018[0m
+[1m[33m⚠ ieta = 0, ix = 149, iy = 311, energy density = 0.670533 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.110593[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 242, energy density = 0.0199065 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.588514[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 242, energy density = 0.0199065 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.10977[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 312, energy density = 1.28044 GeV/fm^3, shear |pi/(epsilon+3*P)| = 885.779[0m
+[1m[33m⚠ ieta = 0, ix = 209, iy = 316, energy density = 0.537605 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.860137[0m
+[1m[33m⚠ ieta = 0, ix = 209, iy = 317, energy density = 0.83718 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.134609[0m
+[1m[33m⚠ ieta = 0, ix = 247, iy = 335, energy density = 0.338209 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.487191[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 229, energy density = 0.94717 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.455161[0m
+[1m[33m⚠ ieta = 0, ix = 199, iy = 289, energy density = 0.508051 GeV/fm^3, shear |pi/(epsilon+3*P)| = 18.0662[0m
+[1m[33m⚠ ieta = 0, ix = 251, iy = 341, energy density = 0.280102 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.465922[0m
+[1m[33m⚠ ieta = 0, ix = 146, iy = 317, energy density = 0.84143 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.106621[0m
+[1m[33m⚠ ieta = 0, ix = 147, iy = 315, energy density = 0.845017 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.248826[0m
+🎵 217 MB 🕑 Done time step 3/50 tau = 0.66 fm/c
+🎵 217 MB eps_max = 68.7146 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.446428 GeV.
+[1m[33m⚠ ieta = 0, ix = 242, iy = 336, energy density = 0.76595 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.13703[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.466764 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.129357[0m
+[1m[33m⚠ ieta = 0, ix = 247, iy = 335, energy density = 0.338209 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.707954[0m
+[1m[33m⚠ ieta = 0, ix = 247, iy = 335, energy density = 0.338209 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.373239[0m
+[1m[33m⚠ ieta = 0, ix = 247, iy = 335, energy density = 0.338209 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.373239ieta = 0, ix = 155, iy = 307, energy density = 0.182984 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109173[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 229, energy density = 0.94717 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.740985[0m
+[1m[33m⚠ ieta = 0, ix = 335, iy = 283, energy density = 0.945376 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121554[0m
+[1m[33m⚠ ieta = 0, ix = 242, iy = 336, energy density = 0.576242 GeV/fm^3, shear |pi/(epsilon+3*P)| = 551.807[0m
+[1m[33m⚠ ieta = 0, ix = 322, iy = 230, energy density = 0.666618 GeV/fm^3, shear |pi/(epsilon+3*P)| = 6.96812[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 249, energy density = 0.623536 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.46524[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 229, energy density = 1.11959 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.39021[0m
+[1m[33m⚠ ieta = 0, ix = 335, iy = 283, energy density = 0.710372 GeV/fm^3, shear |pi/(epsilon+3*P)| = 41.3008[0m
+[1m[33m⚠ ieta = 0, ix = 251, iy = 341, energy density = 0.311353 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.17344[0m
+🎵 217 MB 🕑 Done time step 4/50 tau = 0.68 fm/c
+🎵 217 MB eps_max = 66.801 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.44343 GeV.
+[1m[33m⚠ ieta = 0, ix = 327, iy = 229, energy density = 0.630467 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.104608[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.466764 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.154121[0m
+[1m[33m⚠ ieta = 0, ix = 335, iy = 283, energy density = 0.710372 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.100076[0m
+[1m[33m⚠ ieta = 0, ix = 146, iy = 317, energy density = 0.0422868 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.493315[0m
+[1m[33m⚠ ieta = 0, ix = 228, iy = 354, energy density = 0.0277938 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111922[0m
+[1m[33m⚠ ieta = 0, ix = 181, iy = 227, energy density = 0.736519 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.101058[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 251, energy density = 0.895864 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.194442[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.429023 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.136976[0m
+[1m[33m⚠ ieta = 0, ix = 170, iy = 241, energy density = 0.815092 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.565736[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 229, energy density = 0.312427 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.194205[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 205, energy density = 1.11514 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.901748[0m
+🎵 217 MB 🕑 Done time step 5/50 tau = 0.7 fm/c
+🎵 217 MB eps_max = 63.1847 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.437584 GeV.
+[1m[33m⚠ ieta = 0, ix = 219, iy = 332, energy density = 1.00373 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111447[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 251, energy density = 0.895864 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.117123[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.429023 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.165597[0m
+[1m[33m⚠ ieta = 0, ix = 147, iy = 315, energy density = 0.299409 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.100229[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 332, energy density = 0.486712 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11281[0m
+[1m[33m⚠ ieta = 0, ix = 306, iy = 200, energy density = 1.04111 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.256343[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 249, energy density = 0.0429278 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.182342[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 251, energy density = 0.653411 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.143021[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.749833 GeV/fm^3, shear |pi/(epsilon+3*P)| = 70.9155[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.749833 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.168545[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.39166 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.123903[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 337, energy density = 0.993466 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.123292[0m
+[1m[33m⚠ ieta = 0, ix = 236, iy = 330, energy density = 0.926994 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11034[0m
+[1m[33m⚠ ieta = 0, ix = 330, iy = 234, energy density = 0.671028 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.170637[0m
+🎵 217 MB 🕑 Done time step 6/50 tau = 0.72 fm/c
+🎵 217 MB eps_max = 58.6748 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.429937 GeV.
+[1m[33m⚠ ieta = 0, ix = 219, iy = 332, energy density = 0.486712 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102858[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.340104 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.196016[0m
+[1m[33m⚠ ieta = 0, ix = 335, iy = 283, energy density = 0.424167 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.392855[0m
+[1m[33m⚠ ieta = 0, ix = 236, iy = 330, energy density = 0.926994 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.434152[0m
+[1m[33m⚠ ieta = 0, ix = 329, iy = 224, energy density = 0.441614 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.125518[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 204, energy density = 0.0332411 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.113404[0m
+[1m[33m⚠ ieta = 0, ix = 240, iy = 336, energy density = 0.827364 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.154198[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 337, energy density = 0.993466 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109728[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 332, energy density = 0.679365 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.125354[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 249, energy density = 0.262225 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.169866[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 252, energy density = 0.0238942 GeV/fm^3, shear |pi/(epsilon+3*P)| = 246.56[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.169967 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.205796[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 317, energy density = 0.319922 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.131284[0m
+[1m[33m⚠ ieta = 0, ix = 236, iy = 330, energy density = 0.73766 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.307667[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 231, energy density = 0.920903 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.9689[0m
+[1m[33m⚠ ieta = 0, ix = 187, iy = 268, energy density = 0.741919 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.3382[0m
+[1m[33m⚠ ieta = 0, ix = 240, iy = 336, energy density = 0.827364 GeV/fm^3, shear |pi/(epsilon+3*P)| = 22.6734[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 205, energy density = 0.645696 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121289[0m
+🎵 217 MB 🕑 Done time step 7/50 tau = 0.74 fm/c
+🎵 217 MB eps_max = 53.7444 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.421061 GeV.
+[1m[33m⚠ ieta = 0, ix = 148, iy = 315, energy density = 0.118273 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119357[0m
+[1m[33m⚠ ieta = 0, ix = 148, iy = 315, energy density = 0.118273 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119357ieta = 0, ix = 218, iy = 332, energy density = 0.111314 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120453[0m
+[1m[33m⚠ ieta = 0, ix = 242, iy = 336, energy density = 0.934435 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.142014[0m
+[1m[33m⚠ ieta = 0, ix = 149, iy = 311, energy density = 0.280319 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.331315[0m
+[1m[33m⚠ ieta = 0, ix = 150, iy = 311, energy density = 0.291622 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.149367[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 252, energy density = 0.28403 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120862[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.510466 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.363096[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.169967 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.187639[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 231, energy density = 0.920903 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.208062[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 337, energy density = 0.970087 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.215729[0m
+[1m[33m⚠ ieta = 0, ix = 283, iy = 182, energy density = 0.963301 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.14038[0m
+[1m[33m⚠ ieta = 0, ix = 218, iy = 332, energy density = 0.121294 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.13291[0m
+[1m[33m⚠ ieta = 0, ix = 218, iy = 333, energy density = 0.242857 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.268144[0m
+[1m[33m⚠ ieta = 0, ix = 242, iy = 336, energy density = 0.934435 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.03025[0m
+[1m[33m⚠ ieta = 0, ix = 149, iy = 311, energy density = 0.280319 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.187298[0m
+[1m[33m⚠ ieta = 0, ix = 207, iy = 317, energy density = 0.158511 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.362288[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 252, energy density = 0.28403 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.185511[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 317, energy density = 0.182408 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.340184[0m
+[1m[33m⚠ ieta = 0, ix = 324, iy = 255, energy density = 0.992901 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121861[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.385881 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.218181[0m
+[1m[33m⚠ ieta = 0, ix = 170, iy = 246, energy density = 1.04721 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.724193[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.160653[0m
+[1m[33m⚠ ieta = 0, ix = 283, iy = 182, energy density = 0.600302 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.161519[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.327152 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.171609[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.327152 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.130446[0m
+[1m[33m⚠ ieta = 0, ix = 293, iy = 193, energy density = 1.02045 GeV/fm^3, shear |pi/(epsilon+3*P)| = 115.017[0m
+[1m[33m⚠ ieta = 0, ix = 187, iy = 268, energy density = 0.35248 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.129315[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 337, energy density = 0.885035 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.137435[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 231, energy density = 0.920903 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111754[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 204, energy density = 0.0313841 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114717[0m
+🎵 217 MB 🕑 Done time step 8/50 tau = 0.76 fm/c
+🎵 217 MB eps_max = 49.7404 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.413398 GeV.
+[1m[33m⚠ ieta = 0, ix = 149, iy = 311, energy density = 0.280319 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.168298[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 334, energy density = 0.0374308 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.126914[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 226, energy density = 0.850892 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.126678[0m
+[1m[33m⚠ ieta = 0, ix = 207, iy = 317, energy density = 0.158511 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.740818[0m
+[1m[33m⚠ ieta = 0, ix = 207, iy = 317, energy density = 0.158511 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.311151[0m
+[1m[33m⚠ ieta = 0, ix = 150, iy = 311, energy density = 0.202518 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.113307[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 252, energy density = 0.28403 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.127762[0m
+[1m[33m⚠ ieta = 0, ix = 208, iy = 317, energy density = 0.157735 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.137426[0m
+[1m[33m⚠ ieta = 0, ix = 324, iy = 255, energy density = 0.992901 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.169531[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.17081[0m
+[1m[33m⚠ ieta = 0, ix = 293, iy = 193, energy density = 1.02045 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.107424[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 231, energy density = 0.920903 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.203931[0m
+[1m[33m⚠ ieta = 0, ix = 352, iy = 228, energy density = 0.286626 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105623[0m
+[1m[33m⚠ ieta = 0, ix = 149, iy = 311, energy density = 0.33255 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.103308[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 331, energy density = 0.67406 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.168152[0m
+[1m[33m⚠ ieta = 0, ix = 207, iy = 316, energy density = 0.383203 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.609955[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 226, energy density = 0.831666 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.141077[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.10987 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.129762[0m
+[1m[33m⚠ ieta = 0, ix = 324, iy = 255, energy density = 0.542373 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.25988[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 337, energy density = 0.161007 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111412[0m
+[1m[33m⚠ ieta = 0, ix = 170, iy = 246, energy density = 0.0740501 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.160519[0m
+[1m[33m⚠ ieta = 0, ix = 329, iy = 234, energy density = 0.0269822 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.149344[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115972[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 231, energy density = 0.920903 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.110226[0m
+[1m[33m⚠ ieta = 0, ix = 293, iy = 193, energy density = 0.24215 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.116831[0m
+[1m[33m⚠ ieta = 0, ix = 228, iy = 328, energy density = 1.07366 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119934[0m
+[1m[33m⚠ ieta = 0, ix = 202, iy = 290, energy density = 1.04505 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.261827[0m
+🎵 217 MB 🕑 Done time step 9/50 tau = 0.78 fm/c
+🎵 217 MB eps_max = 48.298 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.410527 GeV.
+[1m[33m⚠ ieta = 0, ix = 149, iy = 311, energy density = 0.33255 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.155508[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 226, energy density = 0.831666 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.110931[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.10987 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.110917[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.140797[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 231, energy density = 0.427869 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.287007[0m
+[1m[33m⚠ ieta = 0, ix = 218, iy = 333, energy density = 0.320227 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.137919[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 226, energy density = 0.550155 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.104442[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111596[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 218, energy density = 0.886983 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.57793[0m
+[1m[33m⚠ ieta = 0, ix = 331, iy = 236, energy density = 0.838463 GeV/fm^3, shear |pi/(epsilon+3*P)| = 9.37537[0m
+[1m[33m⚠ ieta = 0, ix = 228, iy = 328, energy density = 0.773889 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111747[0m
+🎵 217 MB 🕑 Done time step 10/50 tau = 0.8 fm/c
+🎵 217 MB eps_max = 47.1797 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.408256 GeV.
+[1m[33m⚠ ieta = 0, ix = 324, iy = 233, energy density = 0.169542 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.30923[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.946789 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.215143[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 337, energy density = 0.0428293 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.112289[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.132858[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 226, energy density = 0.558092 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.168611[0m
+[1m[33m⚠ ieta = 0, ix = 223, iy = 330, energy density = 0.879129 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.172168[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11073[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.544297 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.93003[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 318, energy density = 0.416842 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.219781[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 308, energy density = 0.0211803 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.111514[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 337, energy density = 1.73901 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.16576[0m
+[1m[33m⚠ ieta = 0, ix = 343, iy = 235, energy density = 0.744494 GeV/fm^3, shear |pi/(epsilon+3*P)| = 55.5055[0m
+🎵 217 MB 🕑 Done time step 11/50 tau = 0.82 fm/c
+🎵 217 MB eps_max = 46.9791 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.407844 GeV.
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.130937[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 308, energy density = 0.0211803 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.13358[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.544297 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.103005[0m
+[1m[33m⚠ ieta = 0, ix = 269, iy = 333, energy density = 0.940236 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.145291[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 337, energy density = 0.0273252 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.358354[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 318, energy density = 0.416842 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120027[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 337, energy density = 1.73901 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102316[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 317, energy density = 0.0331706 GeV/fm^3, shear |pi/(epsilon+3*P)| = 315126[0m
+[1m[33m⚠ ieta = 0, ix = 223, iy = 330, energy density = 0.668978 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11294[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 318, energy density = 0.0261085 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.179913[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 308, energy density = 0.0211803 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.113208[0m
+[1m[33m⚠ ieta = 0, ix = 199, iy = 272, energy density = 0.942338 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.286402[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 337, energy density = 0.0273252 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.210514[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 337, energy density = 0.0273252 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.101326[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 204, energy density = 0.0338578 GeV/fm^3, shear |pi/(epsilon+3*P)| = 500445[0m
+🎵 217 MB 🕑 Done time step 12/50 tau = 0.84 fm/c
+🎵 217 MB eps_max = 46.1398 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.406109 GeV.
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.10923[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109234[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.958502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.209706[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 308, energy density = 0.0211803 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.126779[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 337, energy density = 0.0273252 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.279749[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 337, energy density = 0.0273252 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.106386[0m
+[1m[33m⚠ ieta = 0, ix = 343, iy = 235, energy density = 0.283661 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.160563[0m
+[1m[33m⚠ ieta = 0, ix = 199, iy = 272, energy density = 0.942338 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.12524[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 186, energy density = 0.888134 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121849[0m
+[1m[33m⚠ ieta = 0, ix = 242, iy = 171, energy density = 1.03677 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.144192[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.160002[0m
+[1m[33m⚠ ieta = 0, ix = 234, iy = 330, energy density = 0.885811 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.174182[0m
+[1m[33m⚠ ieta = 0, ix = 210, iy = 317, energy density = 0.270387 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.132892[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.103924[0m
+[1m[33m⚠ ieta = 0, ix = 199, iy = 272, energy density = 0.942338 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.553955[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.958502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.168651[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.958502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.168651ieta = 0, ix = 260, iy = 337, energy density = 0.0273252 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.139857[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 308, energy density = 0.0211803 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.113124[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 337, energy density = 1.65069 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.14048[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 186, energy density = 0.773761 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.149785[0m
+[1m[33m⚠ ieta = 0, ix = 343, iy = 235, energy density = 0.283661 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.15448[0m
+[1m[33m⚠ ieta = 0, ix = 344, iy = 235, energy density = 0.746 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.843646[0m
+🎵 217 MB 🕑 Done time step 13/50 tau = 0.86 fm/c
+🎵 217 MB eps_max = 44.805 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.403299 GeV.
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.118279[0m
+[1m[33m⚠ ieta = 0, ix = 234, iy = 330, energy density = 0.885811 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.10798[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.117462[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 337, energy density = 0.0273252 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102851[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.958502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.281076[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 308, energy density = 0.0211803 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.101872[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 308, energy density = 0.0211803 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.126493[0m
+[1m[33m⚠ ieta = 0, ix = 199, iy = 272, energy density = 0.942338 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.16773[0m
+[1m[33m⚠ ieta = 0, ix = 262, iy = 337, energy density = 0.939134 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.1066[0m
+[1m[33m⚠ ieta = 0, ix = 343, iy = 235, energy density = 0.283661 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.113851[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 186, energy density = 0.773761 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105193[0m
+[1m[33m⚠ ieta = 0, ix = 234, iy = 330, energy density = 0.777967 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114053[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 318, energy density = 0.0488754 GeV/fm^3, shear |pi/(epsilon+3*P)| = 269332[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.958502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115898[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.0797116 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.1114[0m
+[1m[33m⚠ ieta = 0, ix = 199, iy = 272, energy density = 0.465217 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.388428[0m
+[1m[33m⚠ ieta = 0, ix = 329, iy = 234, energy density = 0.155426 GeV/fm^3, shear |pi/(epsilon+3*P)| = 137071[0m
+[1m[33m⚠ ieta = 0, ix = 262, iy = 337, energy density = 0.939134 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.814572[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 186, energy density = 0.78624 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.103992[0m
+🎵 217 MB 🕑 Done time step 14/50 tau = 0.88 fm/c
+🎵 217 MB eps_max = 43.1648 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.399762 GeV.
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.958502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.279693[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 1.17097 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.123643[0m
+[1m[33m⚠ ieta = 0, ix = 262, iy = 337, energy density = 0.939134 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.56509[0m
+[1m[33m⚠ ieta = 0, ix = 344, iy = 235, energy density = 0.518357 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120021[0m
+[1m[33m⚠ ieta = 0, ix = 208, iy = 316, energy density = 0.0247982 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120165[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.059494 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.228566[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 318, energy density = 0.0357553 GeV/fm^3, shear |pi/(epsilon+3*P)| = 3.65554e+06[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.958502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.138093[0m
+[1m[33m⚠ ieta = 0, ix = 343, iy = 236, energy density = 0.407434 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.83498[0m
+🎵 217 MB 🕑 Done time step 15/50 tau = 0.9 fm/c
+🎵 217 MB eps_max = 41.3076 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.395634 GeV.
+[1m[33m⚠ ieta = 0, ix = 181, iy = 225, energy density = 1.41675 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105842[0m
+[1m[33m⚠ ieta = 0, ix = 210, iy = 317, energy density = 0.11537 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.113756[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.059494 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.227182[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 308, energy density = 0.059494 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.114943[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.958502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.282996[0m
+[1m[33m⚠ ieta = 0, ix = 343, iy = 235, energy density = 0.096057 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.126341[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 331, energy density = 0.126182 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1172.34[0m
+[1m[33m⚠ ieta = 0, ix = 208, iy = 316, energy density = 0.0553029 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.751932[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.115914[0m
+[1m[33m⚠ ieta = 0, ix = 181, iy = 225, energy density = 1.41675 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121245[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 318, energy density = 0.149664 GeV/fm^3, shear |pi/(epsilon+3*P)| = 7.85956e+07[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.46625[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.958502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.131831[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 337, energy density = 0.28701 GeV/fm^3, shear |pi/(epsilon+3*P)| = 4.01472e+07[0m
+🎵 217 MB 🕑 Done time step 16/50 tau = 0.92 fm/c
+🎵 217 MB eps_max = 40.4543 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.393692 GeV.
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.143829[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.155041[0m
+[1m[33m⚠ ieta = 0, ix = 181, iy = 225, energy density = 1.41675 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.2053[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.958502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.36695[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 337, energy density = 0.28701 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.101953[0m
+[1m[33m⚠ ieta = 0, ix = 329, iy = 236, energy density = 0.932969 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.333982[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.2401[0m
+[1m[33m⚠ ieta = 0, ix = 344, iy = 234, energy density = 0.148854 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.218249[0m
+[1m[33m⚠ ieta = 0, ix = 206, iy = 316, energy density = 0.0443657 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.01053e+06[0m
+[1m[33m⚠ ieta = 0, ix = 150, iy = 312, energy density = 0.0482783 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.268742[0m
+[1m[33m⚠ ieta = 0, ix = 150, iy = 312, energy density = 0.0482783 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.111914[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119378[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.156725[0m
+[1m[33m⚠ ieta = 0, ix = 181, iy = 225, energy density = 1.14793 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.151003[0m
+[1m[33m⚠ ieta = 0, ix = 223, iy = 330, energy density = 0.0403965 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11647[0m
+[1m[33m⚠ ieta = 0, ix = 199, iy = 274, energy density = 0.604514 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.6746[0m
+[1m[33m⚠ ieta = 0, ix = 329, iy = 236, energy density = 0.0262179 GeV/fm^3, shear |pi/(epsilon+3*P)| = 3.6639[0m
+[1m[33m⚠ ieta = 0, ix = 329, iy = 236, energy density = 0.0262179 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.101824[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.602008[0m
+[1m[33m⚠ ieta = 0, ix = 343, iy = 236, energy density = 0.676553 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120481[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 228, energy density = 0.681821 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.308649[0m
+[1m[33m⚠ ieta = 0, ix = 344, iy = 235, energy density = 0.484197 GeV/fm^3, shear |pi/(epsilon+3*P)| = 4.1537e+07[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 203, energy density = 1.09613 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.323511[0m
+[1m[33m⚠ ieta = 0, ix = 263, iy = 334, energy density = 1.07279 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.141722[0m
+🎵 217 MB 🕑 Done time step 17/50 tau = 0.94 fm/c
+🎵 217 MB eps_max = 39.7598 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.392088 GeV.
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.180767[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.208813[0m
+[1m[33m⚠ ieta = 0, ix = 150, iy = 312, energy density = 0.0482783 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111366[0m
+[1m[33m⚠ ieta = 0, ix = 150, iy = 312, energy density = 0.0482783 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.119301[0m
+[1m[33m⚠ ieta = 0, ix = 181, iy = 225, energy density = 1.14793 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.18035[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.881717 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.12209[0m
+[1m[33m⚠ ieta = 0, ix = 325, iy = 230, energy density = 0.9726 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.149333[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.22492[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.384558 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.133112[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 230, energy density = 1.73453 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.131423[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 338, energy density = 1.07551 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.1482[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 314, energy density = 1.20829 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.428924[0m
+[1m[33m⚠ ieta = 0, ix = 149, iy = 311, energy density = 0.095197 GeV/fm^3, shear |pi/(epsilon+3*P)| = 5.9238e+06[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.148161[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.174134[0m
+[1m[33m⚠ ieta = 0, ix = 181, iy = 225, energy density = 0.980712 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.132938[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.881717 GeV/fm^3, shear |pi/(epsilon+3*P)| = 10.7198[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 212, energy density = 1.17014 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.275211[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 338, energy density = 0.286695 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.703496[0m
+[1m[33m⚠ ieta = 0, ix = 325, iy = 230, energy density = 0.9726 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.175878[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.606601[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 204, energy density = 0.256894 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.172663[0m
+🎵 217 MB 🕑 Done time step 18/50 tau = 0.96 fm/c
+🎵 217 MB eps_max = 38.9341 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.390155 GeV.
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.231339[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.247663[0m
+[1m[33m⚠ ieta = 0, ix = 151, iy = 312, energy density = 0.0776916 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.106022[0m
+[1m[33m⚠ ieta = 0, ix = 325, iy = 230, energy density = 0.242942 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.270899[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.28738[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 338, energy density = 0.286695 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109758[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 203, energy density = 1.09613 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.141421[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 204, energy density = 0.256894 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.134536[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 317, energy density = 0.680001 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.171839[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 313, energy density = 0.848905 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.126387[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.224287[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.202092[0m
+[1m[33m⚠ ieta = 0, ix = 209, iy = 317, energy density = 0.0224824 GeV/fm^3, shear |pi/(epsilon+3*P)| = 255244[0m
+[1m[33m⚠ ieta = 0, ix = 234, iy = 331, energy density = 0.0476014 GeV/fm^3, shear |pi/(epsilon+3*P)| = 13992.9[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.646825[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.800793 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119013[0m
+[1m[33m⚠  eta = 0, ix = 326, iy = 229, energy density = 0.800793 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119013ieta = 0, ix = 155, iy = 308, energy density = 0.120602 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.143095[0m
+[1m[33m⚠ ieta = 0, ix = 330, iy = 236, energy density = 0.163215 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.09754e+06[0m
+[1m[33m⚠ Reconst velocity Newton:: u0 varies more than 100 times compared to its value at previous time step[0m
+[1m[33m⚠ e = 3.86078, u[0] = 171.518, prev_u[0] = 1.28606[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 317, energy density = 0.680001 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.138392[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 203, energy density = 0.162789 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.149697[0m
+🎵 217 MB 🕑 Done time step 19/50 tau = 0.98 fm/c
+🎵 217 MB eps_max = 38.0626 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.388082 GeV.
+[1m[33m⚠ ieta = 0, ix = 320, iy = 313, energy density = 0.848905 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.107753[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.25243[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.279395[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 225, energy density = 0.0210965 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.25243ieta = 0, ix = 150, iy = 311, energy density = 0.347651 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.151472[0m
+[1m[33m⚠ ieta = 0, ix = 181, iy = 224, energy density = 0.147944 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109196[0m
+[1m[33m⚠ ieta = 0, ix = 259, iy = 339, energy density = 0.0230485 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.119815[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.24888[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 339, energy density = 0.92237 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.108697[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.800793 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.126095[0m
+[1m[33m⚠ ieta = 0, ix = 330, iy = 236, energy density = 0.163215 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.100224[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 317, energy density = 0.680001 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.169622[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 314, energy density = 0.708517 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.36401[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.603929[0m
+[1m[33m⚠ ieta = 0, ix = 259, iy = 339, energy density = 0.0230485 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.112896[0m
+[1m[33m⚠ ieta = 0, ix = 259, iy = 339, energy density = 0.0230485 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.100716[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.878814 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114158[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 339, energy density = 0.207023 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.321419[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 185, energy density = 0.41304 GeV/fm^3, shear |pi/(epsilon+3*P)| = 13.6352[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 185, energy density = 0.41304 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.11311[0m
+[1m[33m⚠ ieta = 0, ix = 173, iy = 254, energy density = 0.961058 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109581[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 317, energy density = 0.569185 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.134753[0m
+🎵 217 MB 🕑 Done time step 20/50 tau = 1 fm/c
+🎵 217 MB eps_max = 37.1257 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.385813 GeV.
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.107413[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.31243[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.933299 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.31243ieta = 0, ix = 259, iy = 339, energy density = 0.0230485 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.130402[0m
+[1m[33m⚠ ieta = 0, ix = 259, iy = 339, energy density = 0.0230485 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.100083[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.759115 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.175836[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 317, energy density = 0.569185 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.154061[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 312, energy density = 1.05493 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.514919[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 314, energy density = 0.110774 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.162774[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.103789[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 0.949879 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.58129[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.759115 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.135909[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 235, energy density = 0.152171 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.73335[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 235, energy density = 0.152171 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.10952[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 317, energy density = 0.43367 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.133049[0m
+🎵 217 MB 🕑 Done time step 21/50 tau = 1.02 fm/c
+🎵 217 MB eps_max = 36.1489 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.383403 GeV.
+[1m[33m⚠ ieta = 0, ix = 321, iy = 312, energy density = 0.920552 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.131456[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 314, energy density = 0.110774 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.179039[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 333, energy density = 0.0398138 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.104156[0m
+[1m[33m⚠ ieta = 0, ix = 181, iy = 225, energy density = 0.567815 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114994[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.110673[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 1.30446 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.302528[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.759115 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.171079[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 235, energy density = 0.152171 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.112503[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 238, energy density = 0.447731 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109518[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 311, energy density = 0.65436 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.445635[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 312, energy density = 1.21441 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.328675[0m
+[1m[33m⚠ ieta = 0, ix = 194, iy = 212, energy density = 1.19259 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.100809[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 334, energy density = 0.183221 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.379926[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.106191[0m
+[1m[33m⚠ ieta = 0, ix = 300, iy = 198, energy density = 1.04663 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.535258[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.657525 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114365[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 317, energy density = 1.27002 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.867962[0m
+[1m[33m⚠ ieta = 0, ix = 202, iy = 203, energy density = 0.234272 GeV/fm^3, shear |pi/(epsilon+3*P)| = 3.8257e+08[0m
+🎵 217 MB 🕑 Done time step 22/50 tau = 1.04 fm/c
+🎵 217 MB eps_max = 35.1607 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.380915 GeV.
+[1m[33m⚠ ieta = 0, ix = 320, iy = 311, energy density = 0.65436 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.159777[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 311, energy density = 0.282279 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.93808[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 224, energy density = 1.18946 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.21953[0m
+[1m[33m⚠ ieta = 0, ix = 180, iy = 224, energy density = 1.18946 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.187735[0m
+[1m[33m⚠ ieta = 0, ix = 151, iy = 309, energy density = 0.113032 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.163901[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 274, energy density = 1.33374 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.132995[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105984[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.110753[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.137885[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.131414 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.122935[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 185, energy density = 0.250627 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.10767[0m
+[1m[33m⚠ ieta = 0, ix = 202, iy = 205, energy density = 0.482658 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.146474[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 311, energy density = 1.13879 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.31966[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 311, energy density = 0.282279 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.40259[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.104998[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.104473[0m
+[1m[33m⚠ ieta = 0, ix = 216, iy = 185, energy density = 0.0595919 GeV/fm^3, shear |pi/(epsilon+3*P)| = 3615.83[0m
+[1m[33m⚠ ieta = 0, ix = 263, iy = 334, energy density = 0.331153 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.784508[0m
+[1m[33m⚠ ieta = 0, ix = 333, iy = 300, energy density = 1.03605 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.231586[0m
+[1m[33m⚠ ieta = 0, ix = 342, iy = 236, energy density = 0.236499 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.106423[0m
+🎵 217 MB 🕑 Done time step 23/50 tau = 1.06 fm/c
+🎵 217 MB eps_max = 34.0631 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.378091 GeV.
+[1m[33m⚠ Reconst velocity Newton:: u0 varies more than 100 times compared to its value at previous time step[0m
+[1m[33m⚠ e = 0.695799, u[0] = 594.658, prev_u[0] = 3.5743[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11447[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.107436[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 274, energy density = 1.33374 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.185705[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.16473[0m
+[1m[33m⚠ ieta = 0, ix = 342, iy = 236, energy density = 0.236499 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.16956[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.108675[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.101275[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 274, energy density = 0.531856 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.186436[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121171[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 185, energy density = 0.0269547 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.162568[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 185, energy density = 0.0269547 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.118189[0m
+🎵 217 MB 🕑 Done time step 24/50 tau = 1.08 fm/c
+🎵 217 MB eps_max = 33.0073 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.375311 GeV.
+[1m[33m⚠ ieta = 0, ix = 192, iy = 263, energy density = 0.364391 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.21287[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 274, energy density = 0.531856 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.186626[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.745443 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.198162[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115794[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.103353[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 273, energy density = 0.573553 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105802[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.157167[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 229, energy density = 0.264218 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.141379[0m
+[1m[33m⚠ ieta = 0, ix = 259, iy = 339, energy density = 1.28458 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.138136[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 184, energy density = 1.30608 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.356007[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 185, energy density = 0.0269547 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.144369[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 185, energy density = 0.0269547 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.131694[0m
+[1m[33m⚠ ieta = 0, ix = 146, iy = 317, energy density = 0.134088 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.112529[0m
+[1m[33m⚠ ieta = 0, ix = 192, iy = 263, energy density = 0.471852 GeV/fm^3, shear |pi/(epsilon+3*P)| = 4.04998[0m
+[1m[33m⚠ ieta = 0, ix = 192, iy = 263, energy density = 0.471852 GeV/fm^3, shear |pi/(epsilon+3*P)| = 4.04998ieta = 0, ix = 320, iy = 312, energy density = 0.0530917 GeV/fm^3, shear |pi/(epsilon+3*P)| = 186277[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 274, energy density = 0.542486 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.26602[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.140382[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.108849[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.100288[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 273, energy density = 0.573553 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.762483[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 273, energy density = 0.573553 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.115022[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114272[0m
+[1m[33m⚠ ieta = 0, ix = 300, iy = 197, energy density = 0.74416 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.389074[0m
+[1m[33m⚠ ieta = 0, ix = 300, iy = 198, energy density = 0.0207515 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.588018[0m
+[1m[33m⚠ ieta = 0, ix = 328, iy = 269, energy density = 1.05062 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.608534[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 184, energy density = 1.30608 GeV/fm^3, shear |pi/(epsilon+3*P)| = 12.4732[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 185, energy density = 0.0269547 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.101851[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 317, energy density = 0.0318829 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.107956[0m
+🎵 217 MB 🕑 Done time step 25/50 tau = 1.1 fm/c
+🎵 217 MB eps_max = 32.1859 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.373103 GeV.
+[1m[33m⚠ ieta = 0, ix = 320, iy = 312, energy density = 0.0530917 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.147251[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 334, energy density = 0.202902 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105317[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115383[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.101597[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.150362[0m
+[1m[33m⚠ ieta = 0, ix = 299, iy = 197, energy density = 0.388772 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.122674[0m
+[1m[33m⚠ ieta = 0, ix = 299, iy = 198, energy density = 0.0562373 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.92786[0m
+[1m[33m⚠ ieta = 0, ix = 299, iy = 198, energy density = 0.0562373 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.13989[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 273, energy density = 0.573553 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.54179[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 273, energy density = 0.573553 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.713893[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 274, energy density = 0.0318843 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.117719[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.139907[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 237, energy density = 0.0208419 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.108586[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 237, energy density = 0.0208419 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.152558[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 238, energy density = 0.270492 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.131942[0m
+[1m[33m⚠ ieta = 0, ix = 192, iy = 263, energy density = 0.0211526 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.371314[0m
+[1m[33m⚠ ieta = 0, ix = 192, iy = 263, energy density = 0.0211526 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.11826[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.127402[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.103285[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.107497[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 215, energy density = 1.27528 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102179[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 231, energy density = 0.0222727 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.131157[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 250, energy density = 0.999429 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.186035[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 231, energy density = 0.0222727 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.131157ieta = 0, ix = 300, iy = 197, energy density = 0.81095 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.141128[0m
+[1m[33m⚠ ieta = 0, ix = 329, iy = 213, energy density = 0.915492 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.55063[0m
+[1m[33m⚠ ieta = 0, ix = 263, iy = 336, energy density = 0.819214 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.168493[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 237, energy density = 0.0208419 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.102187[0m
+🎵 217 MB 🕑 Done time step 26/50 tau = 1.12 fm/c
+🎵 217 MB eps_max = 31.2206 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.370454 GeV.
+[1m[33m⚠ ieta = 0, ix = 192, iy = 263, energy density = 0.0211526 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.117582[0m
+[1m[33m⚠ ieta = 0, ix = 192, iy = 263, energy density = 0.0211526 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.127589[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 334, energy density = 0.307416 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.110018[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.148942[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.113275[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.124944[0m
+[1m[33m⚠ ieta = 0, ix = 299, iy = 197, energy density = 0.372745 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.14588[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 250, energy density = 0.999429 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114597[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 184, energy density = 0.978537 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.189333[0m
+[1m[33m⚠ ieta = 0, ix = 329, iy = 213, energy density = 0.915492 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.147615[0m
+[1m[33m⚠ ieta = 0, ix = 330, iy = 236, energy density = 0.166407 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.289011[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 237, energy density = 0.0208419 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.120344[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 238, energy density = 0.189579 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.151638[0m
+[1m[33m⚠ ieta = 0, ix = 192, iy = 263, energy density = 0.17986 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102906[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 336, energy density = 0.0359279 GeV/fm^3, shear |pi/(epsilon+3*P)| = 89.7655[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 336, energy density = 0.0359279 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.313492[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.110244[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.127251[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 215, energy density = 1.42211 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.106623[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.107705[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 250, energy density = 0.320703 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.100714[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 184, energy density = 0.978537 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.15536[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 186, energy density = 0.0911439 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.590732[0m
+[1m[33m⚠ ieta = 0, ix = 329, iy = 213, energy density = 0.280561 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.179258[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.154894 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.10589[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 238, energy density = 0.189579 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.161041[0m
+🎵 217 MB 🕑 Done time step 27/50 tau = 1.14 fm/c
+🎵 217 MB eps_max = 30.1175 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.367352 GeV.
+[1m[33m⚠ ieta = 0, ix = 191, iy = 263, energy density = 0.555454 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114894[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 312, energy density = 0.117519 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.248946[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 312, energy density = 0.117519 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.248946ieta = 0, ix = 219, iy = 336, energy density = 0.0359279 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.107637[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 313, energy density = 0.024335 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.157649[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 334, energy density = 0.42628 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.130538[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.116373[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.153259[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.124287[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 231, energy density = 0.376456 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.136905[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 186, energy density = 0.0911439 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.17922[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.154894 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.122261[0m
+[1m[33m⚠ ieta = 0, ix = 342, iy = 236, energy density = 0.315886 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102492[0m
+[1m[33m⚠ ieta = 0, ix = 191, iy = 263, energy density = 0.555454 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.171941[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 312, energy density = 0.0950009 GeV/fm^3, shear |pi/(epsilon+3*P)| = 5.81304e+08[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 313, energy density = 0.0611076 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.252204[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 335, energy density = 0.204237 GeV/fm^3, shear |pi/(epsilon+3*P)| = 102307[0m
+[1m[33m⚠ ieta = 0, ix = 194, iy = 273, energy density = 0.68805 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.135003[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11372[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.128039[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111363[0m
+[1m[33m⚠ ieta = 0, ix = 299, iy = 198, energy density = 0.139731 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.52565e+07[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 238, energy density = 0.0547018 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114256[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.0589235 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.183043[0m
+🎵 217 MB 🕑 Done time step 28/50 tau = 1.16 fm/c
+🎵 217 MB eps_max = 28.9385 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.363944 GeV.
+[1m[33m⚠ ieta = 0, ix = 191, iy = 263, energy density = 0.555454 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.148042[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 334, energy density = 0.316819 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.108886[0m
+[1m[33m⚠ ieta = 0, ix = 194, iy = 273, energy density = 0.68805 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109071[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.155409[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.124996[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.124996ieta = 0, ix = 299, iy = 197, energy density = 0.0327754 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.644154[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.117272[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 238, energy density = 0.0547018 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.138834[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.0589235 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.122985[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 335, energy density = 0.0296175 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.185948[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 334, energy density = 0.30918 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.221899[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 311, energy density = 0.188854 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.19094[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.118084[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.128269[0m
+[1m[33m⚠ ieta = 0, ix = 299, iy = 197, energy density = 0.0327754 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.379149[0m
+[1m[33m⚠ ieta = 0, ix = 300, iy = 198, energy density = 0.522411 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.108481[0m
+[1m[33m⚠ ieta = 0, ix = 328, iy = 213, energy density = 0.898296 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.90666[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 251, energy density = 0.86466 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.311021[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.0589235 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.112579[0m
+🎵 217 MB 🕑 Done time step 29/50 tau = 1.18 fm/c
+🎵 217 MB eps_max = 27.6653 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.360147 GeV.
+[1m[33m⚠ ieta = 0, ix = 194, iy = 273, energy density = 0.492624 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.104236[0m
+[1m[33m⚠ ieta = 0, ix = 194, iy = 274, energy density = 0.0563054 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.116465[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 337, energy density = 0.0202655 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.286043[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.158173[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114465[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 312, energy density = 0.0410117 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.104911[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102644[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 334, energy density = 0.30918 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.150342[0m
+[1m[33m⚠ ieta = 0, ix = 299, iy = 197, energy density = 0.0327754 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.618957[0m
+[1m[33m⚠ ieta = 0, ix = 299, iy = 197, energy density = 0.0327754 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.118192[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 214, energy density = 0.027615 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.140781[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.0589235 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.112345[0m
+[1m[33m⚠ ieta = 0, ix = 194, iy = 273, energy density = 0.492624 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.136408[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 334, energy density = 0.0547944 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.237464[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.129625[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 341, energy density = 0.0620587 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.138614[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.0213835 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.4559[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.0213835 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.152756[0m
+🎵 217 MB 🕑 Done time step 30/50 tau = 1.2 fm/c
+🎵 217 MB eps_max = 26.278 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.355862 GeV.
+[1m[33m⚠ ieta = 0, ix = 321, iy = 314, energy density = 0.0579493 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.113178[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 334, energy density = 0.0547944 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.141104[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 334, energy density = 0.0547944 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.100691[0m
+[1m[33m⚠ ieta = 0, ix = 153, iy = 310, energy density = 0.115041 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115552[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.887156 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.159266[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 276, energy density = 0.0606952 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.117323[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.0213835 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.193313[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 314, energy density = 0.0579493 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.124463[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 333, energy density = 0.113561 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.231377[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.0820719 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.191571[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.0820719 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.240841[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 311, energy density = 2.27088 GeV/fm^3, shear |pi/(epsilon+3*P)| = 43.6422[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 274, energy density = 0.346216 GeV/fm^3, shear |pi/(epsilon+3*P)| = 6.02308e+06[0m
+[1m[33m⚠ ieta = 0, ix = 300, iy = 199, energy density = 0.67514 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.381052[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 312, energy density = 0.0239226 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102437[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 319, energy density = 0.0283486 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.266446[0m
+🎵 217 MB 🕑 Done time step 31/50 tau = 1.22 fm/c
+🎵 217 MB eps_max = 24.8243 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.35119 GeV.
+[1m[33m⚠ ieta = 0, ix = 316, iy = 215, energy density = 0.965146 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.123139[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.0820719 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.135445[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 275, energy density = 0.0820719 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.115587[0m
+[1m[33m⚠ ieta = 0, ix = 153, iy = 310, energy density = 0.115041 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.103034[0m
+[1m[33m⚠ ieta = 0, ix = 153, iy = 311, energy density = 0.942257 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.564607[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 215, energy density = 0.052795 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.216712[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 215, energy density = 0.052795 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.141637[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 312, energy density = 0.0239226 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.145364[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.123012[0m
+[1m[33m⚠ ieta = 0, ix = 291, iy = 337, energy density = 0.0318377 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.166617[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 238, energy density = 2.85766 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.186935[0m
+[1m[33m⚠ ieta = 0, ix = 163, iy = 316, energy density = 0.0606187 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.148028[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 337, energy density = 0.302267 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.1492[0m
+[1m[33m⚠ ieta = 0, ix = 298, iy = 198, energy density = 0.105602 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.534231[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 274, energy density = 0.254075 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.58337e+08[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.101508[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 215, energy density = 0.965146 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.129096[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 311, energy density = 0.298096 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.134089[0m
+[1m[33m⚠ ieta = 0, ix = 153, iy = 311, energy density = 0.942257 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.523245[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 312, energy density = 0.0239226 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120112[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 342, energy density = 0.100009 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.126336[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 238, energy density = 2.55853 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.149652[0m
+[1m[33m⚠ ieta = 0, ix = 341, iy = 238, energy density = 0.080126 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.668086[0m
+🎵 217 MB 🕑 Done time step 32/50 tau = 1.24 fm/c
+🎵 217 MB eps_max = 24.076 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.348707 GeV.
+[1m[33m⚠ ieta = 0, ix = 316, iy = 215, energy density = 0.65813 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.459014[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.452637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115148[0m
+[1m[33m⚠ ieta = 0, ix = 153, iy = 310, energy density = 0.115041 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.117247[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 238, energy density = 2.55853 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.198834[0m
+[1m[33m⚠ ieta = 0, ix = 331, iy = 255, energy density = 0.827799 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.306192[0m
+[1m[33m⚠ ieta = 0, ix = 193, iy = 273, energy density = 0.114099 GeV/fm^3, shear |pi/(epsilon+3*P)| = 20313.2[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 337, energy density = 0.241339 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.322[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 311, energy density = 0.10525 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.129575[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 311, energy density = 0.10525 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.232197[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 314, energy density = 0.0254306 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.130682[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.337776 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.130956[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 342, energy density = 0.0628665 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111831[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 238, energy density = 1.74569 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.173005[0m
+[1m[33m⚠ ieta = 0, ix = 144, iy = 318, energy density = 0.0200674 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.123009[0m
+[1m[33m⚠ ieta = 0, ix = 331, iy = 255, energy density = 0.848038 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.790257[0m
+[1m[33m⚠ ieta = 0, ix = 342, iy = 237, energy density = 0.126001 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.53212e+06[0m
+🎵 217 MB 🕑 Done time step 33/50 tau = 1.26 fm/c
+🎵 217 MB eps_max = 23.411 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.346452 GeV.
+[1m[33m⚠ ieta = 0, ix = 193, iy = 273, energy density = 0.114099 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.100799[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 275, energy density = 0.435302 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.103619[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 342, energy density = 0.0491099 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.256299[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 238, energy density = 0.290171 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.205939[0m
+[1m[33m⚠ ieta = 0, ix = 144, iy = 318, energy density = 0.0200674 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.110104[0m
+[1m[33m⚠ ieta = 0, ix = 216, iy = 184, energy density = 0.0218561 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.104406[0m
+[1m[33m⚠ ieta = 0, ix = 342, iy = 237, energy density = 0.126001 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.107211[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 312, energy density = 1.05548 GeV/fm^3, shear |pi/(epsilon+3*P)| = 38.3574[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 312, energy density = 1.05548 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.120137[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 337, energy density = 0.0219897 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.00111[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 337, energy density = 0.0219897 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.122575[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 334, energy density = 0.105553 GeV/fm^3, shear |pi/(epsilon+3*P)| = 66533.3[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 248, energy density = 1.01517 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.132228[0m
+[1m[33m⚠ ieta = 0, ix = 153, iy = 310, energy density = 0.0354936 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.122828[0m
+[1m[33m⚠ ieta = 0, ix = 153, iy = 310, energy density = 0.0354936 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.124707[0m
+[1m[33m⚠ ieta = 0, ix = 222, iy = 330, energy density = 0.883408 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.298835[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 214, energy density = 0.200199 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.213117[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 310, energy density = 0.0263271 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.303466[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 310, energy density = 0.0263271 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.102676[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 319, energy density = 0.0284221 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.172798[0m
+🎵 217 MB 🕑 Done time step 34/50 tau = 1.28 fm/c
+🎵 217 MB eps_max = 22.7108 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.344028 GeV.
+[1m[33m⚠ ieta = 0, ix = 320, iy = 313, energy density = 0.947021 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.220524[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 314, energy density = 0.2152 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.117138[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 337, energy density = 0.0219897 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121348[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.933777 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.29865[0m
+[1m[33m⚠ ieta = 0, ix = 222, iy = 336, energy density = 0.0215895 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.16526[0m
+[1m[33m⚠ ieta = 0, ix = 222, iy = 336, energy density = 0.0215895 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.102685[0m
+[1m[33m⚠ ieta = 0, ix = 259, iy = 338, energy density = 0.95342 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.214696[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 310, energy density = 0.0263271 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.180289[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 310, energy density = 0.0263271 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.127495[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 319, energy density = 0.0284221 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.137559[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 313, energy density = 0.947021 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.142566[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 336, energy density = 0.0383586 GeV/fm^3, shear |pi/(epsilon+3*P)| = 158034[0m
+[1m[33m⚠ ieta = 0, ix = 219, iy = 337, energy density = 0.0287525 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.183252[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.864459 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.945085[0m
+[1m[33m⚠ ieta = 0, ix = 222, iy = 330, energy density = 0.225977 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.136275[0m
+[1m[33m⚠ ieta = 0, ix = 259, iy = 338, energy density = 0.95342 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.219793[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 184, energy density = 0.0684474 GeV/fm^3, shear |pi/(epsilon+3*P)| = 45.7506[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 184, energy density = 0.0684474 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.143139[0m
+[1m[33m⚠ ieta = 0, ix = 188, iy = 238, energy density = 1.16315 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.20603e+08[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 183, energy density = 0.175647 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105684[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 319, energy density = 0.0354696 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.18651[0m
+🎵 217 MB 🕑 Done time step 35/50 tau = 1.3 fm/c
+🎵 217 MB eps_max = 21.9215 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.341228 GeV.
+[1m[33m⚠ ieta = 0, ix = 220, iy = 337, energy density = 0.0244035 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.236143[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 335, energy density = 0.150737 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.179494[0m
+[1m[33m⚠ ieta = 0, ix = 259, iy = 338, energy density = 0.95342 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.267791[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 311, energy density = 0.191574 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.10567[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 316, energy density = 0.0758321 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.156984[0m
+[1m[33m⚠ ieta = 0, ix = 342, iy = 237, energy density = 0.204317 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111984[0m
+[1m[33m⚠ ieta = 0, ix = 196, iy = 276, energy density = 0.260866 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.40712e+08[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 216, energy density = 0.192178 GeV/fm^3, shear |pi/(epsilon+3*P)| = 20.5372[0m
+[1m[33m⚠ ieta = 0, ix = 184, iy = 183, energy density = 0.0266339 GeV/fm^3, shear |pi/(epsilon+3*P)| = 10.1001[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 316, energy density = 0.0758321 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121001[0m
+[1m[33m⚠ ieta = 0, ix = 342, iy = 236, energy density = 0.136335 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.365673[0m
+🎵 217 MB 🕑 Done time step 36/50 tau = 1.32 fm/c
+🎵 217 MB eps_max = 20.9886 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.337823 GeV.
+[1m[33m⚠ ieta = 0, ix = 321, iy = 313, energy density = 0.0256034 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.171582[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 313, energy density = 0.0256034 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.129786[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 337, energy density = 0.0244035 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.158299[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 276, energy density = 0.0236429 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.102618[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 214, energy density = 0.0213496 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.221277[0m
+[1m[33m⚠ ieta = 0, ix = 184, iy = 183, energy density = 0.0266339 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.103138[0m
+[1m[33m⚠ ieta = 0, ix = 318, iy = 216, energy density = 0.215644 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.149703[0m
+[1m[33m⚠ ieta = 0, ix = 300, iy = 333, energy density = 0.0382898 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.152813[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 310, energy density = 0.194601 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.131625[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 311, energy density = 0.0664766 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.274715[0m
+[1m[33m⚠ ieta = 0, ix = 188, iy = 238, energy density = 0.741287 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102038[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 316, energy density = 0.0758321 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.147272[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 337, energy density = 0.0244035 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109234[0m
+[1m[33m⚠ ieta = 0, ix = 323, iy = 248, energy density = 0.0400902 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121303[0m
+[1m[33m⚠ ieta = 0, ix = 195, iy = 276, energy density = 0.0236429 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.116832[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 214, energy density = 0.48527 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.137829[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 311, energy density = 0.0664766 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.167425[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 311, energy density = 0.0664766 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.110772[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.885569 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.312788[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 309, energy density = 0.0506578 GeV/fm^3, shear |pi/(epsilon+3*P)| = 5.79619[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 309, energy density = 0.0506578 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.123465[0m
+[1m[33m⚠ ieta = 0, ix = 300, iy = 333, energy density = 0.0382898 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114806[0m
+[1m[33m⚠ ieta = 0, ix = 300, iy = 333, energy density = 0.0382898 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114806ieta = 0, ix = 156, iy = 312, energy density = 0.194711 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.42489[0m
+[1m[33m⚠ ieta = 0, ix = 188, iy = 238, energy density = 0.741287 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119452[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 246, energy density = 0.0833206 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.152965[0m
+🎵 217 MB 🕑 Done time step 37/50 tau = 1.34 fm/c
+🎵 217 MB eps_max = 19.9099 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.333746 GeV.
+[1m[33m⚠ ieta = 0, ix = 220, iy = 336, energy density = 0.0201926 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.257206[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 336, energy density = 0.0201926 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.108345[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 337, energy density = 0.0244035 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.126638[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 314, energy density = 0.5897 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105702[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 214, energy density = 0.48527 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.159587[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 337, energy density = 0.148314 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115465[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.676016 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.13948[0m
+[1m[33m⚠ ieta = 0, ix = 290, iy = 338, energy density = 0.0204818 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111849[0m
+[1m[33m⚠ ieta = 0, ix = 300, iy = 333, energy density = 0.0382898 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.166653[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.885569 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11219[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 309, energy density = 0.0506578 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115582[0m
+[1m[33m⚠ ieta = 0, ix = 188, iy = 238, energy density = 0.741287 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.144323[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 246, energy density = 0.0833206 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.126568[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 246, energy density = 0.0234481 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.32099[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 246, energy density = 0.0234481 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.187854[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 316, energy density = 0.109418 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.142671[0m
+[1m[33m⚠ ieta = 0, ix = 342, iy = 237, energy density = 0.341165 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11449[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.0915867 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.127698[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 314, energy density = 0.584724 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.100484[0m
+[1m[33m⚠ ieta = 0, ix = 259, iy = 338, energy density = 0.0419286 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.50007e+06[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.676016 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.12514[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.89998 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.10882[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 309, energy density = 0.0211002 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.895496[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 309, energy density = 0.0211002 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.395592[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 310, energy density = 0.111125 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.130007[0m
+[1m[33m⚠ ieta = 0, ix = 300, iy = 333, energy density = 0.0382898 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.144754[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.431007 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.106097[0m
+[1m[33m⚠ ieta = 0, ix = 215, iy = 183, energy density = 0.0816597 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.141729[0m
+[1m[33m⚠ ieta = 0, ix = 188, iy = 238, energy density = 0.741287 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105542[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 237, energy density = 0.667487 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.108935[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 237, energy density = 0.667487 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.108935ieta = 0, ix = 216, iy = 183, energy density = 0.0214331 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.102669[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 316, energy density = 0.138587 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.110668[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.109076 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.215738[0m
+🎵 217 MB 🕑 Done time step 38/50 tau = 1.36 fm/c
+🎵 217 MB eps_max = 18.7718 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.329266 GeV.
+[1m[33m⚠ ieta = 0, ix = 320, iy = 214, energy density = 0.022741 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.11978[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.0915867 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119758[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 313, energy density = 0.0537517 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.155945[0m
+[1m[33m⚠ ieta = 0, ix = 325, iy = 247, energy density = 1.11232 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.108249[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.89998 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.174353[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 310, energy density = 0.111125 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.174281[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.431007 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.161631[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 246, energy density = 0.0669316 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102066[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 237, energy density = 0.667487 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119521[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 214, energy density = 1.27868 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.226505[0m
+[1m[33m⚠ ieta = 0, ix = 266, iy = 155, energy density = 0.0425824 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.904062[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 313, energy density = 0.0537517 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.125197[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 314, energy density = 0.560801 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.130653[0m
+[1m[33m⚠ ieta = 0, ix = 325, iy = 247, energy density = 0.116709 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.178367[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.54178 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.136773[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 310, energy density = 0.111125 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.124644[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.301766 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.131474[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.0681573 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.360914[0m
+[1m[33m⚠ ieta = 0, ix = 342, iy = 236, energy density = 0.0197658 GeV/fm^3, shear |pi/(epsilon+3*P)| = 410430[0m
+🎵 217 MB 🕑 Done time step 39/50 tau = 1.38 fm/c
+🎵 217 MB eps_max = 18.1914 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.326905 GeV.
+[1m[33m⚠ ieta = 0, ix = 266, iy = 155, energy density = 0.0425824 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.118165[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 313, energy density = 0.0537517 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.134465[0m
+[1m[33m⚠ ieta = 0, ix = 153, iy = 314, energy density = 0.118794 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115198[0m
+[1m[33m⚠ ieta = 0, ix = 318, iy = 214, energy density = 0.19573 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.101491[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 309, energy density = 0.0243475 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.129703[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 310, energy density = 0.111125 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.149782[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 228, energy density = 3.81106 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.165985[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.54178 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.155919[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.301766 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.147565[0m
+[1m[33m⚠ ieta = 0, ix = 342, iy = 236, energy density = 0.0197658 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119373[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 214, energy density = 1.27975 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.187821[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 313, energy density = 0.097549 GeV/fm^3, shear |pi/(epsilon+3*P)| = 6987.98[0m
+[1m[33m⚠ ieta = 0, ix = 164, iy = 316, energy density = 0.0415401 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.358892[0m
+[1m[33m⚠ ieta = 0, ix = 164, iy = 316, energy density = 0.0415401 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.155864[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 314, energy density = 0.0995637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.124652[0m
+[1m[33m⚠ ieta = 0, ix = 153, iy = 314, energy density = 0.109723 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121647[0m
+[1m[33m⚠ ieta = 0, ix = 154, iy = 310, energy density = 0.165559 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.98056e+07[0m
+[1m[33m⚠ ieta = 0, ix = 301, iy = 332, energy density = 0.179924 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.104634[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 228, energy density = 1.38146 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121304[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 338, energy density = 0.376682 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.07298e+08[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 311, energy density = 0.231244 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11853[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.293187 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121742[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 237, energy density = 0.0949215 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.260498[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 237, energy density = 0.0949215 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.170078[0m
+🎵 217 MB 🕑 Done time step 40/50 tau = 1.4 fm/c
+🎵 217 MB eps_max = 17.837 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.325437 GeV.
+[1m[33m⚠ ieta = 0, ix = 164, iy = 316, energy density = 0.0415401 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.478353[0m
+[1m[33m⚠ ieta = 0, ix = 194, iy = 277, energy density = 0.422588 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.337597[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 314, energy density = 0.0995637 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.1707[0m
+[1m[33m⚠ ieta = 0, ix = 325, iy = 229, energy density = 0.0346712 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.104484[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.549504 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.138903[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 237, energy density = 0.0949215 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114894[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 237, energy density = 0.0949215 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.150029[0m
+[1m[33m⚠ ieta = 0, ix = 189, iy = 238, energy density = 0.133236 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.136766[0m
+[1m[33m⚠ ieta = 0, ix = 352, iy = 298, energy density = 0.039546 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.122996[0m
+[1m[33m⚠ ieta = 0, ix = 352, iy = 299, energy density = 0.0213149 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.128176[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.293187 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.139535[0m
+[1m[33m⚠ ieta = 0, ix = 145, iy = 318, energy density = 0.043843 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.262264[0m
+[1m[33m⚠ ieta = 0, ix = 321, iy = 313, energy density = 0.390089 GeV/fm^3, shear |pi/(epsilon+3*P)| = 8.21476e+07[0m
+[1m[33m⚠ ieta = 0, ix = 266, iy = 155, energy density = 0.0737386 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.198656[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 214, energy density = 0.386586 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.81828e+08[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 229, energy density = 0.359846 GeV/fm^3, shear |pi/(epsilon+3*P)| = 3.85385e+08[0m
+[1m[33m⚠ ieta = 0, ix = 301, iy = 332, energy density = 0.199537 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.350521[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.282582 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.112933[0m
+🎵 217 MB 🕑 Done time step 41/50 tau = 1.42 fm/c
+🎵 217 MB eps_max = 17.388 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.323545 GeV.
+[1m[33m⚠ ieta = 0, ix = 220, iy = 337, energy density = 0.0276988 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.915772[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 314, energy density = 0.142131 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.126759[0m
+[1m[33m⚠ ieta = 0, ix = 156, iy = 310, energy density = 0.0677409 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.118884[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.940472 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.16903[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.243607 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.133245[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 246, energy density = 0.107743 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.100206[0m
+[1m[33m⚠ ieta = 0, ix = 152, iy = 314, energy density = 0.142131 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.135415[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 247, energy density = 0.180005 GeV/fm^3, shear |pi/(epsilon+3*P)| = 5283.86[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 228, energy density = 0.263312 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.309516[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 228, energy density = 0.263312 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.182905[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 1.12661 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.692538[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.0833885 GeV/fm^3, shear |pi/(epsilon+3*P)| = 4294.91[0m
+🎵 217 MB 🕑 Done time step 42/50 tau = 1.44 fm/c
+🎵 217 MB eps_max = 16.8632 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.321289 GeV.
+[1m[33m⚠ ieta = 0, ix = 163, iy = 246, energy density = 0.171222 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.14652[0m
+[1m[33m⚠ ieta = 0, ix = 164, iy = 315, energy density = 0.0531502 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.100364[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 1.12661 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.317181[0m
+[1m[33m⚠ ieta = 0, ix = 188, iy = 238, energy density = 1.02407 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120909[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 336, energy density = 0.0250724 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.110576[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.183263 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115666[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 214, energy density = 0.194977 GeV/fm^3, shear |pi/(epsilon+3*P)| = 9.72815e+06[0m
+[1m[33m⚠ ieta = 0, ix = 322, iy = 314, energy density = 0.0924801 GeV/fm^3, shear |pi/(epsilon+3*P)| = 4.49309[0m
+[1m[33m⚠ ieta = 0, ix = 322, iy = 314, energy density = 0.0924801 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.103421[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 335, energy density = 0.228698 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.07199[0m
+[1m[33m⚠ ieta = 0, ix = 325, iy = 247, energy density = 0.299751 GeV/fm^3, shear |pi/(epsilon+3*P)| = 3.28874e+07[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 227, energy density = 0.225899 GeV/fm^3, shear |pi/(epsilon+3*P)| = 20.7903[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 227, energy density = 0.225899 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.136245[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 230, energy density = 1.43942 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.122145[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.977898 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.246231[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 336, energy density = 0.0250724 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.153094[0m
+[1m[33m⚠ ieta = 0, ix = 318, iy = 214, energy density = 0.33086 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.55163e+07[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.161086 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11836[0m
+[1m[33m⚠ ieta = 0, ix = 188, iy = 238, energy density = 1.80243 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.117657[0m
+🎵 217 MB 🕑 Done time step 43/50 tau = 1.46 fm/c
+🎵 217 MB eps_max = 16.289 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.318762 GeV.
+[1m[33m⚠ ieta = 0, ix = 320, iy = 214, energy density = 0.194977 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.125779[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 336, energy density = 0.11547 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.193393[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 336, energy density = 0.0250724 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.113759[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.977898 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.492081[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.977898 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.10037[0m
+[1m[33m⚠ ieta = 0, ix = 352, iy = 299, energy density = 0.0691218 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.651777[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 214, energy density = 0.215933 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.1004[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 335, energy density = 0.0871452 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.412535[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 336, energy density = 0.11547 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.17466[0m
+[1m[33m⚠ ieta = 0, ix = 164, iy = 317, energy density = 0.0450905 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114395[0m
+[1m[33m⚠ ieta = 0, ix = 322, iy = 314, energy density = 0.116082 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.252106[0m
+[1m[33m⚠ ieta = 0, ix = 322, iy = 314, energy density = 0.116082 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.110769[0m
+[1m[33m⚠ ieta = 0, ix = 155, iy = 310, energy density = 0.0391499 GeV/fm^3, shear |pi/(epsilon+3*P)| = 329364[0m
+[1m[33m⚠ ieta = 0, ix = 328, iy = 227, energy density = 0.449085 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121805[0m
+[1m[33m⚠ Reconst velocity Newton:: u0 varies more than 100 times compared to its value at previous time step[0m
+[1m[33m⚠ e = 8.59199, u[0] = 137.111, prev_u[0] = 1.05671[0m
+[1m[33m⚠ ieta = 0, ix = 260, iy = 339, energy density = 0.763467 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.185866[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 229, energy density = 0.0744889 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.22166[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.385673 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.395021[0m
+[1m[33m⚠ ieta = 0, ix = 352, iy = 299, energy density = 0.0691218 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.41662[0m
+[1m[33m⚠ ieta = 0, ix = 352, iy = 299, energy density = 0.0691218 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.22589[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 245, energy density = 0.056842 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.523091[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 245, energy density = 0.0211986 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.271139[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 245, energy density = 0.0211986 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.138732[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 316, energy density = 0.0744101 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105225[0m
+🎵 217 MB 🕑 Done time step 44/50 tau = 1.48 fm/c
+🎵 217 MB eps_max = 15.6881 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.316047 GeV.
+[1m[33m⚠ ieta = 0, ix = 302, iy = 333, energy density = 0.021056 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111479[0m
+[1m[33m⚠ ieta = 0, ix = 220, iy = 336, energy density = 0.11547 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.185037[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.385673 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.335452[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.385673 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.125497[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.184675 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102852[0m
+[1m[33m⚠ ieta = 0, ix = 354, iy = 298, energy density = 0.021847 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.122375[0m
+[1m[33m⚠ ieta = 0, ix = 302, iy = 333, energy density = 0.021056 GeV/fm^3, shear |pi/(epsilon+3*P)| = 7.24401e+07[0m
+[1m[33m⚠ ieta = 0, ix = 253, iy = 170, energy density = 0.969728 GeV/fm^3, shear |pi/(epsilon+3*P)| = 5.3979[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 214, energy density = 0.235088 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114797[0m
+[1m[33m⚠ ieta = 0, ix = 178, iy = 252, energy density = 0.642237 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.100038[0m
+[1m[33m⚠ ieta = 0, ix = 265, iy = 153, energy density = 0.183457 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.146021[0m
+[1m[33m⚠ ieta = 0, ix = 179, iy = 236, energy density = 0.882827 GeV/fm^3, shear |pi/(epsilon+3*P)| = 11.8896[0m
+[1m[33m⚠ ieta = 0, ix = 266, iy = 153, energy density = 0.0831414 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.413607[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 323, energy density = 1.19013 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.568902[0m
+[1m[33m⚠ ieta = 0, ix = 153, iy = 314, energy density = 0.020587 GeV/fm^3, shear |pi/(epsilon+3*P)| = 5.84308e+06[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.716807 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.105621[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.0680503 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.117903[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 183, energy density = 0.290855 GeV/fm^3, shear |pi/(epsilon+3*P)| = 16.285[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 183, energy density = 0.290855 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.100467[0m
+[1m[33m⚠ ieta = 0, ix = 158, iy = 310, energy density = 0.0519681 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.25679[0m
+[1m[33m⚠ ieta = 0, ix = 142, iy = 319, energy density = 0.0219969 GeV/fm^3, shear |pi/(epsilon+3*P)| = 4.90541[0m
+[1m[33m⚠ ieta = 0, ix = 142, iy = 319, energy density = 0.0219969 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.100692[0m
+🎵 217 MB 🕑 Done time step 45/50 tau = 1.5 fm/c
+🎵 217 MB eps_max = 15.2887 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.3142 GeV.
+[1m[33m⚠ ieta = 0, ix = 302, iy = 333, energy density = 0.021056 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.15733[0m
+[1m[33m⚠ ieta = 0, ix = 253, iy = 170, energy density = 0.969728 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.191536[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 323, energy density = 1.19013 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.166907[0m
+[1m[33m⚠ ieta = 0, ix = 319, iy = 214, energy density = 0.0434211 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.1168[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.716807 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.115777[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 245, energy density = 0.0458547 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.119792[0m
+[1m[33m⚠ ieta = 0, ix = 302, iy = 333, energy density = 0.021056 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.108213[0m
+[1m[33m⚠ ieta = 0, ix = 253, iy = 170, energy density = 0.698475 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.180204[0m
+[1m[33m⚠ ieta = 0, ix = 265, iy = 153, energy density = 0.04591 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.416692[0m
+[1m[33m⚠ ieta = 0, ix = 179, iy = 236, energy density = 0.326157 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.124473[0m
+[1m[33m⚠ Reconst velocity Newton:: u0 varies more than 100 times compared to its value at previous time step[0m
+[1m[33m⚠ e = 0.178654, u[0] = 279.468, prev_u[0] = 2.32314[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 323, energy density = 0.916547 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.195452[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 183, energy density = 0.0970253 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.176327[0m
+[1m[33m⚠ ieta = 0, ix = 214, iy = 183, energy density = 0.0970253 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.148398[0m
+[1m[33m⚠ ieta = 0, ix = 157, iy = 311, energy density = 0.0794326 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.149905[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 227, energy density = 0.232217 GeV/fm^3, shear |pi/(epsilon+3*P)| = 261583[0m
+[1m[33m⚠ ieta = 0, ix = 158, iy = 310, energy density = 0.0270249 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.59792[0m
+[1m[33m⚠ ieta = 0, ix = 158, iy = 310, energy density = 0.0270249 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.115472[0m
+[1m[33m⚠ ieta = 0, ix = 203, iy = 147, energy density = 0.0287986 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.341512[0m
+🎵 217 MB 🕑 Done time step 46/50 tau = 1.52 fm/c
+🎵 217 MB eps_max = 15.2954 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.314232 GeV.
+[1m[33m⚠ ieta = 0, ix = 166, iy = 315, energy density = 0.151966 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.10666[0m
+[1m[33m⚠ ieta = 0, ix = 167, iy = 315, energy density = 0.0352538 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.114609[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 323, energy density = 0.40135 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.654988[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 323, energy density = 0.40135 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.117847[0m
+[1m[33m⚠ ieta = 0, ix = 318, iy = 214, energy density = 0.610383 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.10419[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 339, energy density = 0.0263375 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.121118[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 339, energy density = 0.0263375 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.100395[0m
+[1m[33m⚠ ieta = 0, ix = 187, iy = 238, energy density = 0.245967 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.118519[0m
+[1m[33m⚠ ieta = 0, ix = 253, iy = 170, energy density = 0.705823 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.112809[0m
+[1m[33m⚠ Reconst velocity Newton:: u0 varies more than 100 times compared to its value at previous time step[0m
+[1m[33m⚠ e = 0.340403, u[0] = 120.098, prev_u[0] = 1.10564[0m
+[1m[33m⚠ ieta = 0, ix = 165, iy = 314, energy density = 0.0205397 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1230.93[0m
+[1m[33m⚠ ieta = 0, ix = 165, iy = 314, energy density = 0.0205397 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.563734[0m
+[1m[33m⚠ ieta = 0, ix = 166, iy = 315, energy density = 0.0726334 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.117149[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 323, energy density = 0.40135 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.224505[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 214, energy density = 0.32713 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.129472[0m
+[1m[33m⚠ ieta = 0, ix = 318, iy = 214, energy density = 0.188365 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.113018[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 228, energy density = 0.447189 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.131557[0m
+[1m[33m⚠ ieta = 0, ix = 261, iy = 339, energy density = 0.0244874 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.5263[0m
+[1m[33m⚠ ieta = 0, ix = 158, iy = 309, energy density = 0.0576453 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.767736[0m
+[1m[33m⚠ ieta = 0, ix = 263, iy = 338, energy density = 0.694573 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.15684[0m
+[1m[33m⚠ ieta = 0, ix = 144, iy = 317, energy density = 0.0511527 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.135787[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 245, energy density = 0.0244758 GeV/fm^3, shear |pi/(epsilon+3*P)| = 12160.3[0m
+[1m[33m⚠ ieta = 0, ix = 354, iy = 298, energy density = 0.0208959 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.19939[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 314, energy density = 0.0514913 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.85034[0m
+🎵 217 MB 🕑 Done time step 47/50 tau = 1.54 fm/c
+🎵 217 MB eps_max = 15.1949 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.313762 GeV.
+[1m[33m⚠ ieta = 0, ix = 165, iy = 316, energy density = 0.0341671 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.268784[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 250, energy density = 0.385769 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.234305[0m
+[1m[33m⚠ ieta = 0, ix = 328, iy = 227, energy density = 0.524699 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.102924[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.530272 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.143572[0m
+[1m[33m⚠ ieta = 0, ix = 329, iy = 247, energy density = 0.79708 GeV/fm^3, shear |pi/(epsilon+3*P)| = 1.71108[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 323, energy density = 0.40135 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.206949[0m
+[1m[33m⚠ ieta = 0, ix = 317, iy = 214, energy density = 0.32713 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.120375[0m
+[1m[33m⚠ ieta = 0, ix = 354, iy = 298, energy density = 0.0208959 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.163643[0m
+[1m[33m⚠ ieta = 0, ix = 160, iy = 246, energy density = 0.0283092 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111813[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 245, energy density = 0.0244758 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.175215[0m
+[1m[33m⚠ ieta = 0, ix = 178, iy = 252, energy density = 0.249514 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.155936[0m
+[1m[33m⚠ ieta = 0, ix = 165, iy = 314, energy density = 0.0217337 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.130793[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.530272 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.137637[0m
+[1m[33m⚠ ieta = 0, ix = 316, iy = 323, energy density = 0.352342 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.182654[0m
+[1m[33m⚠ ieta = 0, ix = 319, iy = 214, energy density = 0.184103 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.107217[0m
+[1m[33m⚠ ieta = 0, ix = 262, iy = 338, energy density = 1.07259 GeV/fm^3, shear |pi/(epsilon+3*P)| = 9.39681e+08[0m
+[1m[33m⚠ ieta = 0, ix = 354, iy = 298, energy density = 0.0208959 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.13111[0m
+[1m[33m⚠ ieta = 0, ix = 162, iy = 314, energy density = 0.0537836 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.11446[0m
+🎵 217 MB 🕑 Done time step 48/50 tau = 1.56 fm/c
+🎵 217 MB eps_max = 14.9879 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.312787 GeV.
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.530272 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.236795[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 247, energy density = 0.0361047 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.109722[0m
+[1m[33m⚠ ieta = 0, ix = 354, iy = 298, energy density = 0.0208959 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.133132[0m
+[1m[33m⚠ ieta = 0, ix = 319, iy = 214, energy density = 0.184103 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.331266[0m
+[1m[33m⚠ ieta = 0, ix = 320, iy = 214, energy density = 0.307269 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.130168[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.530272 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.173178[0m
+[1m[33m⚠ ieta = 0, ix = 222, iy = 331, energy density = 0.026594 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.114102[0m
+[1m[33m⚠ ieta = 0, ix = 326, iy = 250, energy density = 0.247975 GeV/fm^3, shear |pi/(epsilon+3*P)| = 12695.8[0m
+[1m[33m⚠ ieta = 0, ix = 318, iy = 213, energy density = 0.0637029 GeV/fm^3, shear |pi/(epsilon+3*P)| = 8.35945[0m
+[1m[33m⚠ ieta = 0, ix = 318, iy = 213, energy density = 0.0637029 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.1563[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 230, energy density = 0.025633 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.576121[0m
+[1m[33m⚠ ieta = 0, ix = 327, iy = 230, energy density = 0.025633 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.334201[0m
+[1m[33m⚠ ieta = 0, ix = 353, iy = 297, energy density = 0.0432237 GeV/fm^3, shear |pi/(epsilon+3*P)| = 2.4227[0m
+[1m[33m⚠ ieta = 0, ix = 262, iy = 338, energy density = 0.0286701 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.112853[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 314, energy density = 0.0596751 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.174949[0m
+🎵 217 MB 🕑 Done time step 49/50 tau = 1.58 fm/c
+🎵 217 MB eps_max = 14.6691 GeV/fm^3, rhob_max = 0 1/fm^3, T_max = 0.311266 GeV.
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.530272 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.239013[0m
+[1m[33m⚠ ieta = 0, ix = 222, iy = 331, energy density = 0.026594 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.113683[0m
+[1m[33m⚠ ieta = 0, ix = 222, iy = 331, energy density = 0.026594 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.128669[0m
+[1m[33m⚠ ieta = 0, ix = 318, iy = 213, energy density = 0.0637029 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.108052[0m
+[1m[33m⚠ ieta = 0, ix = 328, iy = 250, energy density = 0.127484 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.157644[0m
+[1m[33m⚠ ieta = 0, ix = 328, iy = 250, energy density = 0.127484 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.15182[0m
+[1m[33m⚠ ieta = 0, ix = 353, iy = 297, energy density = 0.0432237 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.111418[0m
+[1m[33m⚠ ieta = 0, ix = 221, iy = 331, energy density = 0.530272 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.169407[0m
+[1m[33m⚠ ieta = 0, ix = 222, iy = 331, energy density = 0.026594 GeV/fm^3, bulk |Pi/(epsilon+3*P)| = 0.123846[0m
+[1m[33m⚠ ieta = 0, ix = 161, iy = 314, energy density = 0.0728553 GeV/fm^3, shear |pi/(epsilon+3*P)| = 0.144482[0m
+🎵 217 MB 🕑 Done time step 50/50 tau = 1.6 fm/c
+[1m[33m⚠ Maximum allowed time reached.[0m

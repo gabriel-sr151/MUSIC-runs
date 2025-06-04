@@ -66,8 +66,8 @@ X_grid_size_in_fm 20.0        # spatial range along x direction in the
 Y_grid_size_in_fm 20.0        # spatial range along y direction in the
                               # transverse plane
                               # [-Y_grid_size_in_fm/2, Y_grid_size_in_fm/2]
-Grid_size_in_y 250            # number of the grid points in y direction
-Grid_size_in_x 250            # number of the grid points in x direction
+Grid_size_in_y 150            # number of the grid points in y direction
+Grid_size_in_x 150            # number of the grid points in x direction
 #
 #
 EOS_to_use 9                 # type of the equation of state
@@ -97,7 +97,7 @@ bulk_relax_time_factor 0.06667     #default_value 1.0/14.55
                                    #for bulk_relaxation_type == 0 \tau_PI = \zeta*factor/[(1/3-cs2)^2(e+P)]
                                    #for bulk_relaxation_type == 1 \tau_PI = \zeta/[factor*(1/3-cs2)(e+P)]
                                    # default shear relaxation time
-Include_second_order_terms 0       # include second order non-linear coupling terms
+Include_second_order_terms 1       # include second order non-linear coupling terms
 Include_Rhob_Yes_1_No_0 0
 turn_on_baryon_diffusion 0
 kappa_coefficient 0.0

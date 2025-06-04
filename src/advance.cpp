@@ -322,7 +322,7 @@ void Advance::UpdateTJbRK(const ReconstCell &grid_rk, Cell_small &grid_pt) {
 //! in the dilute region to stablize numerical simulations
 void Advance::QuestRevert(const double tau, Cell_small *grid_pt,
                           const int ieta, const int ix, const int iy) {
-    double eps_scale = 0.1;   // 1/fm^4 default: 0.1
+    double eps_scale = 0.02;   // 1/fm^4 default: 0.1
     double e_local   = grid_pt->epsilon;
     double rhob      = grid_pt->rhob;
 

@@ -480,7 +480,7 @@ void Cell_info::OutputEvolutionDataXYEta_chun(SCGrid &arena, double tau) {
         fwrite(header, sizeof(float), 16, out_file_xyeta);
     }
     for (int ieta = 0; ieta < arena.nEta(); ieta += n_skip_eta) {
-        double eta_local = - DATA.eta_size/2. + ieta*DATA.delta_eta;
+        double eta_local = - DATA.eta_size/2. + ieta*DATA.delta_eta; //gsr test put this to 1.0
         double cosh_eta = cosh(eta_local);
         double sinh_eta = sinh(eta_local);
         for (int iy = 0; iy < arena.nY(); iy += n_skip_y) {

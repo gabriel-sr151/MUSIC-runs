@@ -45,9 +45,9 @@ Eta_fall_off 0.7               # the scale of the fall off of the
 #######################################
 boost_invariant  1            # whether the simulation is boost-invariant
 # grid information
-Initial_time_tau_0 10      # starting time of the hydrodynamic 
+Initial_time_tau_0 10000000.0      # starting time of the hydrodynamic 
                               # evolution (fm/c) 
-Total_evolution_time_tau 1.0  # the maximum allowed running
+Total_evolution_time_tau 4.0  # the maximum allowed running
                               # evolution time (fm/c)
                               # need to be set to some large number
 Delta_Tau 0.02                # time step to use in the evolution [fm/c]
@@ -88,16 +88,15 @@ EOS_to_use 9                 # type of the equation of state
                               # 14: lattice EOS hotQCD at finite muB
 # transport coefficients
 Viscosity_Flag_Yes_1_No_0 1        # turn on viscosity in the evolution
-Include_Shear_Visc_Yes_1_No_0 1    # include shear viscous effect
+Include_Shear_Visc_Yes_1_No_0 0    # include shear viscous effect
 Shear_to_S_ratio 0.0              # value of \eta/s
-T_dependent_Shear_to_S_ratio  1    # flag to use temperature dep. \eta/s(T)
+T_dependent_Shear_to_S_ratio  0    # flag to use temperature dep. \eta/s(T)
 Include_Bulk_Visc_Yes_1_No_0 1     # include bulk viscous effect
 T_dependent_Bulk_to_S_ratio 1      # include Temperature-dependent \zeta/s(T)
 bulk_relax_time_factor 0.06667     #default_value 1.0/14.55
                                    #for bulk_relaxation_type == 0 \tau_PI = \zeta*factor/[(1/3-cs2)^2(e+P)]
                                    #for bulk_relaxation_type == 1 \tau_PI = \zeta/[factor*(1/3-cs2)(e+P)]
-                                   # default shear relaxation time
-Include_second_order_terms 1       # include second order non-linear coupling terms
+Include_second_order_terms 0       # include second order non-linear coupling terms
 Include_Rhob_Yes_1_No_0 0
 turn_on_baryon_diffusion 0
 kappa_coefficient 0.0

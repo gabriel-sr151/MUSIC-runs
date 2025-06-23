@@ -68,7 +68,7 @@ my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', ['bl
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run4XL-dchk" 
+TestResultFolder = "acausality-stuff/run10_cartesian" 
                                            #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
                                            #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
                                            #run 3 (ERR) -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file 
@@ -116,7 +116,7 @@ header = data[0:16]
 print(header) #ok 
 print(data.shape)
 
-sys.exit()
+#sys.exit()
 #
 #print(data[12:]) #the rest of the data seems to not be there
                  #do not set the T_cut in the input file to large values!!!! now it's ok

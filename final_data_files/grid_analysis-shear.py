@@ -43,7 +43,7 @@ print(working_path)
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-w-shear/run5QRV-off-9IC" 
+TestResultFolder = "acausality-w-shear/run6-echo+a" 
                                            # >run 1 -- no second order terms, i excluded even the ones that music
                                            #                            doesn't by default -- energy 2x error
                                            # >run 2 -- i reincluded the terms excluded by me in run 1 
@@ -93,14 +93,17 @@ TestResultFolder = "acausality-w-shear/run5QRV-off-9IC"
                                            # + printing all cells
                                            # run5-QRVon_finer-91IC - run5-QRVoff (minimal IS + deltapipi and deltaPIPI)
                                            # quest revert on
-                                           # 
+                                           # >run7-coarser_grid - coarser IP Glasma IC
+                                           # >run8_cartesian - cartesian evolution Include_second_order_terms 1
+                                           # >run9_booinv - test for boost invariance with eta = 1.0 (changed in code) 
+                                           # instead of eta = 0.0 (see grid_info.cpp 'gsr test put this to 1.0')
 
                                            
 print('RESULTS BEING ANALYZED:',TestResultFolder)
 
 #second order terms
 incl_sec_mus = 1.0 #not excluded by 'Include_second_order_terms = 0' by default
-incl_sec = 0.0 #excluded by 'Include_second_order_terms = 0' by default excludes the ones below
+incl_sec = 1.0 #excluded by 'Include_second_order_terms = 0' by default excludes the ones below
 incl_lamb_PI_shear = 1.0 #include shear coupling in bulk eom; make sure incl_sec = 1.0 
 incl_lamb_pi_PI = 1.0 #include bulk_PI coupling in shear eom; make sure incl_sec = 1.0
 incl_tau_pipi = 1.0 #include tau_pipi; make sure incl_sec = 1.0
@@ -129,7 +132,8 @@ tau0 = header[0]
 dtau = header[1]
 tau_list = array([tau0 + i*dtau for i in range(ntau)])
 
-#print(ntau, tau0, dtau)
+
+#sys.exit()
 
 # define 3D grid in x, y, and eta_s (space-time rapidity)
 neta = int(header[8])
@@ -560,10 +564,12 @@ my_cmap_5stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap',
 
 ############################# quest revert REGULATOR WARNING
 
-filename_log = path.join(final_plots_folder, "log_music.txt")
+'''filename_log = path.join(final_plots_folder, "log_music.txt")
 extracted_data = find_warning(filename_log)
 
-#sys.exit()
+
+print(np.shape(extracted_data))
+sys.exit()
 
 QR_warning_status = active_cells 
                 
@@ -573,9 +579,9 @@ for entry in extracted_data:
     ieta = entry[1]
     ix = int(entry[2])#/2)
     iy = int(entry[3])#/2)  
-    # to translate to ix,iy, we have to take into account that not necessarily all cells are printed out 
+    # to translate to ix,iy, we have to take into account that not necessarily all x,y cells are printed out 
 
-    QR_warning_status[itau, ieta, ix, iy] = 20.0
+    QR_warning_status[itau, ieta, ix, iy] = 20.0'''
 
 #print(QR_warning_status[0, 0, :, :]) 
 
@@ -659,12 +665,12 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_QR-status.gif", writer=writergif)'''
+anim.save(f"{final_plots_folder}/animation_QR-status.gif", writer=writergif)
 
-
+'''
 ############## fractions good, bad, ugly
 
-fig = plt.figure()
+'''fig = plt.figure()
 
 frac_sum = frac_good + frac_bad + frac_ugly + frac_elli + frac_neg_iner
 
@@ -678,7 +684,7 @@ plt.xlabel(r"$\tau (fm)$")
 plt.ylabel("fractions")
 plt.tight_layout()
 plt.legend()
-plt.savefig(f"{final_plots_folder}/fracs-GoodBadUglyElli-")
+plt.savefig(f"{final_plots_folder}/fracs-GoodBadUglyElli-")'''
 
 
 
@@ -747,7 +753,7 @@ plt.savefig(f"{final_plots_folder}/full_status-countour-all-second-order-terms-t
 
 ################ causal and v2w2 status animation ---2 with pcolormesh
 
-# make a 2D meshgrid in the transverse plane
+'''# make a 2D meshgrid in the transverse plane
 X, Y = np.meshgrid(x, y)
 
 # Set up the figure
@@ -795,12 +801,12 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation_full-status-w-elli--.gif", writer=writergif)
 
-plt.close()  # Close the figure to prevent display in notebooks
+plt.close()'''  # Close the figure to prevent display in notebooks
 
 ################ causal and v2w2 status frame --- with pcolor 
 
 '''# Choose which frame to plot (e.g., first frame)
-frame_idx = 20  
+frame_idx = 0  
 
 # Create figure
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -840,8 +846,8 @@ ax.set_aspect('equal')  # Keep aspect ratio square
 plt.tight_layout()
 
 # Save or show
-plt.savefig(f"{final_plots_folder}/full_status_frame_{frame_idx}-of-{ntau}.png", dpi=300, bbox_inches='tight')
-'''
+plt.savefig(f"{final_plots_folder}/full_status_frame_{frame_idx}-of-{ntau}.png", dpi=300, bbox_inches='tight')'''
+
 
 ################ causal and v2w2 status animation --- with contour plot
 
@@ -1040,6 +1046,36 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/animation-v2.gif", writer=writergif)
 '''
+
+############### GLOBAL minimum propagation speeds
+
+glo_minw2 = []
+
+min = np.min(wchar2_min[0, 0, :, :])
+ind = wchar2_min[0, 0, :, :].index(min)
+
+print(min, ind)
+
+sys.exit()
+
+for t in range(ntau):
+
+    min_glo_w2 = np.min(wchar2_min[t, 0, :, :])    
+    wchar2_min[t, 0, :, :].index(min_glo_w2)
+    glo_minw2.append(min_glo_w2)
+
+
+fig = plt.figure()
+
+plt.plot(tau_list, glo_minw2, color = 'blue')
+plt.xlabel(r"$\tau (fm)$")
+plt.ylabel("min(w2)")
+plt.tight_layout()
+plt.legend()
+plt.savefig(f"{final_plots_folder}/global-min-w2")
+
+
+
 
 
 ############### minimum propagation speeds

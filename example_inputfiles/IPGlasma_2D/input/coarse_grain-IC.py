@@ -1,5 +1,5 @@
-import pandas as pd
 import numpy as np
+from numpy import *
 import sys
 import os
 
@@ -9,29 +9,45 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
 
 orig_IC = "./epsilon-u-Hydro-t0.6-0.dat" 
+altered_IC = open(f"./coarse_grain-GSR/epsilon-u-Hydro-t0.6-0-coarse-grained-to-256x256.dat","w")
+print('# dummy 1 etamax= 1 xmax= 256 ymax= 256 deta= 0 dx= 0.1328125 dy= 0.1328125', file = altered_IC)
 
-
-#fact = 2.0 # v_final= relativistic_sum(vx, fact*vx) for local boost
-vx = 0.0
-
-dvx = 0.99 # change in vx for global boost
-gam_b = 1.0/( np.sqrt(1.0-dvx**(2.0)) ) 
-
-
-#ic_new = open(f"./epsilon-u-Hydro-t0.6-0-increased-in-x-by-{fact}.dat","w")
-ic_new = open(f"./epsilon-u-Hydro-t0.6-0-boosted-global-by-{dvx}.dat","w")
-print('# dummy 1 etamax= 1 xmax= 512 ymax= 512 deta= 0 dx= 0.0664062 dy= 0.066406', file = ic_new)
-
+orig_data = []
 
 with open(orig_IC, 'r') as file_d:
    
-   file_d.readline() #skipping first line
+   file_d.readline() #skipping first line (header)
 
    for line in file_d:
        
-       columns = line.split()
-      
-       u = columns[4:8]
+       columns = list(map(float, line.split()))
 
-       e = 0 
+       if columns != []:
+
+            orig_data.append(columns) 
+
+#print(shape(orig_data))
+
+orig_data1 = np.array(orig_data)
+orig_data_grid = orig_data1.reshape((512,512,18))
+#print(shape(orig_data_grid))
+print(orig_data_grid[0,:,:])
+
+new_data_grid = orig_data_grid[::2,::2,:]
+#print(shape(new_data_grid))
+#print('altered data \n',new_data_grid[0,:,:])
+
+new_data1 = new_data_grid.reshape(-1,18)
+
+for line in new_data1:
+
+    result = ' '.join(map(str, line))
+
+    print(result, file = altered_IC)
+        
+
+
+
+
+sys.exit()
 

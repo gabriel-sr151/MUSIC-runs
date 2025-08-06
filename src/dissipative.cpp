@@ -218,9 +218,9 @@ double Diss::Make_uWSource(const double tau, const Cell_small *grid_pt,
     double transport_coefficient2_b = 0.;
 
     double incl_del_pipi_GSR = 0.0; 
-    double incl_lamb_pi_PI = 1.0; // include shear to bulk coupling
-    double incl_tau_pipi = 1.0; // shear-sigma
-    double incl_rest_shear = 1.0; // shear-shear, bulk-shear terms
+    double incl_lamb_pi_PI = 0.0; // include shear to bulk coupling
+    double incl_tau_pipi = 0.0; // shear-sigma
+    double incl_rest_shear = 0.0; // shear-shear, bulk-shear terms
     
 
 
@@ -627,8 +627,8 @@ double Diss::Make_uPiSource(const double tau, const Cell_small *grid_pt,
     }
 
     double incl_delPIPI_GSR = 1.0; // variable to in/exclude Bulk theta term GSR
-    double incl_lamb_PI_shear = 1.0; // include bulk to shear coupling
-    double incl_rest_bulk = 1.0; // shear-shear and bulkbulk terms
+    double incl_lamb_PI_shear = 0.0; // include bulk to shear coupling
+    double incl_rest_bulk = 0.0; // shear-shear and bulkbulk terms
 
 
     // defining bulk viscosity coefficient

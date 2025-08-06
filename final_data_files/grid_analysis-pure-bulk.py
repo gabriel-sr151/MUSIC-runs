@@ -11,6 +11,7 @@ import matplotlib.patches as mpatches
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.gridspec import GridSpec
 from matplotlib.ticker import FormatStrFormatter  # For formatting the colorbar
+from log_music_analysis import find_warning # script to extract questrevert alerts points
 
 # define format for the plots
 import matplotlib as mpl
@@ -41,7 +42,7 @@ working_path = path.join(home, "MUSIC/final_data_files")
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run_paper-w_PI-th-zovs8" 
+TestResultFolder = "acausality-stuff/run_paper-w_PI-th-zovs8-QRVoff" 
                                            #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
                                            #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
                                            #run 3 (ERR) -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file 
@@ -72,13 +73,14 @@ TestResultFolder = "acausality-stuff/run_paper-w_PI-th-zovs8"
                                            #run4XL-echo+v2 -- quest revert activation test eps_scale 0.1
                                            #run_paper_min_IS -- minimal IS with zeta/s option 1 (default)
                                            #run_paper_zovs8 -- minimal IS with zeta/s option 8
+                                           #run_paper_zovs8_QRVoff -- minimal IS with zeta/s option 8  -- quest revert regulator off
 
 
 #ATTENTION!!!!!!!!!!!!!!!!!!!!!!! When running the pure bulk case here, I mean pure bulk minimal Israel-Stewart
 # then, make sure incl_delPIPI_GSR = 0 in src/dissipative.cpp
 
 bulk_relax_time_factor = 1./15. #MUSIC_default 1/14.55
-incl_delPIPI = 0
+incl_delPIPI = 1.0
 
 
 
@@ -145,6 +147,7 @@ v2 = zeros([ntau, neta, nx, ny]) #GSR -- VW criterion
 causality_status = zeros([ntau, neta, nx, ny]) #GSR
 V2w2_status = zeros([ntau, neta, nx, ny]) #GSR                            
 causal_AND_v2w2_status = zeros([ntau, neta, nx, ny]) #GSR
+active_cells = zeros([ntau, neta, nx, ny]) #GSR
 
 
 for itau in range(ntau):
@@ -195,6 +198,12 @@ for itau in range(ntau):
                                                     
         v2[itau, eta_idx, x_idx, y_idx] = vx[itau, eta_idx, x_idx, y_idx]**2 + vy[itau, eta_idx, x_idx, y_idx]**2 \
                                        + vz[itau, eta_idx, x_idx, y_idx]**2
+        
+        if ed[itau, eta_idx, x_idx, y_idx] > 0.15: #GeV/fm3 -- see chun's output file
+
+            active_cells[itau, eta_idx, x_idx, y_idx] = 10.0
+        
+        #end if    
 
         '''if (wchar2[itau, eta_idx, x_idx, y_idx] > 0.0 and wchar2[itau, eta_idx, x_idx, y_idx] < 1.0):
             
@@ -267,6 +276,8 @@ print("neta = {0}, eta_min = {1:.2f} fm, eta_max = {2:.2f} fm, deta = {3:.2f}".f
 final_plots_folder = path.join(working_path, TestResultFolder)
 
 
+
+
 ########################################  PLOTS SETTINGS  #########
 
 
@@ -303,6 +314,82 @@ my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', ['bl
 ####################################################
 
 
+############################# quest revert REGULATOR WARNING
+
+'''filename_log = path.join(final_plots_folder, "log_music.txt")
+extracted_data = find_warning(filename_log)
+
+
+QR_warning_status = active_cells 
+                
+for entry in extracted_data:
+
+    itau = int( (entry[0]-tau0)/dtau )
+    ieta = entry[1]
+    ix = int(entry[2])#/2)
+    iy = int(entry[3])#/2)  
+    # to translate to ix,iy, we have to take into account that not necessarily all x,y cells are printed out 
+
+    QR_warning_status[itau, ieta, ix, iy] = 20.0'''
+
+
+
+############# animation QR status ------------------------------------------------------------------------
+
+
+'''levels2statusQR = [0, 2]
+levels3statusQR = [-5, 5, 15,25]
+colors2statQR = ['black','red']
+colors3statQR = ['black','white','red']
+
+my_cmap_2statQR = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors2statQR)
+my_cmap_3statQR = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors3statQR)
+
+QR_status_labels = ['inactive','active']
+QR_status_3labels = ['background','inactive','active']
+
+
+# make a 2D meshgrid in the transverse plane
+X, Y = meshgrid(x, y)
+
+# first plot the first frame as a contour plot
+fig = plt.figure(figsize=(10,6))
+cont = plt.contourf(X, Y, QR_warning_status[0, 0, :, :].transpose(), 
+                    levels = levels3statusQR, 
+                    cmap=my_cmap_3statQR, 
+                    extend='both')
+time_text = plt.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]), color ='black')
+legend_patches = [mpatches.Patch(color=colors3statQR[i], label = QR_status_3labels[i])
+                  for i in range(len(colors3statQR))]
+plt.legend(handles = legend_patches,
+            loc='center left', 
+            bbox_to_anchor=(1.05,0.5), 
+            frameon=False)
+plt.xlabel(r"$x$ (fm)")
+plt.ylabel(r"$y$ (fm)")
+plt.xlim([-8, 8])
+plt.ylim([-8, 8])
+plt.tight_layout(rect=[0, 0, 1, 1])   
+
+# define animation function to update the contour at every time frame
+def animate(i): 
+    global cont, time_text
+    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
+        c.remove()  # removes only the contours, leaves the rest intact
+    cont = plt.contourf(X, Y, QR_warning_status[i, 0, :, :],\
+                         levels = levels3statusQR, cmap=my_cmap_3statQR, extend='both')
+    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
+    return cont, time_text
+
+# create the animation
+anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
+
+# save the animation to a file
+writergif = animation.PillowWriter(fps=10)
+anim.save(f"{final_plots_folder}/animation_QR-status.gif", writer=writergif)
+'''
+
+#sys.exit()
 
 
 ###################################### contour plot for vw status pcolormesh
@@ -312,15 +399,40 @@ colors4stat = ['green','yellow','red','purple']
 total_status_labels4 = ['good','bad', r'ugly ($vw > 1$)', r'ugly ($w^{2}<0$)']
 my_cmap_4stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', ['black'] + colors4stat)
 
+colors4stat_lp = ['green','yellow','red'] #['green','red','yellow','purple']#to change columns of legend_patches
+total_status_labels4_lp = ['good','bad',r'ugly ($vw > 1$)']
+ #['good',r'ugly ($vw > 1$)','bad', r'ugly ($w^{2}<0$)'] #to change columns of legend_patches
 
 # Choose which frames to plot (e.g., first frame)
-frame_idx_list = [0,40,50] #[int(ntau*(0/82)),int(ntau*(40/82)), int(ntau*(50/82))]
+#frame_idx_list = [int(ntau*(0/82)),int(ntau*(40/82)), int(ntau*(50/82))]
+#frame_idx_list = [int(ntau*(0)),int(ntau*(1/2)), int(ntau*(9/10))]
+frame_idx_list = [0, 20, 40]
+
+#fontsize data
+GBU_time_text_fs = 22
+GBU_legend_fs = 22
+GBU_axes_fs = 24
+GBU_ticks_fs = 22
+
+Tmap_time_text_fs = 22
+Tmap_cbar_fs = 22
+Tmap_axes_fs = 24
+Tmap_ticks_fs = 22
+Tmap_cbar_num_fs = 18
+Tmap_status_subreg = 3 # 3 for ugly vw>1
+Tmap_color_subreg = 'red'
 
 for tau_idx in frame_idx_list:
 
-    
-    # Create figure
-    fig, ax = plt.subplots(figsize=(8, 8))
+    if tau_idx == 0:
+
+        # Create figure
+        fig, ax = plt.subplots(figsize=(8, 9))
+
+    else:
+
+        fig, ax = plt.subplots(figsize=(8, 8))    
+    #endif    
 
     # Create 2D meshgrid 
     X, Y = np.meshgrid(x, y)
@@ -334,7 +446,8 @@ for tau_idx in frame_idx_list:
 
     # Add time annotation
     time_text = ax.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[tau_idx]), 
-                    color='white', fontsize=16)
+                    color='white', fontsize=GBU_time_text_fs)
+    
 
     # Add colorbar (if desired)
     #cbar = fig.colorbar(plot, ax=ax, ticks=levels4status)
@@ -343,23 +456,45 @@ for tau_idx in frame_idx_list:
     # Create legend
     if tau_idx == 0:
 
-        legend_patches = [mpatches.Patch(color=colors4stat[i], label=total_status_labels4[i])
-                    for i in range(len(colors4stat))]
+        legend_patches = [mpatches.Patch(color=colors4stat_lp[i], label=total_status_labels4_lp[i])
+                    for i in range(len(colors4stat_lp))]       
         ax.legend(handles=legend_patches,
             loc='lower center',
             bbox_to_anchor=(0.5, 1.02), # Position above the plot
-            ncol = len(colors4stat),# Number of columns (equal to number of items for horizontal layout)
+            ncol = len(colors4stat_lp) ,#len(colors4stat),# Number of columns (equal to number of items for horizontal layout)
             frameon=False,
-            fontsize=16)
+            fontsize=GBU_legend_fs,
+            handletextpad=0.5,# Space between patch and text
+            borderaxespad=0.02,# Padding between legend and axes
+            columnspacing= 0.3 # Space between columns
+            )
     #endif    
 
     # Axis formatting
-    ax.set_xlabel(r"$x$ (fm)", fontsize=16)
-    ax.set_ylabel(r"$y$ (fm)", fontsize=16)
-    ax.tick_params(axis='both', labelsize = 16)
+    ax.set_xlabel(r"$x$ (fm)", fontsize= GBU_axes_fs)
+    ax.set_ylabel(r"$y$ (fm)", fontsize= GBU_axes_fs)
+    ax.tick_params(axis='both', labelsize = GBU_ticks_fs)
     ax.set_xlim([-8, 8])
     ax.set_ylim([-8, 8])
     ax.set_aspect('equal')  # Keep aspect ratio square
+    if tau_idx == 0:
+        
+        ax.text(1, 7, 'Initial conditions', color = 'white', fontsize = Tmap_time_text_fs)
+        ax.text(6, -7, '(a)', color = 'white', fontsize = Tmap_time_text_fs)
+
+    else:
+
+        if incl_delPIPI < 0.001:
+
+            ax.text(1, 7, 'Minimal IS', color = 'white', fontsize = Tmap_time_text_fs)
+            ax.text(6, -7, '(c)', color = 'white', fontsize = Tmap_time_text_fs)
+
+        else:
+
+            ax.text(1, 7, r'IS with $\delta_{\Pi \Pi}$', color = 'white', fontsize = Tmap_time_text_fs)
+            ax.text(6, -7, '(e)', color = 'white', fontsize = Tmap_time_text_fs)
+
+   
     plt.tight_layout()
 
     # Save or show
@@ -376,7 +511,14 @@ for tau_idx in frame_idx_list:
 
 
     # 1. First plot the temperature contour
-    fig = plt.figure(figsize=(8,8))
+    if tau_idx == 0:
+
+        fig = plt.figure(figsize=(8,9))
+
+    else:
+
+        fig = plt.figure(figsize=(8,8))    
+    
     ax = plt.gca() 
 
     cont = ax.contourf(X, Y, T[tau_idx, 0, :, :], levelsT_finer, cmap=blue_transparent, extend='both')
@@ -388,38 +530,56 @@ for tau_idx in frame_idx_list:
             location='top',    # Places colorbar above the plot
             orientation='horizontal',  # Ensures horizontal layout
             pad=0.02, # Adds small spacing between plot and colorbar
-            shrink = 0.8,
+            shrink = 1.0,
             aspect = 40, # Controls colorbar thickness
             )  
-        cbar.set_label('T (GeV)', fontsize = 16 , labelpad=10)
-        cbar.formatter = FormatStrFormatter('%.2g')  # 3 significant figures
+        cbar.set_label('T (GeV)', fontsize = Tmap_cbar_fs, labelpad = Tmap_cbar_num_fs)
+        cbar.formatter = FormatStrFormatter('%4.2g')  # 3 significant figures
         cbar.update_normal(cont)  # Ensure updates apply
     #endif    
     
 
-    # 2. Then plot the status boundary where status == 3
+    # 2. Then plot the status boundary where status == Tmap_status_subreg
     status_data = causal_AND_v2w2_status[tau_idx, 0, :, :]
-    cont_status = plt.contour(X, Y, (status_data == 2).astype(float), 
+    cont_status = plt.contour(X, Y, (status_data == Tmap_status_subreg).astype(float), 
                             levels=[0.5],  # This will draw the boundary between 0 and 1
-                            colors='yellow',                           
+                            colors=Tmap_color_subreg,                           
                             linewidths=0.75)
     
-    ax.set_xlabel(r"$x$ (fm)", fontsize = 18)
-    ax.set_ylabel(r"$y$ (fm)", fontsize = 18)
-    ax.tick_params(axis='both', labelsize = 16)
+    ax.set_xlabel(r"$x$ (fm)", fontsize = Tmap_axes_fs)
+    ax.set_ylabel(r"$y$ (fm)", fontsize = Tmap_axes_fs)
+    ax.tick_params(axis='both', labelsize = Tmap_ticks_fs)
     ax.set_xlim([-8, 8])
     ax.set_ylim([-8, 8])
     ax.set_aspect('equal')
-    ax.text(-7.4, -7, r'$\tau = {0:3.1f}$ fm/c'.format(tau_list[tau_idx]), fontsize = 18) 
+    ax.text(-7.4, -7, r'$\tau = {0:4.2f}$ fm/c'.format(tau_list[tau_idx]), fontsize = Tmap_time_text_fs)
+
+    if tau_idx == 0:
+        
+        ax.text(1, 7, 'Initial conditions', fontsize = Tmap_time_text_fs)
+        ax.text(6, -7, '(b)', fontsize = Tmap_time_text_fs)
+
+    else:
+
+        if incl_delPIPI < 0.001:
+
+            ax.text(1, 7, 'Minimal IS', fontsize = Tmap_time_text_fs)
+            ax.text(6, -7, '(d)', fontsize = Tmap_time_text_fs)
+
+        else:
+
+            ax.text(1, 7, r'IS with $\delta_{\Pi \Pi}$', fontsize = Tmap_time_text_fs)
+            ax.text(6, -7, '(f)', fontsize = Tmap_time_text_fs)
+
     
     plt.tight_layout()
-    plt.savefig(f"{final_plots_folder}/temperature_XY-tau_{tau_idx}-of-{ntau}-with-bad")
+    plt.savefig(f"{final_plots_folder}/temperature_XY-tau_{tau_idx}-of-{ntau}-with-ugly")
 
 # end for in tau_idx
 
 ################ causal and v2w2 status animation ---2 with pcolormesh
 
-levels4status = [-0.5, 0.5, 1.5, 2.5,3.5,4.5]
+levels4status = [-0.5, 0.5, 1.5, 2.5, 3.5, 4.5]
 colors4stat = ['green','yellow','red','purple']
 total_status_labels4 = ['good','bad', r'ugly ($vw > 1$)', r'ugly ($w^{2}<0$)']
 my_cmap_4stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', ['black'] + colors4stat)
@@ -513,8 +673,8 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # save the animation to a file
 writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/temperature-XY.gif", writer=writergif)'''
-
+anim.save(f"{final_plots_folder}/temperature-XY.gif", writer=writergif)
+'''
 
 '''#######################################temperature contour plot, rainbow color code
 

@@ -42,7 +42,7 @@ working_path = path.join(home, "MUSIC/final_data_files")
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run_paper-w_PI-th-zovs8-QRVoff" 
+TestResultFolder = "acausality-stuff/run_paper_zovs8_QRVoff" 
                                            #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
                                            #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
                                            #run 3 (ERR) -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file 
@@ -573,7 +573,7 @@ for tau_idx in frame_idx_list:
 
     
     plt.tight_layout()
-    plt.savefig(f"{final_plots_folder}/temperature_XY-tau_{tau_idx}-of-{ntau}-with-ugly")
+    plt.savefig(f"{final_plots_folder}/temperature_XY-tau_{tau_idx}-of-{ntau}-with-ugly", dpi = 300)
 
 # end for in tau_idx
 
@@ -631,7 +631,7 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # Save the animation
 writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_full-status-w-elli--pm.gif", writer=writergif)
+anim.save(f"{final_plots_folder}/animation_full-status-w-elli--pm.gif", writer=writergif, dpi=300)
 
 plt.close()  # Close the figure to prevent display in notebooks
 

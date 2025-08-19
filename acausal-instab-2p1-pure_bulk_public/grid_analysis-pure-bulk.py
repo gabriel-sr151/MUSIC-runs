@@ -1,4 +1,3 @@
-#based on https://github.com/JETSCAPE/SummerSchool2020/blob/master/hydro_session/hydro_movie-TestRun.ipynb
 import numpy as np
 from numpy import *
 from os import path
@@ -11,7 +10,6 @@ import matplotlib.patches as mpatches
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.gridspec import GridSpec
 from matplotlib.ticker import FormatStrFormatter  # For formatting the colorbar
-from log_music_analysis import find_warning # script to extract questrevert alerts points
 
 # define format for the plots
 import matplotlib as mpl
@@ -34,72 +32,33 @@ mpl.rcParams['legend.numpoints'] = 1
 mpl.rcParams['font.size'] = 15
 mpl.rcParams['savefig.format'] = "pdf"
 #
-#sys.exit() # INTERRUPT CODE for debugging
 
-working_path = path.join(home, "MUSIC/final_data_files")
-#print(working_path)
+working_path = path.join(home, "MUSIC/acausal-instab-2p1-pure_bulk_public")
+# if you have a different path, please change it accordingly 
+        
 
 
 
 # change the following line to your result folder
-TestResultFolder = "acausality-stuff/run_paper_zovs8_QRVoff" 
-                                           #run 1 -- pure bulk with bulk_relax_time_factor = 1/14.55 default bulk_relax_time_factor
-                                           #run 2 -- pure bulk with bulk_relax_time_factor = 19.34 in input file    
-                                           #run 3 (ERR) -- pure bulk with bulk_relax_time_factor = 1/19.36 in input file 
-                                                    # ERR ---  never insert 1/14.55 in the input
-                                                    # file. put the numerical value instead (0.0687).
-                                           #run 4 (ERR) -- pure bulk with bulk_relax_time_factor = 1/15.0 in input file ERR
-                                           #run 5 -- same as run1 for double checking -- something is weird when considering another 
-                                                     #tau_bulk factor
-                                           #run 1 finer -- run 1 input file with smaller delta_tau
-                                           #run 4 - hard -- pure bulk with bulk_relax_time_factor = 1/15.0 changed in code
-                                           #run 3 - hard -- pure bulk with bulk_relax_time_factor = 1/19.34 changed in code
-                                               #>> for this run there was a energy density factor warning
-                                           #run 4 - dcheck -- double check run -- input file implementation error found
-                                           # pure bulk with bulk_relax_time_factor = 1/15.0 changed in code                                               
-                                           #run 6 (ERR) - locally boosted IC vx -> relat_sum(vx,0.2vx) bulk_relax_time_factor = 1/15.0   
-                                           # ERR implementation error: boost with wrong sign 
-                                           #run 7 -- locally boosted IC vx -> relat_sum(vx,0.5vx) bulk_relax_time_factor = 1/15.0 
-                                           #run7-vx+2vx -- locally boosted IC vx -> relat_sum(vx,2vx) bulk_relax_time_factor = 1/15.0 
-                                           #run7-vx+1vx -- locally boosted IC vx -> relat_sum(vx,vx) bulk_relax_time_factor = 1/15.0
-                                           #run8-global -- global boost with vx -> relat_sum(vx,-0.8) bulk_relax_time_factor = 1/15.0 
-                                           #run8-global -- global boost with vx -> relat_sum(vx,-0.99) bulk_relax_time_factor = 1/15.0    
-                                           # ------------------ all runs above this line contained an error postprocessing regarding Pi/(e+P)
-                                           #                    because the bulk printed in Pi/(e+p) and not Pi  
-                                           # run4XL -- pure bulk with bulk_relax_time_factor = 1/15.0 but with larger tau window
-                                           #   run 4 - hard is the reference          
-                                           #run9-QRVoff -- quest revert regulator off
-                                           #run4XL-echo+ -- quest revert activation test eps_scale 0.02
-                                           #run4XL-echo+v2 -- quest revert activation test eps_scale 0.1
-                                           #run_paper_min_IS -- minimal IS with zeta/s option 1 (default)
-                                           #run_paper_zovs8 -- minimal IS with zeta/s option 8
-                                           #run_paper_zovs8_QRVoff -- minimal IS with zeta/s option 8  -- quest revert regulator off
+TestResultFolder = "run_paper-w_PI-th-zovs8-QRVoff"#"run_paper_zovs8_QRVoff" 
+                   #"run_paper-w_PI-th-zovs8-QRVoff"
 
 
-#ATTENTION!!!!!!!!!!!!!!!!!!!!!!! When running the pure bulk case here, I mean pure bulk minimal Israel-Stewart
-# then, make sure incl_delPIPI_GSR = 0 in src/dissipative.cpp
+bulk_relax_time_factor = 1./15.
+incl_delPIPI = 1.0 # 1.0 for including delPIPI (run_paper-w_PI-th-zovs8-QRVoff), 
+                   # 0.0 for not including it (run_paper_zovs8_QRVoff)
 
-bulk_relax_time_factor = 1./15. #MUSIC_default 1/14.55
-incl_delPIPI = 0.0
 
 
 
 # load hydrodynamic evolution data
 data = fromfile(path.join(working_path, TestResultFolder,"evolution_all_xyeta.dat"), dtype=float32)
 
-#print(type(data))
 
 
 # read header about the grid information
 header = data[0:16]
 
-#print(header) #ok 
-#print(data.shape)
-
-#sys.exit()
-#
-#print(data[12:]) #the rest of the data seems to not be there
-                 #do not set the T_cut in the input file to large values!!!! now it's ok
 
 # read in data and reshape it to the correct form -- 
 data = data[16:].reshape(-1, int(header[-1]))
@@ -138,7 +97,6 @@ cs2 = zeros([ntau, neta, nx, ny]) #GSR
 vx = zeros([ntau, neta, nx, ny])
 vy = zeros([ntau, neta, nx, ny])
 vz = zeros([ntau, neta, nx, ny]) #GSR
-bulkPI = zeros([ntau, neta, nx, ny]) #GSR
 bulkPI_norm = zeros([ntau, neta, nx, ny]) #GSR  -- Pi/(e+p)
 
 
@@ -205,26 +163,7 @@ for itau in range(ntau):
         
         #end if    
 
-        '''if (wchar2[itau, eta_idx, x_idx, y_idx] > 0.0 and wchar2[itau, eta_idx, x_idx, y_idx] < 1.0):
-            
-            causality_status[itau, eta_idx, x_idx, y_idx] = 0
-
-        else:
-
-            causality_status[itau, eta_idx, x_idx, y_idx] = 1
-
-        #end causality test    
-
-
-        if wchar2[itau, eta_idx, x_idx, y_idx]*v2[itau, eta_idx, x_idx, y_idx] < 1.0:
-            
-            V2w2_status[itau, eta_idx, x_idx, y_idx] = 0
-
-        else:
-
-            V2w2_status[itau, eta_idx, x_idx, y_idx] = 1
-
-        #end vw test'''     
+          
 
         if (wchar2[itau, eta_idx, x_idx, y_idx] > 0.0 and wchar2[itau, eta_idx, x_idx, y_idx] < 1.0):
            
@@ -311,85 +250,7 @@ my_cmap_3stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', ['bl
 
 
 
-####################################################
 
-
-############################# quest revert REGULATOR WARNING
-
-'''filename_log = path.join(final_plots_folder, "log_music.txt")
-extracted_data = find_warning(filename_log)
-
-
-QR_warning_status = active_cells 
-                
-for entry in extracted_data:
-
-    itau = int( (entry[0]-tau0)/dtau )
-    ieta = entry[1]
-    ix = int(entry[2])#/2)
-    iy = int(entry[3])#/2)  
-    # to translate to ix,iy, we have to take into account that not necessarily all x,y cells are printed out 
-
-    QR_warning_status[itau, ieta, ix, iy] = 20.0'''
-
-
-
-############# animation QR status ------------------------------------------------------------------------
-
-
-'''levels2statusQR = [0, 2]
-levels3statusQR = [-5, 5, 15,25]
-colors2statQR = ['black','red']
-colors3statQR = ['black','white','red']
-
-my_cmap_2statQR = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors2statQR)
-my_cmap_3statQR = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', colors3statQR)
-
-QR_status_labels = ['inactive','active']
-QR_status_3labels = ['background','inactive','active']
-
-
-# make a 2D meshgrid in the transverse plane
-X, Y = meshgrid(x, y)
-
-# first plot the first frame as a contour plot
-fig = plt.figure(figsize=(10,6))
-cont = plt.contourf(X, Y, QR_warning_status[0, 0, :, :].transpose(), 
-                    levels = levels3statusQR, 
-                    cmap=my_cmap_3statQR, 
-                    extend='both')
-time_text = plt.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]), color ='black')
-legend_patches = [mpatches.Patch(color=colors3statQR[i], label = QR_status_3labels[i])
-                  for i in range(len(colors3statQR))]
-plt.legend(handles = legend_patches,
-            loc='center left', 
-            bbox_to_anchor=(1.05,0.5), 
-            frameon=False)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout(rect=[0, 0, 1, 1])   
-
-# define animation function to update the contour at every time frame
-def animate(i): 
-    global cont, time_text
-    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
-        c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, QR_warning_status[i, 0, :, :],\
-                         levels = levels3statusQR, cmap=my_cmap_3statQR, extend='both')
-    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
-    return cont, time_text
-
-# create the animation
-anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
-
-# save the animation to a file
-writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_QR-status.gif", writer=writergif)
-'''
-
-#sys.exit()
 
 
 ###################################### contour plot for vw status pcolormesh
@@ -631,7 +492,7 @@ anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
 
 # Save the animation
 writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_full-status-w-elli--pm.gif", writer=writergif, dpi=300)
+anim.save(f"{final_plots_folder}/animation_full-status.gif", writer=writergif, dpi=300)
 
 plt.close()  # Close the figure to prevent display in notebooks
 
@@ -676,277 +537,7 @@ writergif = animation.PillowWriter(fps=10)
 anim.save(f"{final_plots_folder}/temperature-XY.gif", writer=writergif)
 '''
 
-'''#######################################temperature contour plot, rainbow color code
-
-tau_idx = int(ntau*(40/82)) # 0 for the initial condition
-
-fig = plt.figure()
-cont = plt.contourf(X, Y, T[tau_idx, 0, :, :], levelsT, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/temperature_XY-tau_{tau_idx}-of-{ntau}")
-'''
-######################################animation with velocity field
-
-'''nskip = 2  # only plot every other point to speed up the live animation
-
-X, Y = meshgrid(x, y)
-
-v_mag = sqrt(vx[-1, 0, :, :]**2 + vy[-1, 0, :, :]**2.)
-
-# first plot the first frame as the contour plot
-levels2 = (linspace(0.10**0.25, 0.3**0.25, 30))**(4.)
-fig = plt.figure()
-cont = plt.contourf(X[::nskip, ::nskip], Y[::nskip, ::nskip],
-                    T[0, 0, ::nskip, ::nskip],
-                    levels2, cmap='Reds', extend='both')
-Q = plt.quiver(X[::nskip, ::nskip], Y[::nskip, ::nskip],
-              vy[0, 0, ::nskip, ::nskip],
-              vx[0, 0, ::nskip, ::nskip],
-              units='xy', scale_units='xy', scale=0.5, color='b')
-time_text = plt.text(-7.5, 6.5, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
-cbar = fig.colorbar(cont)
-plt.tight_layout()
-plt.xlim(-8, 8)
-plt.ylim(-8, 8)
-
-# update the temperature contour and velocity vector field 
-def update_quiver(num, Q, X, Y):
-    global cont, time_text
-    for c in cont.collections:
-        c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X[::nskip, ::nskip], Y[::nskip, ::nskip],
-                        T[num, 0, ::nskip, ::nskip],
-                        levels2, cmap='Reds', extend='both')
-    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[num])) 
-    
-    U = vy[num, 0, ::nskip, ::nskip]
-    V = vx[num, 0, ::nskip, ::nskip]
-    
-    Q = plt.quiver(X[::nskip, ::nskip], Y[::nskip, ::nskip],
-                   U, V, units='xy', scale_units='xy', scale=0.5, color='b')
-    return Q, cont, time_text  
-
-# create the animation
-anim = animation.FuncAnimation(fig, update_quiver, fargs=(Q, X, Y),
-                               frames=ntau, blit=False, repeat=False)
-
-# save the animation
-writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_Tandflow.gif", writer=writergif)
-'''
-
-
-'''
-#####################################----temperature animation, Rainbow color code
-
-X, Y = meshgrid(x, y)
-
-# first plot the first frame as a contour plot
-fig = plt.figure()
-cont = plt.contourf(X, Y, T[0, 0, :, :], levelsT ,
-                    cmap=my_cmap, extend='both')
-time_text = plt.text(-6, 6, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]))
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout()   
-
-# define animation function to update the contour at every time frame
-def animate(i): 
-    global cont, time_text
-    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
-        c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, T[i, 0, :, :], levelsT, cmap=my_cmap, extend='both')
-    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
-    return cont, time_text
-
-# create the animation
-anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
-
-# save the animation to a file
-writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/temperature.gif", writer=writergif)
-
-
-'''
-
-
-# make a 2D meshgrid in the transverse plane
-#X, Y = meshgrid(x, y)
 
 
 
-# make the contour plot
-'''tau_idx = -1 #int(ntau*(2/3)) # 0 for the initial condition
 
-fig = plt.figure()
-cont = plt.contourf(X, Y, bulkPI[tau_idx, 0, :, :]/(ed[tau_idx, 0, :, :]+pr[tau_idx, 0, :, :]), levelsbulk, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/Bulk_ov_e_p_Contour_XY-initial-tau_{tau_idx}-of-{ntau}")
-'''
-# make the contour plot
-'''fig = plt.figure()
-cont = plt.contourf(X, Y, cs2[0, 0, :, :], levelsbulk, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_cs2_Contour_XY")
-'''
-
-
-
-#tau_idx = 0*int(ntau*(2/3)) # 0 for the initial condition
-
-# make the contour plot
-'''fig = plt.figure()
-cont = plt.contourf(X, Y, wchar2[tau_idx, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_caus_Contour_XY-tau_{tau_idx}-of-{ntau}")
-'''
-
-'''Tau, X = meshgrid(tau_list, x)
-
-y_idx = int(ny/2)  # pick the central point in the y direction
-
-fig = plt.figure()
-cont = plt.contourf(X, Tau, wchar2[:, 0, :, y_idx].transpose(), levelscaus,
-                    cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$\tau$ (fm/c)")
-plt.text(1.0, 10.0, r'$y = {0:3.1f}$ fm'.format(y[y_idx]))
-#plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_wchar2_Contour_TauX")
-'''
-
-'''tau_idx = int(ntau*(1/3)) # 0 for the initial condition
-
-fig = plt.figure()
-cont = plt.contourf(X, Y, v2[tau_idx, 0, :, :]*wchar2[tau_idx, 0, :, :], levelsVW, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/V2W2_Contour_XY-tau_{tau_idx}-of-{ntau}")
-
-'''
-'''tau_idx = int(ntau*(18/51)) # 0 for the initial condition
-
-fig = plt.figure()
-cont = plt.contourf(X, Y, V2w2_status[tau_idx, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/V2W2_status-countour-tau_{tau_idx}-of-{ntau}")
-'''
-
-
-
-'''tau_idx = -1 #int(ntau*(2/3)) # 0 for the initial condition
-
-# make the contour plot
-fig = plt.figure()
-cont = plt.contourf(X, Y, causality_status[tau_idx, 0, :, :], levelscaus, cmap=my_cmap, extend='both')
-cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(1.0, 10.0, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]))
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/TestRun_causality_status_Contour_XY-tau_{tau_idx}-of-{ntau}")
-'''
-
-
-###################################### contour plot for vw status with contours
-
-'''levels4status = [-0.5, 0.5, 1.5, 2.5,3.5,4.5]
-colors4stat = ['green','yellow','red','pink']
-total_status_labels4 = ['causal & stable','acausal & stable', 'acausal & unstable','elliptic']
-my_cmap_4stat = mpl.colors.LinearSegmentedColormap.from_list('my_colormap', ['black'] + colors4stat)
-
-
-X, Y = meshgrid(x, y)
-
-tau_idx = int(ntau*(40/82)) # 0 for the initial condition
-
-fig = plt.figure(figsize=(10,6))
-cont = plt.contourf(X, Y, causal_AND_v2w2_status[tau_idx, 0, :, :], 
-                    levels = levels4status, 
-                    cmap=my_cmap_4stat,
-                    extend='both')
-#cbar = fig.colorbar(cont)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.text(-7.4, -7, r'$\tau = {0:3.1f}$ fm'.format(tau_list[tau_idx]), color ='white')
-legend_patches = [mpatches.Patch(color=colors4stat[i], label = total_status_labels4[i])
-                  for i in range(len(colors4stat))]
-plt.legend(handles = legend_patches,
-            loc='center left', 
-            bbox_to_anchor=(1.05,0.5), 
-            frameon=False)
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout()
-plt.savefig(f"{final_plots_folder}/full_status-countour-pure-bulk-tau_{tau_idx}-of-{ntau}-GYR-elli")'''
-
-
-###################################### -- causal and vw animation with contours
-
-'''X, Y = meshgrid(x, y)
-
-# first plot the first frame as a contour plot
-fig = plt.figure(figsize=(10,6))
-cont = plt.contourf(X, Y, causal_AND_v2w2_status[0, 0, :, :].transpose(), 
-                    levels = levels4status, 
-                    cmap=my_cmap_4stat, 
-                    extend='both')
-time_text = plt.text(-7.4, -7, r"$\tau = {0:4.2f}$ fm/c".format(tau_list[0]), color ='white')
-#cbar = fig.colorbar(cont, ticks = [0,1,2,3])
-#cbar.ax.set_yticklabels(total_status_labels)
-legend_patches = [mpatches.Patch(color=colors4stat[i], label = total_status_labels4[i])
-                  for i in range(len(colors4stat))]
-plt.legend(handles = legend_patches,
-            loc='center left', 
-            bbox_to_anchor=(1.05,0.5), 
-            frameon=False)
-plt.xlabel(r"$x$ (fm)")
-plt.ylabel(r"$y$ (fm)")
-plt.xlim([-8, 8])
-plt.ylim([-8, 8])
-plt.tight_layout(rect=[0, 0, 1, 1])   
-
-# define animation function to update the contour at every time frame
-def animate(i): 
-    global cont, time_text
-    for c in cont.collections: # collections WILL BE REMOVED SOON from matplotlib
-        c.remove()  # removes only the contours, leaves the rest intact
-    cont = plt.contourf(X, Y, causal_AND_v2w2_status[i, 0, :, :], levels = levels4status, cmap=my_cmap_4stat, extend='both')
-    time_text.set_text(r"$\tau = {0:4.2f}$ fm/c".format(tau_list[i]))
-    return cont, time_text
-
-# create the animation
-anim = animation.FuncAnimation(fig, animate, frames=ntau, repeat=False)
-
-# save the animation to a file
-writergif = animation.PillowWriter(fps=10)
-anim.save(f"{final_plots_folder}/animation_full-status-elli.gif", writer=writergif)'''

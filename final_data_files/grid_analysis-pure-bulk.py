@@ -93,10 +93,10 @@ data = fromfile(path.join(working_path, TestResultFolder,"evolution_all_xyeta.da
 # read header about the grid information
 header = data[0:16]
 
-#print(header) #ok 
-#print(data.shape)
+print(header) #ok 
+print(data.shape)
 
-#sys.exit()
+sys.exit()
 #
 #print(data[12:]) #the rest of the data seems to not be there
                  #do not set the T_cut in the input file to large values!!!! now it's ok
